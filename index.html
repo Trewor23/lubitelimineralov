@@ -82,15 +82,35 @@
     .badge-terracotta { background-color: rgba(249, 235, 228, 0.94); color: #8c4a32; border: 1px solid #eccbc0; }
     .vk-btn { background-color: #0077FF; color: #ffffff; }
     .vk-btn:hover { background-color: #0062d6; transform: translateY(-1px); }
+
+    /* Вертикальный текст для левых колонок ОСШ-2024 */
+    .vert-box {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      line-height: 1.15;
+      max-height: 260px;
+      margin: 0 auto;
+    }
     .strat-cell-btn {
-      width: 100%; min-height: 28px; border: 1.5px dashed #7a6b5d; border-radius: 6px;
+      width: 100%; min-height: 26px; border: 1.5px dashed #7a6b5d; border-radius: 6px;
       background: #fffdf9; color: #4a3f35; font-size: 11px; font-weight: 600;
-      padding: 3px 6px; transition: all 0.18s ease; cursor: pointer;
+      padding: 3px 5px; transition: all 0.18s ease; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    .strat-cell-btn.vert-btn {
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      width: auto; min-width: 24px; min-height: 54px;
+      padding: 6px 3px; margin: 0 auto;
     }
     .strat-cell-btn:hover { background: #f3ece1; border-color: #3b5e49; color: #1e4620; }
     .strat-cell-btn.active-target {
-      border: 2px solid #2e6f40; background: #e6f4ea; color: #1e4620;
-      box-shadow: 0 0 0 3px rgba(59, 94, 73, 0.22);
+      border: 2px solid #2e6f40; background: #dcfce7; color: #14532d;
+      box-shadow: 0 0 0 3px rgba(46, 111, 64, 0.25);
     }
     .btn-light {
       background-color: #fffdf9; color: #4a3f35; border: 1px solid #dfd3c3;
@@ -101,11 +121,11 @@
       box-shadow: 0 2px 8px rgba(59, 94, 73, 0.25);
     }
     .strat-table th, .strat-table td {
-      border-color: #8c7b6b;
+      border-color: #7a6b5d;
     }
   </style>
 </head>
-<body class="min-h-screen pb-36">
+<body class="min-h-screen pb-40">
 
   <div class="geo-bg">
     <div class="geo-blob geo-blob-1"></div>
@@ -115,16 +135,15 @@
 
   <!-- Шапка сайта -->
   <header class="sticky top-0 z-30 pastel-header">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
       <div class="flex items-center gap-3">
-        <div class="w-11 h-11 rounded-xl badge-sage flex items-center justify-center font-bold text-lg shadow-sm shrink-0">💎</div>
+        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl badge-sage flex items-center justify-center font-bold text-lg shadow-sm shrink-0">💎</div>
         <div>
-          <h1 class="font-bold text-lg sm:text-xl leading-tight text-[#2e2620]">Клуб любителей минералов</h1>
+          <h1 class="font-bold text-base sm:text-xl leading-tight text-[#2e2620]">Клуб любителей минералов</h1>
           <div class="flex flex-wrap items-center gap-2 text-xs text-[#6e5f51] mt-1">
             <a href="https://vk.ru/wall-242280530_18"
                onclick="openVkGate(event, 'https://vk.ru/wall-242280530_18', 'Переход в группу ВКонтакте')"
-               class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md vk-btn font-medium shadow-sm transition"
-               title="Группа ВКонтакте">
+               class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md vk-btn font-medium shadow-sm transition">
               <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.08 14.27h-1.46c-.55 0-.72-.44-1.71-1.45-.86-.83-1.24-.94-1.46-.94-.3 0-.38.08-.38.5v1.31c0 .35-.11.56-1.04.56-1.54 0-3.25-.93-4.45-2.66-1.81-2.54-2.3-4.45-2.3-4.84 0-.21.08-.41.5-.41h1.46c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.41 3.9.19 0 .27-.09.27-.55v-2.14c-.06-.99-.58-1.08-.58-1.43 0-.17.14-.34.37-.34h2.29c.31 0 .42.16.42.53v2.89c0 .31.14.42.23.42.19 0 .34-.11.68-.45 1.05-1.18 1.8-3 1.8-3 .1-.21.27-.41.64-.41h1.46c.44 0 .54.23.44.53-.18.85-1.97 3.36-1.97 3.36-.16.26-.22.38 0 .68.16.22.69.67 1.04 1.08.65.74 1.14 1.36 1.28 1.79.13.42-.09.64-.51.64z"/></svg>
               <span>ВК</span>
             </a>
@@ -132,10 +151,10 @@
             <a href="https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk="
                onclick="openVkGate(event, 'https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk=', 'Переход в чат группы ВКонтакте')"
                class="inline-flex items-center gap-1 font-semibold text-[#0077FF] hover:underline">
-              <span>💬 Чат группы</span>
+              <span>💬 Чат</span>
             </a>
             <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Справочник минералов</button>
+            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Справочник</button>
             <span>•</span>
             <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('exam').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Тренажёр</button>
           </div>
@@ -143,14 +162,14 @@
       </div>
 
       <!-- Переключатель вкладок: Геология / Стратиграфия -->
-      <div class="flex items-center gap-2 bg-[#efe7dc] p-1.5 rounded-2xl border border-[#dfd3c3]">
+      <div class="flex items-center gap-1.5 bg-[#efe7dc] p-1 rounded-2xl border border-[#dfd3c3] w-full sm:w-auto">
         <button type="button" id="tabBtn-geology" onclick="switchMainTab('geology')"
-          class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">
-          🪨 Геология (Минералогия)
+          class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">
+          🪨 Геология
         </button>
         <button type="button" id="tabBtn-stratigraphy" onclick="switchMainTab('stratigraphy')"
-          class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-          ⏳ Стратиграфия (Шкала)
+          class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+          ⏳ Стратиграфия
         </button>
       </div>
     </div>
@@ -384,115 +403,122 @@
   </main>
 
   <!-- ========================================================= -->
-  <!-- ВКЛАДКА 2: СТРАТИГРАФИЯ (ТОЧНАЯ СЕТКА ОСШ-2024)           -->
+  <!-- ВКЛАДКА 2: СТРАТИГРАФИЯ (ТОЧНАЯ СЕТКА ОСШ-2024 + МОБИЛЬНЫЙ РЕЖИМ) -->
   <!-- ========================================================= -->
-  <section id="tabContent-stratigraphy" class="hidden max-w-6xl mx-auto px-4 mt-6 space-y-6">
-    <div class="pastel-card rounded-2xl p-6 md:p-8 space-y-6">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#e6dccf] pb-5">
-        <div class="space-y-1.5">
+  <section id="tabContent-stratigraphy" class="hidden max-w-6xl mx-auto px-2 sm:px-4 mt-4 sm:mt-6 space-y-4 sm:space-y-6">
+    <div class="pastel-card rounded-2xl p-4 sm:p-6 md:p-8 space-y-5">
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#e6dccf] pb-4">
+        <div class="space-y-1">
           <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage">
-            Общая стратиграфическая (геохронологическая) шкала (по состоянию на 2024 г.)
+            Общая стратиграфическая (геохронологическая) шкала (2024 г.)
           </span>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Интерактивная стратиграфическая шкала</h2>
-          <p class="text-sm text-[#5c5044]">
+          <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#2e2620]">Интерактивная стратиграфическая шкала</h2>
+          <p class="text-xs sm:text-sm text-[#5c5044]">
             Выберите <strong>«Режим изучения»</strong> для просмотра полной шкалы или <strong>«Режим практики»</strong> для проверки памяти по уровням сложности.
           </p>
         </div>
 
-        <div id="stratStatsBox" class="hidden flex-wrap items-center gap-2.5 shrink-0">
-          <div class="px-4 py-2 rounded-xl badge-sage font-bold text-xs sm:text-sm">
-            Восстановлено: <span id="stratSolvedCount">0</span> / <span id="stratTotalCount">0</span>
+        <div id="stratStatsBox" class="hidden flex-wrap items-center gap-2 shrink-0">
+          <div class="px-3.5 py-2 rounded-xl badge-sage font-bold text-xs sm:text-sm">
+            Отгадано: <span id="stratSolvedCount">0</span> / <span id="stratTotalCount">0</span>
           </div>
-          <button type="button" onclick="giveStratHint()" class="px-3.5 py-2 rounded-xl badge-sand text-xs font-bold hover:bg-[#e5dac9] transition">
+          <button type="button" onclick="giveStratHint()" class="px-3 py-2 rounded-xl badge-sand text-xs font-bold hover:bg-[#e5dac9] transition">
             💡 Подсказка
           </button>
-          <button type="button" onclick="resetStratTraining()" class="px-3.5 py-2 rounded-xl badge-terracotta text-xs font-bold hover:opacity-90 transition">
+          <button type="button" onclick="resetStratTraining()" class="px-3 py-2 rounded-xl badge-terracotta text-xs font-bold hover:opacity-90 transition">
             🔄 Сбросить
           </button>
         </div>
       </div>
 
       <!-- Пошаговый выбор режима (все кнопки изначально светлые) -->
-      <div class="space-y-4 bg-[#f5efe6]/90 p-5 rounded-2xl border border-[#e2d6c5]">
-        <div class="flex flex-wrap items-center gap-3">
+      <div class="space-y-3.5 bg-[#f5efe6]/90 p-3.5 sm:p-5 rounded-2xl border border-[#e2d6c5]">
+        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
           <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">1. Режим:</span>
           <button type="button" id="stratMainBtn-study" onclick="selectStratMainMode('study')"
-            class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
             📖 Режим изучения
           </button>
           <button type="button" id="stratMainBtn-practice" onclick="selectStratMainMode('practice')"
-            class="px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
             🎯 Режим практики
           </button>
         </div>
 
-        <div id="stratLevelBar" class="hidden slide-fade flex-wrap items-center gap-2.5 pt-3 border-t border-[#dfd3c3]">
+        <div id="stratLevelBar" class="hidden slide-fade flex-wrap items-center gap-2 pt-3 border-t border-[#dfd3c3]">
           <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">2. Сложность:</span>
           <button type="button" id="stratLvlBtn-easy" onclick="selectStratLevel('easy')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
             🟢 Лёгкий (Акрон, Эон, Эра, Период)
           </button>
           <button type="button" id="stratLvlBtn-medium" onclick="selectStratLevel('medium')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
             🟡 Средний (+ Отделы и подотделы)
           </button>
           <button type="button" id="stratLvlBtn-hard" onclick="selectStratLevel('hard')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
             🔴 Продвинутый (Вся шкала + Ярусы и Возраст)
           </button>
         </div>
 
-        <div id="stratInputBar" class="hidden slide-fade flex-wrap items-center gap-2.5 pt-3 border-t border-[#dfd3c3]">
-          <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">3. Способ заполнения:</span>
+        <div id="stratInputBar" class="hidden slide-fade flex-wrap items-center gap-2 pt-3 border-t border-[#dfd3c3]">
+          <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">3. Способ ввода:</span>
           <button type="button" id="stratInpBtn-chips" onclick="selectStratInputMode('chips')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            🧩 Плашки (Выдвижная шторка)
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            🧩 Плашки (Шторка)
           </button>
           <button type="button" id="stratInpBtn-keyboard" onclick="selectStratInputMode('keyboard')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            ⌨️ Клавиатура (Ввод вручную)
+            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+            ⌨️ Клавиатура (Вручную)
+          </button>
+        </div>
+
+        <!-- Панель мобильного удобства: Фильтр по Эрам и Компактный вид -->
+        <div id="stratMobileToolbar" class="hidden slide-fade flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-[#dfd3c3]">
+          <div class="flex flex-wrap items-center gap-1.5">
+            <span class="text-[11px] font-bold uppercase text-[#6e5a44] mr-1">Раздел шкалы:</span>
+            <button type="button" id="eraFilter-ALL" onclick="setEraFilter('ALL')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green">Все (53)</button>
+            <button type="button" id="eraFilter-KZ" onclick="setEraFilter('KZ')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Кайнозой KZ</button>
+            <button type="button" id="eraFilter-MZ" onclick="setEraFilter('MZ')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Мезозой MZ</button>
+            <button type="button" id="eraFilter-PZ" onclick="setEraFilter('PZ')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Палеозой PZ</button>
+            <button type="button" id="eraFilter-DOCM" onclick="setEraFilter('DOCM')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Докембрий PR–AR</button>
+          </div>
+
+          <button type="button" id="compactColsBtn" onclick="toggleCompactCols()"
+            class="px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5">
+            <span>📱 Скрыть неигровые столбцы</span>
           </button>
         </div>
       </div>
 
-      <div id="stratEmptyPrompt" class="py-12 text-center text-sm text-[#7a6b5d] bg-[#faf5ed]/60 rounded-2xl border border-dashed border-[#d8cbb8]">
+      <div id="stratEmptyPrompt" class="py-10 text-center text-xs sm:text-sm text-[#7a6b5d] bg-[#faf5ed]/60 rounded-2xl border border-dashed border-[#d8cbb8] px-4">
         👆 Нажмите <strong>«📖 Режим изучения»</strong> или выберите параметры в <strong>«🎯 Режиме практики»</strong>, чтобы открыть стратиграфическую шкалу.
       </div>
 
-      <!-- Таблица Общей стратиграфической шкалы (10 колонок сетки для точной передачи подсистем и подотделов) -->
-      <div id="stratTableContainer" class="hidden slide-fade overflow-x-auto rounded-2xl border-2 border-[#594c3f] shadow-md bg-white">
-        <table class="strat-table w-full text-left border-collapse min-w-[980px]">
-          <thead>
-            <tr class="bg-[#f3ece1] text-[#2e2620] text-xs font-bold border-b-2 border-[#594c3f] text-center">
-              <th colspan="1" class="py-3 px-2 border-r border-[#8c7b6b] w-28">Акротема<br>(Акрон)</th>
-              <th colspan="1" class="py-3 px-2 border-r border-[#8c7b6b] w-36">Эонотема<br>(эон)</th>
-              <th colspan="2" class="py-3 px-2 border-r border-[#8c7b6b] w-44">Эратема<br>(эра)</th>
-              <th colspan="2" class="py-3 px-2 border-r border-[#8c7b6b] w-44">Система (период),<br>подсистема</th>
-              <th colspan="2" class="py-3 px-2 border-r border-[#8c7b6b] w-56">Отдел (эпоха),<br>подотдел</th>
-              <th colspan="1" class="py-3 px-2 border-r border-[#8c7b6b] w-44">Ярус (век),<br>раздел</th>
-              <th colspan="1" class="py-3 px-2 w-32">Геохронологич.<br>шкала (млн. лет)</th>
-            </tr>
-          </thead>
-          <tbody id="stratTableBody" class="text-xs"></tbody>
+      <!-- Таблица Общей стратиграфической шкалы (с вертикальным текстом левых колонок как в оригинале ОСШ-2024) -->
+      <div id="stratTableContainer" class="hidden slide-fade overflow-x-auto rounded-xl border-2 border-[#594c3f] shadow-md bg-white">
+        <table class="strat-table w-full text-left border-collapse">
+          <thead id="stratTableHead"></thead>
+          <tbody id="stratTableBody" class="text-[11px] sm:text-xs"></tbody>
         </table>
       </div>
     </div>
   </section>
 
-  <!-- Выдвижная шторка с плашками (все плашки одного нейтрального цвета без подсказки) -->
-  <div id="stratDrawer" class="fixed bottom-0 inset-x-0 z-40 hidden pastel-header border-t-2 border-[#b59e85] shadow-2xl p-4 slide-fade">
-    <div class="max-w-5xl mx-auto space-y-3">
-      <div class="flex items-center justify-between gap-4">
-        <div class="flex items-center gap-2">
-          <span class="px-2.5 py-1 rounded-lg badge-sage text-xs font-bold" id="drawerColTitle">Раздел</span>
-          <span class="text-xs text-[#5c5044]">Выберите правильную плашку для выделенной ячейки:</span>
+  <!-- Выдвижная шторка с плашками (компактная и удобная на мобильных) -->
+  <div id="stratDrawer" class="fixed bottom-0 inset-x-0 z-40 hidden pastel-header border-t-2 border-[#b59e85] shadow-2xl p-2.5 sm:p-4 slide-fade">
+    <div class="max-w-5xl mx-auto space-y-2">
+      <div class="flex items-center justify-between gap-2">
+        <div class="flex items-center gap-2 min-w-0">
+          <span class="px-2.5 py-0.5 rounded-lg badge-sage text-[11px] sm:text-xs font-bold shrink-0" id="drawerColTitle">Раздел</span>
+          <span class="text-[11px] sm:text-xs text-[#5c5044] truncate">Выберите плашку для выделенной ячейки:</span>
         </div>
-        <div class="flex items-center gap-2">
-          <button type="button" onclick="giveStratHint()" class="px-3 py-1 rounded-lg badge-sand text-xs font-semibold hover:bg-[#e5dac9]">💡 Открыть ячейку</button>
+        <div class="flex items-center gap-1.5 shrink-0">
+          <button type="button" onclick="giveStratHint()" class="px-2.5 py-1 rounded-lg badge-sand text-[11px] sm:text-xs font-semibold hover:bg-[#e5dac9]">💡 Открыть</button>
           <button type="button" onclick="closeStratDrawer()" class="w-7 h-7 rounded-lg bg-[#e6dccf] text-[#2e2620] font-bold text-xs flex items-center justify-center">✕</button>
         </div>
       </div>
-      <div id="drawerChipsContainer" class="flex flex-wrap gap-2 max-h-44 overflow-y-auto py-1"></div>
+      <div id="drawerChipsContainer" class="flex flex-wrap gap-1.5 sm:gap-2 max-h-32 sm:max-h-44 overflow-y-auto py-1"></div>
     </div>
   </div>
 
@@ -570,14 +596,14 @@
       if (tab === "stratigraphy") {
         geoMain.classList.add("hidden");
         stratMain.classList.remove("hidden");
-        btnStrat.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
-        btnGeo.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        btnStrat.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
+        btnGeo.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       } else {
         stratMain.classList.add("hidden");
         geoMain.classList.remove("hidden");
         closeStratDrawer();
-        btnGeo.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
-        btnStrat.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        btnGeo.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
+        btnStrat.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
@@ -641,22 +667,23 @@
     // =========================================================================
     // 2. ТОЧНАЯ МАТРИЦА ОБЩЕЙ СТРАТИГРАФИЧЕСКОЙ ШКАЛЫ (ОСШ-2024, 53 СТРОКИ)
     // =========================================================================
+    // Свойство vert: true разворачивает текст вертикально снизу вверх (как в оригинальной таблице ОСШ-2024)
     const stratRows = [
       // КАЙНОЗОЙСКАЯ ЭРАТЕМА (KZ) — 15 строк
       {
-        id: "Q_hol", color: "#fff8d6",
+        id: "Q_hol", eraGroup: "KZ", color: "#fff8d6",
         cells: [
           { cat: "empty", val: "", rs: 42, cs: 1, bg: "#ffffff" },
-          { cat: "eon", val: "Фанерозойская (фанерозойский)", rs: 42, cs: 1, bg: "#6d9eeb" },
-          { cat: "era", val: "Кайнозойская (кайнозойская) KZ", rs: 15, cs: 2, bg: "#f7e3a1" },
-          { cat: "system", val: "Четвертичная (четвертичный) Q", rs: 2, cs: 2, bg: "#fbf0be" },
+          { cat: "eon", val: "Фанерозойская (фанерозойский)", rs: 42, cs: 1, bg: "#6d9eeb", vert: true },
+          { cat: "era", val: "Кайнозойская (кайнозойская) KZ", rs: 15, cs: 2, bg: "#f7e3a1", vert: true },
+          { cat: "system", val: "Четвертичная (четвертичный) Q", rs: 2, cs: 2, bg: "#fbf0be", vert: true },
           { cat: "series", val: "Голоцен (голоценовая) H", rs: 1, cs: 1, bg: "#fef6d4" },
           { cat: "empty", val: "", rs: 1, cs: 1, bg: "#fef6d4" }
         ],
         stages: [], ages: ["0.0117"]
       },
       {
-        id: "Q_ple", color: "#fef3c4",
+        id: "Q_ple", eraGroup: "KZ", color: "#fef3c4",
         cells: [
           { cat: "series", val: "Плейстоцен (плейстоценовая) P", rs: 1, cs: 1, bg: "#fef3c4" },
           { cat: "empty", val: "", rs: 1, cs: 1, bg: "#fef3c4" }
@@ -665,23 +692,23 @@
         ages: ["0.781", "1.806", "2.58"]
       },
       {
-        id: "N2_2", color: "#f9f1c0",
+        id: "N2_2", eraGroup: "KZ", color: "#f9f1c0",
         cells: [
-          { cat: "system", val: "Неогеновая (неогеновый) N", rs: 5, cs: 2, bg: "#f4ebc2" },
+          { cat: "system", val: "Неогеновая (неогеновый) N", rs: 5, cs: 2, bg: "#f4ebc2", vert: true },
           { cat: "series", val: "Плиоцен (плиоценовая) N₂", rs: 2, cs: 1, bg: "#f7f0ca" },
           { cat: "series", val: "Верхний N₂²", rs: 1, cs: 1, bg: "#f9f3d2" }
         ],
         stages: ["Пьяченцский"], ages: ["3.600"]
       },
       {
-        id: "N2_1", color: "#f9f1c0",
+        id: "N2_1", eraGroup: "KZ", color: "#f9f1c0",
         cells: [
           { cat: "series", val: "Нижний N₂¹", rs: 1, cs: 1, bg: "#f9f3d2" }
         ],
         stages: ["Занклский"], ages: ["5.333"]
       },
       {
-        id: "N1_3", color: "#f5ecb6",
+        id: "N1_3", eraGroup: "KZ", color: "#f5ecb6",
         cells: [
           { cat: "series", val: "Миоцен (миоценовая) N₁", rs: 3, cs: 1, bg: "#f5ecb6" },
           { cat: "series", val: "Верхний N₁³", rs: 1, cs: 1, bg: "#f7efc0" }
@@ -689,37 +716,37 @@
         stages: ["Мессинский", "Тортонский"], ages: ["7.246", "11.63"]
       },
       {
-        id: "N1_2", color: "#f5ecb6",
+        id: "N1_2", eraGroup: "KZ", color: "#f5ecb6",
         cells: [
           { cat: "series", val: "Средний N₁²", rs: 1, cs: 1, bg: "#f7efc0" }
         ],
         stages: ["Серравальский", "Лангийский"], ages: ["13.82", "15.98"]
       },
       {
-        id: "N1_1", color: "#f5ecb6",
+        id: "N1_1", eraGroup: "KZ", color: "#f5ecb6",
         cells: [
           { cat: "series", val: "Нижний N₁¹", rs: 1, cs: 1, bg: "#f7efc0" }
         ],
         stages: ["Бурдигальский", "Аквитанский"], ages: ["20.45", "23.04"]
       },
       {
-        id: "P3_2", color: "#f5efc4",
+        id: "P3_2", eraGroup: "KZ", color: "#f5efc4",
         cells: [
-          { cat: "system", val: "Палеогеновая (палеогеновый) P", rs: 8, cs: 2, bg: "#fce5cd" },
+          { cat: "system", val: "Палеогеновая (палеогеновый) P", rs: 8, cs: 2, bg: "#fce5cd", vert: true },
           { cat: "series", val: "Олигоцен (олигоценовая) P₃", rs: 2, cs: 1, bg: "#f2ecc2" },
           { cat: "series", val: "Верхний P₃²", rs: 1, cs: 1, bg: "#f5f0ce" }
         ],
         stages: ["Хаттский"], ages: ["27.30"]
       },
       {
-        id: "P3_1", color: "#f5efc4",
+        id: "P3_1", eraGroup: "KZ", color: "#f5efc4",
         cells: [
           { cat: "series", val: "Нижний P₃¹", rs: 1, cs: 1, bg: "#f5f0ce" }
         ],
         stages: ["Рюпельский"], ages: ["33.9"]
       },
       {
-        id: "P2_3", color: "#f7f2c8",
+        id: "P2_3", eraGroup: "KZ", color: "#f7f2c8",
         cells: [
           { cat: "series", val: "Эоцен (эоценовая) P₂", rs: 3, cs: 1, bg: "#f5f0c4" },
           { cat: "series", val: "Верхний P₂³", rs: 1, cs: 1, bg: "#f7f3ce" }
@@ -727,21 +754,21 @@
         stages: ["Приабонский"], ages: ["37.71"]
       },
       {
-        id: "P2_2", color: "#f7f2c8",
+        id: "P2_2", eraGroup: "KZ", color: "#f7f2c8",
         cells: [
           { cat: "series", val: "Средний P₂²", rs: 1, cs: 1, bg: "#f7f3ce" }
         ],
         stages: ["Бартонский", "Лютетский"], ages: ["41.03", "48.07"]
       },
       {
-        id: "P2_1", color: "#f7f2c8",
+        id: "P2_1", eraGroup: "KZ", color: "#f7f2c8",
         cells: [
           { cat: "series", val: "Нижний P₂¹", rs: 1, cs: 1, bg: "#f7f3ce" }
         ],
         stages: ["Ипрский"], ages: ["56.0"]
       },
       {
-        id: "P1_3", color: "#f4f587",
+        id: "P1_3", eraGroup: "KZ", color: "#f4f587",
         cells: [
           { cat: "series", val: "Палеоцен (палеоценовая) P₁", rs: 3, cs: 1, bg: "#f2f57a" },
           { cat: "series", val: "Верхний P₁³", rs: 1, cs: 1, bg: "#f4f78d" }
@@ -749,14 +776,14 @@
         stages: ["Танетский"], ages: ["59.24"]
       },
       {
-        id: "P1_2", color: "#f4f587",
+        id: "P1_2", eraGroup: "KZ", color: "#f4f587",
         cells: [
           { cat: "series", val: "Средний P₁²", rs: 1, cs: 1, bg: "#f4f78d" }
         ],
         stages: ["Зеландский"], ages: ["61.66"]
       },
       {
-        id: "P1_1", color: "#f4f587",
+        id: "P1_1", eraGroup: "KZ", color: "#f4f587",
         cells: [
           { cat: "series", val: "Нижний P₁¹", rs: 1, cs: 1, bg: "#f4f78d" }
         ],
@@ -765,17 +792,17 @@
 
       // МЕЗОЗОЙСКАЯ ЭРАТЕМА (MZ) — 8 строк
       {
-        id: "K_2", color: "#f6fad9",
+        id: "K_2", eraGroup: "MZ", color: "#f6fad9",
         cells: [
-          { cat: "era", val: "Мезозойская (мезозойская) MZ", rs: 8, cs: 2, bg: "#a8e6b8" },
-          { cat: "system", val: "Меловая (меловой) K", rs: 2, cs: 2, bg: "#dcf5c4" },
+          { cat: "era", val: "Мезозойская (мезозойская) MZ", rs: 8, cs: 2, bg: "#a8e6b8", vert: true },
+          { cat: "system", val: "Меловая (меловой) K", rs: 2, cs: 2, bg: "#dcf5c4", vert: true },
           { cat: "series", val: "Верхний (поздняя) K₂", rs: 1, cs: 2, bg: "#f6fad9" }
         ],
         stages: ["Маастрихтский", "Кампанский", "Сантонский", "Коньякский", "Туронский", "Сеноманский"],
         ages: ["72.1±0.2", "83.6±0.2", "85.7±0.2", "89.8±0.3", "93.9±0.2", "100.5±0.1"]
       },
       {
-        id: "K_1", color: "#dcf5c4",
+        id: "K_1", eraGroup: "MZ", color: "#dcf5c4",
         cells: [
           { cat: "series", val: "Нижний (ранняя) K₁", rs: 1, cs: 2, bg: "#dcf5c4" }
         ],
@@ -783,16 +810,16 @@
         ages: ["113.2±0.3", "121.4±0.6", "125.77", "132.6±0.6", "137.05±0.2", "143.1±0.6"]
       },
       {
-        id: "J_3", color: "#dcf0fa",
+        id: "J_3", eraGroup: "MZ", color: "#dcf0fa",
         cells: [
-          { cat: "system", val: "Юрская (юрский) J", rs: 3, cs: 2, bg: "#d0e4f5" },
+          { cat: "system", val: "Юрская (юрский) J", rs: 3, cs: 2, bg: "#d0e4f5", vert: true },
           { cat: "series", val: "Верхний (поздняя) J₃", rs: 1, cs: 2, bg: "#dcf0fa" }
         ],
         stages: ["Титонский", "Кимериджский", "Оксфордский"],
         ages: ["149.2±0.7", "154.8±0.8", "161.5±1.0"]
       },
       {
-        id: "J_2", color: "#b3d7f2",
+        id: "J_2", eraGroup: "MZ", color: "#b3d7f2",
         cells: [
           { cat: "series", val: "Средний (средняя) J₂", rs: 1, cs: 2, bg: "#b3d7f2" }
         ],
@@ -800,7 +827,7 @@
         ages: ["165.3±1.1", "168.2±1.2", "170.9±0.8", "174.7±0.8"]
       },
       {
-        id: "J_1", color: "#a8cdf0",
+        id: "J_1", eraGroup: "MZ", color: "#a8cdf0",
         cells: [
           { cat: "series", val: "Нижний (ранняя) J₁", rs: 1, cs: 2, bg: "#a8cdf0" }
         ],
@@ -808,16 +835,16 @@
         ages: ["184.2±0.3", "192.9±0.3", "199.3±0.3", "201.4±0.2"]
       },
       {
-        id: "T_3", color: "#fae6f7",
+        id: "T_3", eraGroup: "MZ", color: "#fae6f7",
         cells: [
-          { cat: "system", val: "Триасовая (триасовый) T", rs: 3, cs: 2, bg: "#ebd3f0" },
+          { cat: "system", val: "Триасовая (триасовый) T", rs: 3, cs: 2, bg: "#ebd3f0", vert: true },
           { cat: "series", val: "Верхний (поздняя) T₃", rs: 1, cs: 2, bg: "#fae6f7" }
         ],
         stages: ["Рэтский", "Норийский", "Карнийский"],
         ages: ["~ 205.7", "~ 227.3", "~ 237"]
       },
       {
-        id: "T_2", color: "#f0c4eb",
+        id: "T_2", eraGroup: "MZ", color: "#f0c4eb",
         cells: [
           { cat: "series", val: "Средний (средняя) T₂", rs: 1, cs: 2, bg: "#f0c4eb" }
         ],
@@ -825,7 +852,7 @@
         ages: ["241.464±0.28", "246.7"]
       },
       {
-        id: "T_1", color: "#e3b3eb",
+        id: "T_1", eraGroup: "MZ", color: "#e3b3eb",
         cells: [
           { cat: "series", val: "Нижний (ранняя) T₁", rs: 1, cs: 2, bg: "#e3b3eb" }
         ],
@@ -835,17 +862,17 @@
 
       // ПАЛЕОЗОЙСКАЯ ЭРАТЕМА (PZ) — 19 строк
       {
-        id: "P_3", color: "#fce8cc",
+        id: "P_3", eraGroup: "PZ", color: "#fce8cc",
         cells: [
-          { cat: "era", val: "Палеозойская (палеозойская) PZ", rs: 19, cs: 2, bg: "#d4cfa9" },
-          { cat: "system", val: "Пермская (пермский) P", rs: 3, cs: 2, bg: "#fcdbb6" },
+          { cat: "era", val: "Палеозойская (палеозойская) PZ", rs: 19, cs: 2, bg: "#d4cfa9", vert: true },
+          { cat: "system", val: "Пермская (пермский) P", rs: 3, cs: 2, bg: "#fcdbb6", vert: true },
           { cat: "series", val: "Татарский (татарская) P₃", rs: 1, cs: 2, bg: "#fce8cc" }
         ],
         stages: ["Вятский", "Северодвинский"],
         ages: ["259.51±0.2", "264.28±0.16"]
       },
       {
-        id: "P_2", color: "#fcdfba",
+        id: "P_2", eraGroup: "PZ", color: "#fcdfba",
         cells: [
           { cat: "series", val: "Биармийский (биармийская) P₂", rs: 1, cs: 2, bg: "#fcdfba" }
         ],
@@ -853,7 +880,7 @@
         ages: ["266.9±0.4", "274.04±0.4"]
       },
       {
-        id: "P_1", color: "#fcd5a7",
+        id: "P_1", eraGroup: "PZ", color: "#fcd5a7",
         cells: [
           { cat: "series", val: "Приуральский (приуральская) P₁", rs: 1, cs: 2, bg: "#fcd5a7" }
         ],
@@ -861,16 +888,16 @@
         ages: ["—", "283.3±0.4", "290.1±0.26", "293.52±0.17", "298.9±0.15"]
       },
       {
-        id: "C_3", color: "#dce0db",
+        id: "C_3", eraGroup: "PZ", color: "#dce0db",
         cells: [
-          { cat: "system", val: "Каменноугольная (каменноугольный) C", rs: 3, cs: 2, bg: "#b5bab8" },
+          { cat: "system", val: "Каменноугольная (каменноугольный) C", rs: 3, cs: 2, bg: "#b5bab8", vert: true },
           { cat: "series", val: "Верхний (поздняя) C₃", rs: 1, cs: 2, bg: "#dce0db" }
         ],
         stages: ["Гжельский", "Касимовский"],
         ages: ["303.7±0.1", "307.0±0.1"]
       },
       {
-        id: "C_2", color: "#b5bab8",
+        id: "C_2", eraGroup: "PZ", color: "#b5bab8",
         cells: [
           { cat: "series", val: "Средний (средняя) C₂", rs: 1, cs: 2, bg: "#b5bab8" }
         ],
@@ -878,7 +905,7 @@
         ages: ["315.2±0.2", "323.4±0.4"]
       },
       {
-        id: "C_1", color: "#a4b3b8",
+        id: "C_1", eraGroup: "PZ", color: "#a4b3b8",
         cells: [
           { cat: "series", val: "Нижний (ранняя) C₁", rs: 1, cs: 2, bg: "#a4b3b8" }
         ],
@@ -886,16 +913,16 @@
         ages: ["330.3±0.4", "346.7±0.4", "358.86±0.19"]
       },
       {
-        id: "D_3", color: "#f7dec4",
+        id: "D_3", eraGroup: "PZ", color: "#f7dec4",
         cells: [
-          { cat: "system", val: "Девонская (девонский) D", rs: 3, cs: 2, bg: "#e3bd96" },
+          { cat: "system", val: "Девонская (девонский) D", rs: 3, cs: 2, bg: "#e3bd96", vert: true },
           { cat: "series", val: "Верхний (поздняя) D₃", rs: 1, cs: 2, bg: "#f7dec4" }
         ],
         stages: ["Фаменский", "Франский"],
         ages: ["372.15±0.46", "382.31±1.36"]
       },
       {
-        id: "D_2", color: "#e3c5a6",
+        id: "D_2", eraGroup: "PZ", color: "#e3c5a6",
         cells: [
           { cat: "series", val: "Средний (средняя) D₂", rs: 1, cs: 2, bg: "#e3c5a6" }
         ],
@@ -903,7 +930,7 @@
         ages: ["387.95±1.04", "393.47±0.99"]
       },
       {
-        id: "D_1", color: "#deb69b",
+        id: "D_1", eraGroup: "PZ", color: "#deb69b",
         cells: [
           { cat: "series", val: "Нижний (ранняя) D₁", rs: 1, cs: 2, bg: "#deb69b" }
         ],
@@ -911,16 +938,16 @@
         ages: ["410.62±1.95", "413.02±1.91", "419.62±1.36"]
       },
       {
-        id: "S_4", color: "#e5ebcc",
+        id: "S_4", eraGroup: "PZ", color: "#e5ebcc",
         cells: [
-          { cat: "system", val: "Силурийская (силурийский) S", rs: 4, cs: 1, bg: "#d9e3b8" },
-          { cat: "system", val: "Верх. S₂", rs: 2, cs: 1, bg: "#e5ebcc" },
+          { cat: "system", val: "Силурийская (силурийский) S", rs: 4, cs: 1, bg: "#d9e3b8", vert: true },
+          { cat: "system", val: "Верх. S₂", rs: 2, cs: 1, bg: "#e5ebcc", vert: true },
           { cat: "series", val: "Пржидольский (пржидольская) S₂²", rs: 1, cs: 2, bg: "#e5ebcc" }
         ],
         stages: [], ages: ["422.7±1.6"]
       },
       {
-        id: "S_3", color: "#e5ebcc",
+        id: "S_3", eraGroup: "PZ", color: "#e5ebcc",
         cells: [
           { cat: "series", val: "Лудловский (лудловская) S₂¹", rs: 1, cs: 2, bg: "#e5ebcc" }
         ],
@@ -928,16 +955,16 @@
         ages: ["425.0±1.5", "426.7±1.5"]
       },
       {
-        id: "S_2", color: "#d6dbba",
+        id: "S_2", eraGroup: "PZ", color: "#d6dbba",
         cells: [
-          { cat: "system", val: "Нижняя S₁", rs: 2, cs: 1, bg: "#d6dbba" },
+          { cat: "system", val: "Нижняя S₁", rs: 2, cs: 1, bg: "#d6dbba", vert: true },
           { cat: "series", val: "Венлокский (венлокская) S₁²", rs: 1, cs: 2, bg: "#d6dbba" }
         ],
         stages: ["Гомерский", "Шейнвудский"],
         ages: ["430.6±1.3", "432.9±1.2"]
       },
       {
-        id: "S_1", color: "#d6dbba",
+        id: "S_1", eraGroup: "PZ", color: "#d6dbba",
         cells: [
           { cat: "series", val: "Лландоверийский (лландоверийская) S₁¹", rs: 1, cs: 2, bg: "#d6dbba" }
         ],
@@ -945,16 +972,16 @@
         ages: ["438.6±1.0", "440.5±1.0", "443.1±0.9"]
       },
       {
-        id: "O_3", color: "#cff2e5",
+        id: "O_3", eraGroup: "PZ", color: "#cff2e5",
         cells: [
-          { cat: "system", val: "Ордовикская (ордовикский) O", rs: 3, cs: 2, bg: "#a4dec8" },
+          { cat: "system", val: "Ордовикская (ордовикский) O", rs: 3, cs: 2, bg: "#a4dec8", vert: true },
           { cat: "series", val: "Верхний (поздняя) O₃", rs: 1, cs: 2, bg: "#cff2e5" }
         ],
         stages: ["Хирнантский", "Катийский", "Сандбийский"],
         ages: ["445.2±0.9", "452.8±0.7", "458.2±0.7"]
       },
       {
-        id: "O_2", color: "#bee8d6",
+        id: "O_2", eraGroup: "PZ", color: "#bee8d6",
         cells: [
           { cat: "series", val: "Средний (средняя) O₂", rs: 1, cs: 2, bg: "#bee8d6" }
         ],
@@ -962,7 +989,7 @@
         ages: ["469.4±0.9", "471.3±1.4"]
       },
       {
-        id: "O_1", color: "#abdec8",
+        id: "O_1", eraGroup: "PZ", color: "#abdec8",
         cells: [
           { cat: "series", val: "Нижний (ранняя) O₁", rs: 1, cs: 2, bg: "#abdec8" }
         ],
@@ -970,16 +997,16 @@
         ages: ["477.1±1.2", "486.85±1.5"]
       },
       {
-        id: "Cm_3", color: "#d2f0f2",
+        id: "Cm_3", eraGroup: "PZ", color: "#d2f0f2",
         cells: [
-          { cat: "system", val: "Кембрийская (кембрийский) Є", rs: 3, cs: 2, bg: "#a8d4d4" },
+          { cat: "system", val: "Кембрийская (кембрийский) Є", rs: 3, cs: 2, bg: "#a8d4d4", vert: true },
           { cat: "series", val: "Верхний (поздняя) Є₃", rs: 1, cs: 2, bg: "#d2f0f2" }
         ],
         stages: ["Батырбайский", "Аксайский", "Сакский"],
         ages: ["—", "—", "~ 497"]
       },
       {
-        id: "Cm_2", color: "#c2ebed",
+        id: "Cm_2", eraGroup: "PZ", color: "#c2ebed",
         cells: [
           { cat: "series", val: "Средний (средняя) Є₂", rs: 1, cs: 2, bg: "#c2ebed" }
         ],
@@ -987,7 +1014,7 @@
         ages: ["500", "~ 504,5", "509"]
       },
       {
-        id: "Cm_1", color: "#c2f0eb",
+        id: "Cm_1", eraGroup: "PZ", color: "#c2f0eb",
         cells: [
           { cat: "series", val: "Нижний (ранняя) Є₁", rs: 1, cs: 2, bg: "#c2f0eb" }
         ],
@@ -995,12 +1022,12 @@
         ages: ["—", "—", "—", "535±1"]
       },
 
-      // ПРОТЕРОЗОЙСКАЯ АКРОТЕМА (PR) — 7 строк
+      // ПРОТЕРОЗОЙСКАЯ (PR) И АРХЕЙСКАЯ (AR) АКРОТЕМЫ (DOCM) — 11 строк
       {
-        id: "V_2", color: "#fad4d4",
+        id: "V_2", eraGroup: "DOCM", color: "#fad4d4",
         cells: [
-          { cat: "akron", val: "Протерозойская (протерозойский) PR", rs: 7, cs: 1, bg: "#f4bab8" },
-          { cat: "eon", val: "Верхнепротерозойская (позднепротерозойский) PR₂", rs: 5, cs: 1, bg: "#f4bab8" },
+          { cat: "akron", val: "Протерозойская (протерозойский) PR", rs: 7, cs: 1, bg: "#f4bab8", vert: true },
+          { cat: "eon", val: "Верхнепротерозойская (позднепротерозойский) PR₂", rs: 5, cs: 1, bg: "#f4bab8", vert: true },
           { cat: "empty", val: "", rs: 2, cs: 2, bg: "#f4bab8" },
           { cat: "system", val: "Вендская (вендский) V", rs: 2, cs: 2, bg: "#fad4d4" },
           { cat: "series", val: "Верхний (поздняя) V₂", rs: 1, cs: 2, bg: "#fad4d4" }
@@ -1008,16 +1035,16 @@
         stages: [], ages: ["555-570"]
       },
       {
-        id: "V_1", color: "#fad4d4",
+        id: "V_1", eraGroup: "DOCM", color: "#fad4d4",
         cells: [
           { cat: "series", val: "Нижний (ранняя) V₁", rs: 1, cs: 2, bg: "#fad4d4" }
         ],
         stages: [], ages: ["600"]
       },
       {
-        id: "RF_3", color: "#f7886a",
+        id: "RF_3", eraGroup: "DOCM", color: "#f7886a",
         cells: [
-          { cat: "era", val: "Рифейская RF", rs: 3, cs: 1, bg: "#f7886a" },
+          { cat: "era", val: "Рифейская RF", rs: 3, cs: 1, bg: "#f7886a", vert: true },
           { cat: "era", val: "Верхнерифейская RF₃", rs: 1, cs: 1, bg: "#f7886a" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
@@ -1025,7 +1052,7 @@
         stages: [], ages: ["1030"]
       },
       {
-        id: "RF_2", color: "#f7886a",
+        id: "RF_2", eraGroup: "DOCM", color: "#f7886a",
         cells: [
           { cat: "era", val: "Среднерифейская RF₂", rs: 1, cs: 1, bg: "#f7886a" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
@@ -1034,7 +1061,7 @@
         stages: [], ages: ["1350"]
       },
       {
-        id: "RF_1", color: "#f7886a",
+        id: "RF_1", eraGroup: "DOCM", color: "#f7886a",
         cells: [
           { cat: "era", val: "Нижнерифейская RF₁", rs: 1, cs: 1, bg: "#f7886a" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
@@ -1043,9 +1070,9 @@
         stages: [], ages: ["1650"]
       },
       {
-        id: "KR_2", color: "#f5769a",
+        id: "KR_2", eraGroup: "DOCM", color: "#f5769a",
         cells: [
-          { cat: "eon", val: "Нижнепротерозойская (раннепротерозойский) PR₁ (Карельская KR)", rs: 2, cs: 1, bg: "#f4bab8" },
+          { cat: "eon", val: "Нижнепротерозойская (раннепротерозойский) PR₁ (Карельская KR)", rs: 2, cs: 1, bg: "#f4bab8", vert: true },
           { cat: "era", val: "Верхнекарельская KR₂", rs: 1, cs: 2, bg: "#f5769a" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
@@ -1053,7 +1080,7 @@
         stages: [], ages: ["2100"]
       },
       {
-        id: "KR_1", color: "#f5769a",
+        id: "KR_1", eraGroup: "DOCM", color: "#f5769a",
         cells: [
           { cat: "era", val: "Нижнекарельская KR₁", rs: 1, cs: 2, bg: "#f5769a" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
@@ -1061,13 +1088,11 @@
         ],
         stages: [], ages: ["2500"]
       },
-
-      // АРХЕЙСКАЯ АКРОТЕМА (AR) — 4 строки
       {
-        id: "LP_3", color: "#ebb5d8",
+        id: "LP_3", eraGroup: "DOCM", color: "#ebb5d8",
         cells: [
-          { cat: "akron", val: "Архейская (архейский) AR", rs: 4, cs: 1, bg: "#ebbae0" },
-          { cat: "eon", val: "Верхнеархейская (позднеархейский) AR₂ (Лопийская LP)", rs: 3, cs: 1, bg: "#f2cde8" },
+          { cat: "akron", val: "Архейская (архейский) AR", rs: 4, cs: 1, bg: "#ebbae0", vert: true },
+          { cat: "eon", val: "Верхнеархейская (позднеархейский) AR₂ (Лопийская LP)", rs: 3, cs: 1, bg: "#f2cde8", vert: true },
           { cat: "era", val: "Верхнелопийская LP₃", rs: 1, cs: 2, bg: "#ebb5d8" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
@@ -1075,7 +1100,7 @@
         stages: [], ages: ["2800"]
       },
       {
-        id: "LP_2", color: "#e396c8",
+        id: "LP_2", eraGroup: "DOCM", color: "#e396c8",
         cells: [
           { cat: "era", val: "Среднелопийская LP₂", rs: 1, cs: 2, bg: "#e396c8" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
@@ -1084,7 +1109,7 @@
         stages: [], ages: ["3000"]
       },
       {
-        id: "LP_1", color: "#db6eb8",
+        id: "LP_1", eraGroup: "DOCM", color: "#db6eb8",
         cells: [
           { cat: "era", val: "Нижнелопийская LP₁", rs: 1, cs: 2, bg: "#db6eb8" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
@@ -1093,9 +1118,9 @@
         stages: [], ages: ["3200"]
       },
       {
-        id: "SM_1", color: "#f2cde8",
+        id: "SM_1", eraGroup: "DOCM", color: "#f2cde8",
         cells: [
-          { cat: "eon", val: "Нижнеархейская (раннеархейский) AR₁ (Саамская SM)", rs: 1, cs: 1, bg: "#f2cde8" },
+          { cat: "eon", val: "Нижнеархейская (раннеархейский) AR₁ (Саамская SM)", rs: 1, cs: 1, bg: "#f2cde8", vert: true },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
           { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
@@ -1105,27 +1130,58 @@
     ];
 
     const catLabels = {
-      akron: "Акротема (Акрон)",
-      eon: "Эонотема (эон)",
-      era: "Эратема (эра)",
-      system: "Система (период)",
-      series: "Отдел / Подотдел",
-      stage: "Ярус (век)",
-      age: "Возраст (млн лет)"
+      akron: "Акрон",
+      eon: "Эон",
+      era: "Эра",
+      system: "Период",
+      series: "Отдел",
+      stage: "Ярус",
+      age: "Возраст"
     };
 
     let stratMainMode = null;   // null | 'study' | 'practice'
     let stratLevel = null;      // null | 'easy' | 'medium' | 'hard'
     let stratInputMode = null;  // null | 'chips' | 'keyboard'
+    let stratEraFilter = "ALL"; // 'ALL' | 'KZ' | 'MZ' | 'PZ' | 'DOCM'
+    let compactColsMode = false;
     let stratSolved = {};
-    let lastSolvedKey = null;   // Ключ ТОЛЬКО ЧТО отгаданной ячейки (чтобы зелёным мигала только она!)
-    let activeTargetKey = null; // { key, cat }
+    let lastSolvedKey = null;
+    let activeTargetKey = null;
 
     function getHiddenCatsForLevel(lvl) {
       if (lvl === "easy") return ["akron", "eon", "era", "system"];
       if (lvl === "medium") return ["akron", "eon", "era", "system", "series"];
       if (lvl === "hard") return ["akron", "eon", "era", "system", "series", "stage", "age"];
       return [];
+    }
+
+    function setEraFilter(era) {
+      stratEraFilter = era;
+      activeTargetKey = null;
+      closeStratDrawer();
+      ["ALL", "KZ", "MZ", "PZ", "DOCM"].forEach(k => {
+        const b = document.getElementById(`eraFilter-${k}`);
+        if (b) {
+          b.className = k === era
+            ? "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green"
+            : "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light";
+        }
+      });
+      renderStratTable();
+    }
+
+    function toggleCompactCols() {
+      compactColsMode = !compactColsMode;
+      const btn = document.getElementById("compactColsBtn");
+      if (btn) {
+        btn.className = compactColsMode
+          ? "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-green flex items-center gap-1.5"
+          : "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5";
+        btn.innerHTML = compactColsMode
+          ? "<span>👁️ Показать все столбцы</span>"
+          : "<span>📱 Скрыть неигровые столбцы</span>";
+      }
+      renderStratTable();
     }
 
     function selectStratMainMode(mode) {
@@ -1139,29 +1195,33 @@
       const btnPractice = document.getElementById("stratMainBtn-practice");
       const levelBar = document.getElementById("stratLevelBar");
       const inputBar = document.getElementById("stratInputBar");
+      const mobileToolbar = document.getElementById("stratMobileToolbar");
       const statsBox = document.getElementById("stratStatsBox");
       const emptyPrompt = document.getElementById("stratEmptyPrompt");
       const tableContainer = document.getElementById("stratTableContainer");
 
       if (mode === "study") {
-        btnStudy.className = "px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
-        btnPractice.className = "px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        btnStudy.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
+        btnPractice.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
         levelBar.classList.add("hidden"); levelBar.classList.remove("flex");
         inputBar.classList.add("hidden"); inputBar.classList.remove("flex");
         statsBox.classList.add("hidden"); statsBox.classList.remove("flex");
+        mobileToolbar.classList.remove("hidden"); mobileToolbar.classList.add("flex");
+        document.getElementById("compactColsBtn").classList.add("hidden");
         emptyPrompt.classList.add("hidden");
         tableContainer.classList.remove("hidden");
         renderStratTable();
       } else {
-        btnPractice.className = "px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
-        btnStudy.className = "px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        btnPractice.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
+        btnStudy.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
         stratLevel = null;
         stratInputMode = null;
         ["easy", "medium", "hard"].forEach(k => {
-          document.getElementById(`stratLvlBtn-${k}`).className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+          document.getElementById(`stratLvlBtn-${k}`).className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
         });
         levelBar.classList.remove("hidden"); levelBar.classList.add("flex");
         inputBar.classList.add("hidden"); inputBar.classList.remove("flex");
+        mobileToolbar.classList.add("hidden"); mobileToolbar.classList.remove("flex");
         statsBox.classList.add("hidden"); statsBox.classList.remove("flex");
         tableContainer.classList.add("hidden");
         emptyPrompt.classList.remove("hidden");
@@ -1176,10 +1236,27 @@
       activeTargetKey = null;
       closeStratDrawer();
 
+      // На телефоне (< 768px) автоматически включаем компактный вид колонок для Лёгкого и Среднего уровней
+      if (window.innerWidth < 768 && (lvl === "easy" || lvl === "medium")) {
+        compactColsMode = true;
+      } else if (lvl === "hard") {
+        compactColsMode = false;
+      }
+      const cBtn = document.getElementById("compactColsBtn");
+      if (cBtn) {
+        cBtn.classList.toggle("hidden", lvl === "hard");
+        cBtn.className = compactColsMode
+          ? "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-green flex items-center gap-1.5"
+          : "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5";
+        cBtn.innerHTML = compactColsMode
+          ? "<span>👁️ Показать все столбцы</span>"
+          : "<span>📱 Скрыть неигровые столбцы</span>";
+      }
+
       ["easy", "medium", "hard"].forEach(k => {
         document.getElementById(`stratLvlBtn-${k}`).className = k === lvl
-          ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
-          : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+          ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
+          : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       });
 
       const inputBar = document.getElementById("stratInputBar");
@@ -1189,9 +1266,9 @@
         renderStratTable();
       } else {
         ["chips", "keyboard"].forEach(m => {
-          document.getElementById(`stratInpBtn-${m}`).className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+          document.getElementById(`stratInpBtn-${m}`).className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
         });
-        document.getElementById("stratEmptyPrompt").innerHTML = "👆 Выберите способ заполнения: <strong>«🧩 Плашки»</strong> или <strong>«⌨️ Клавиатура»</strong>.";
+        document.getElementById("stratEmptyPrompt").innerHTML = "👆 Выберите способ ввода: <strong>«🧩 Плашки»</strong> или <strong>«⌨️ Клавиатура»</strong>.";
       }
     }
 
@@ -1203,13 +1280,15 @@
 
       ["chips", "keyboard"].forEach(m => {
         document.getElementById(`stratInpBtn-${m}`).className = m === inpMode
-          ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
-          : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+          ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
+          : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       });
 
       document.getElementById("stratEmptyPrompt").classList.add("hidden");
       const statsBox = document.getElementById("stratStatsBox");
       statsBox.classList.remove("hidden"); statsBox.classList.add("flex");
+      const mobileToolbar = document.getElementById("stratMobileToolbar");
+      mobileToolbar.classList.remove("hidden"); mobileToolbar.classList.add("flex");
       document.getElementById("stratTableContainer").classList.remove("hidden");
       renderStratTable();
     }
@@ -1222,12 +1301,40 @@
       renderStratTable();
     }
 
+    // Возвращает строки с учётом фильтра по эрам и динамически корректирует rowspan для Фанерозоя
+    function getFilteredRows() {
+      if (stratEraFilter === "ALL") return stratRows;
+      const subset = stratRows.filter(r => r.eraGroup === stratEraFilter);
+      if (stratEraFilter === "DOCM" || subset.length === 0) return subset;
+
+      // Для KZ, MZ, PZ гарантируем, что в первой строке фильтра есть ячейки Акрона (пустая) и Эона (Фанерозой) с точным rowspan
+      return subset.map((r, idx) => {
+        if (idx !== 0) return r;
+        const clonedCells = r.cells.map((c, cIdx) => ({ ...c, origKey: `${r.id}_c${cIdx}` }));
+        if (r.id === "Q_hol") {
+          clonedCells[0].rs = subset.length;
+          clonedCells[1].rs = subset.length;
+        } else {
+          clonedCells.unshift(
+            { cat: "empty", val: "", rs: subset.length, cs: 1, bg: "#ffffff", origKey: "Q_hol_c0" },
+            { cat: "eon", val: "Фанерозойская (фанерозойский)", rs: subset.length, cs: 1, bg: "#6d9eeb", vert: true, origKey: "Q_hol_c1" }
+          );
+        }
+        return { ...r, cells: clonedCells };
+      });
+    }
+
     function getAllPlayableItems(hiddenCats) {
       const list = [];
-      stratRows.forEach(row => {
+      const seenKeys = new Set();
+      const rows = getFilteredRows();
+
+      rows.forEach(row => {
         row.cells.forEach((c, idx) => {
-          if (c.cat !== "empty" && c.val && hiddenCats.includes(c.cat)) {
-            list.push({ key: `${row.id}_c${idx}`, cat: c.cat, val: c.val });
+          const key = c.origKey || `${row.id}_c${idx}`;
+          if (c.cat !== "empty" && c.val && hiddenCats.includes(c.cat) && !seenKeys.has(key)) {
+            seenKeys.add(key);
+            list.push({ key, cat: c.cat, val: c.val });
           }
         });
         if (hiddenCats.includes("stage") && row.stages.length > 0) {
@@ -1244,27 +1351,28 @@
       return list;
     }
 
-    function renderSingleInteractiveUnit(key, cat, displayHtml, rawVal, hiddenCats) {
+    function renderSingleInteractiveUnit(key, cat, displayHtml, rawVal, hiddenCats, isVert) {
       if (!rawVal || cat === "empty") return displayHtml;
       const isHidden = stratMainMode === "practice" && hiddenCats.includes(cat) && !stratSolved[key];
       if (!isHidden) {
-        // Зелёная вспышка (.pop-ok) срабатывает ТОЛЬКО для только что вставленной ячейки (key === lastSolvedKey)
         const isJustSolved = (key === lastSolvedKey);
-        const cls = isJustSolved
+        const popCls = isJustSolved
           ? "pop-ok font-bold text-[#14532d] rounded px-1 py-0.5"
           : (stratSolved[key] ? "font-bold text-[#1e4620]" : "");
-        return `<div class="${cls}">${displayHtml}</div>`;
+        const vertCls = isVert ? "vert-box" : "";
+        return `<div class="${popCls} ${vertCls}">${displayHtml}</div>`;
       }
       if (stratInputMode === "keyboard") {
-        return `<input type="text" placeholder="${catLabels[cat].split(' ')[0]}..."
+        return `<input type="text" placeholder="${catLabels[cat]}..."
           onkeydown="if(event.key==='Enter') checkKeyboardStrat('${key}','${cat}',this)"
           onblur="checkKeyboardStrat('${key}','${cat}',this)"
-          class="w-full px-1.5 py-1 rounded bg-[#fffdf9] border border-[#8c7b6b] text-[11px] text-[#2e2620] focus:outline-none focus:border-[#3b5e49]">`;
+          class="w-full min-w-[64px] px-1.5 py-1 rounded bg-[#fffdf9] border border-[#8c7b6b] text-[11px] text-[#2e2620] focus:outline-none focus:border-[#3b5e49]">`;
       }
       const isActive = activeTargetKey && activeTargetKey.key === key;
-      return `<button type="button" onclick="selectStratUnit('${key}', '${cat}')"
-        class="strat-cell-btn ${isActive ? 'active-target' : ''}">
-        ? ${catLabels[cat].split(' ')[0]}
+      const vertBtnCls = isVert ? "vert-btn" : "";
+      return `<button type="button" id="unit-${key}" onclick="selectStratUnit('${key}', '${cat}')"
+        class="strat-cell-btn ${vertBtnCls} ${isActive ? 'active-target' : ''}">
+        ? ${catLabels[cat]}
       </button>`;
     }
 
@@ -1276,50 +1384,74 @@
       document.getElementById("stratSolvedCount").textContent = solvedCount;
       document.getElementById("stratTotalCount").textContent = playable.length;
 
+      // Проверяем, какие колонки показывать в компактном мобильном режиме
+      const hideSeriesCol = stratMainMode === "practice" && compactColsMode && stratLevel === "easy";
+      const hideStagesAgesCol = stratMainMode === "practice" && compactColsMode && (stratLevel === "easy" || stratLevel === "medium");
+
+      // Шапка таблицы с вертикальными заголовками для узких левых столбцов
+      const thead = document.getElementById("stratTableHead");
+      thead.innerHTML = `
+        <tr class="bg-[#f3ece1] text-[#2e2620] text-[11px] sm:text-xs font-bold border-b-2 border-[#594c3f] text-center">
+          <th colspan="1" class="py-2 px-1 border-r border-[#7a6b5d] w-8 sm:w-11"><div class="vert-box">Акротема (Акрон)</div></th>
+          <th colspan="1" class="py-2 px-1 border-r border-[#7a6b5d] w-9 sm:w-12"><div class="vert-box">Эонотема (эон)</div></th>
+          <th colspan="2" class="py-2 px-1 border-r border-[#7a6b5d] w-14 sm:w-20"><div class="vert-box">Эратема (эра)</div></th>
+          <th colspan="2" class="py-2 px-1 border-r border-[#7a6b5d] w-16 sm:w-24"><div class="vert-box">Система (период), подсистема</div></th>
+          ${!hideSeriesCol ? `<th colspan="2" class="py-2 px-2 border-r border-[#7a6b5d] min-w-[110px]">Отдел (эпоха),<br>подотдел</th>` : ""}
+          ${!hideStagesAgesCol ? `
+            <th colspan="1" class="py-2 px-2 border-r border-[#7a6b5d] min-w-[100px]">Ярус (век),<br>раздел</th>
+            <th colspan="1" class="py-2 px-1.5 min-w-[72px]">Возраст<br>(млн. лет)</th>
+          ` : ""}
+        </tr>
+      `;
+
+      const rowsToRender = getFilteredRows();
       const tbody = document.getElementById("stratTableBody");
-      tbody.innerHTML = stratRows.map(row => {
+
+      tbody.innerHTML = rowsToRender.map(row => {
         const tdsHtml = row.cells.map((cell, idx) => {
-          const key = `${row.id}_c${idx}`;
+          // Если включён компактный режим на Лёгком уровне — пропускаем колонки Отделов (series и пустые ячейки отделов)
+          if (hideSeriesCol && (cell.cat === "series" || (cell.cat === "empty" && idx >= row.cells.length - 2 && row.eraGroup !== "KZ" || (row.eraGroup === "KZ" && idx === row.cells.length - 1)))) {
+            return "";
+          }
+          const key = cell.origKey || `${row.id}_c${idx}`;
           const isCellHidden = stratMainMode === "practice" && hiddenCats.includes(cell.cat) && cell.val && !stratSolved[key];
-          const content = renderSingleInteractiveUnit(key, cell.cat, cell.val, cell.val, hiddenCats);
+          const content = renderSingleInteractiveUnit(key, cell.cat, cell.val, cell.val, hiddenCats, cell.vert);
           const fontCls = (cell.cat === "akron" || cell.cat === "eon" || cell.cat === "era" || cell.cat === "system")
             ? "font-bold text-center"
             : "font-semibold";
-          // Если ячейка скрыта — даём ей нейтральный фон #faf6f0, чтобы нельзя было угадать по цвету!
           const tdBg = isCellHidden ? "#faf6f0" : (cell.bg || row.color);
           return `<td rowspan="${cell.rs}" colspan="${cell.cs}" style="background-color: ${tdBg};"
-            class="p-2 border-b border-r border-[#8c7b6b] align-middle transition-colors duration-300 ${fontCls}">${content}</td>`;
+            class="p-1 sm:p-1.5 border-b border-r border-[#7a6b5d] align-middle transition-colors duration-300 ${fontCls}">${content}</td>`;
         }).join("");
 
-        // Ярусы
-        const stageKey = `${row.id}_stage`;
-        const stageRaw = row.stages.length > 0 ? row.stages.join(" / ") : "";
-        const isStageHidden = stratMainMode === "practice" && hiddenCats.includes("stage") && stageRaw && !stratSolved[stageKey];
-        const stageHtml = row.stages.length > 0
-          ? `<div class="flex flex-col divide-y divide-[#8c7b6b] -m-1.5">${row.stages.map(s => `<div class="py-1 px-2 text-center">${s}</div>`).join("")}</div>`
-          : "";
-        const stageCellContent = renderSingleInteractiveUnit(stageKey, "stage", stageHtml, stageRaw, hiddenCats);
-        const stageBg = row.stages.length > 0 ? (isStageHidden ? "#faf6f0" : row.color) : "#ffffff";
+        let rightColsHtml = "";
+        if (!hideStagesAgesCol) {
+          const stageKey = `${row.id}_stage`;
+          const stageRaw = row.stages.length > 0 ? row.stages.join(" / ") : "";
+          const isStageHidden = stratMainMode === "practice" && hiddenCats.includes("stage") && stageRaw && !stratSolved[stageKey];
+          const stageHtml = row.stages.length > 0
+            ? `<div class="flex flex-col divide-y divide-[#7a6b5d] -m-1">${row.stages.map(s => `<div class="py-0.5 px-1.5 text-center leading-tight">${s}</div>`).join("")}</div>`
+            : "";
+          const stageCellContent = renderSingleInteractiveUnit(stageKey, "stage", stageHtml, stageRaw, hiddenCats, false);
+          const stageBg = row.stages.length > 0 ? (isStageHidden ? "#faf6f0" : row.color) : "#ffffff";
 
-        // Возраст
-        const ageKey = `${row.id}_age`;
-        const validAges = row.ages.filter(a => a && a !== "—");
-        const ageRaw = validAges.length > 0 ? validAges.join(" / ") : "";
-        const ageHtml = row.ages.length > 0
-          ? `<div class="flex flex-col divide-y divide-[#dfd3c3] -m-1.5">${row.ages.map(a => `<div class="py-1 px-2 text-center font-mono">${a}</div>`).join("")}</div>`
-          : "";
-        const ageCellContent = renderSingleInteractiveUnit(ageKey, "age", ageHtml, ageRaw, hiddenCats);
+          const ageKey = `${row.id}_age`;
+          const validAges = row.ages.filter(a => a && a !== "—");
+          const ageRaw = validAges.length > 0 ? validAges.join(" / ") : "";
+          const ageHtml = row.ages.length > 0
+            ? `<div class="flex flex-col divide-y divide-[#dfd3c3] -m-1">${row.ages.map(a => `<div class="py-0.5 px-1 text-center font-mono leading-tight">${a}</div>`).join("")}</div>`
+            : "";
+          const ageCellContent = renderSingleInteractiveUnit(ageKey, "age", ageHtml, ageRaw, hiddenCats, false);
 
-        return `
-          <tr>
-            ${tdsHtml}
-            <td style="background-color: ${stageBg};" class="p-1.5 border-b border-r border-[#8c7b6b] align-middle transition-colors duration-300">${stageCellContent}</td>
-            <td class="p-1.5 border-b border-[#8c7b6b] bg-white align-middle text-[11px]">${ageCellContent}</td>
-          </tr>
-        `;
+          rightColsHtml = `
+            <td style="background-color: ${stageBg};" class="p-1 border-b border-r border-[#7a6b5d] align-middle transition-colors duration-300">${stageCellContent}</td>
+            <td class="p-1 border-b border-[#7a6b5d] bg-white align-middle text-[10px] sm:text-[11px]">${ageCellContent}</td>
+          `;
+        }
+
+        return `<tr>${tdsHtml}${rightColsHtml}</tr>`;
       }).join("");
 
-      // Сбрасываем lastSolvedKey сразу после отрисовки, чтобы при следующем действии старые ячейки не вспыхивали заново
       lastSolvedKey = null;
 
       if (activeTargetKey && stratInputMode === "chips") {
@@ -1333,6 +1465,14 @@
       renderStratTable();
       document.getElementById("stratDrawer").classList.remove("hidden");
       renderDrawerChips(cat);
+
+      // Плавно прокручиваем выбранную ячейку в центр экрана над шторкой
+      setTimeout(() => {
+        const activeBtn = document.getElementById(`unit-${key}`);
+        if (activeBtn) {
+          activeBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }, 60);
     }
 
     function closeStratDrawer() {
@@ -1351,14 +1491,13 @@
       remaining.sort((a, b) => a.val.localeCompare(b.val, 'ru'));
 
       if (remaining.length === 0) {
-        container.innerHTML = `<span class="text-xs font-bold text-[#3b5e49]">🎉 Все ячейки этой категории успешно открыты!</span>`;
+        container.innerHTML = `<span class="text-xs font-bold text-[#3b5e49]">🎉 Все ячейки этой категории открыты!</span>`;
         return;
       }
 
-      // Все плашки имеют одинаковый нейтральный светлый цвет (#fffdf9), без цветовой подсказки!
       container.innerHTML = remaining.map(item => `
         <button type="button" onclick="pickStratChip('${item.key}', '${cat}', this)"
-          class="px-3.5 py-2 rounded-xl border border-[#b59e85] bg-[#fffdf9] hover:bg-[#efe7dc] text-xs font-bold text-[#2e2620] shadow-sm hover:scale-105 transition text-left">
+          class="px-2.5 sm:px-3.5 py-1.5 rounded-xl border border-[#b59e85] bg-[#fffdf9] hover:bg-[#efe7dc] text-[11px] sm:text-xs font-bold text-[#2e2620] shadow-sm transition text-left">
           ${item.val}
         </button>
       `).join("");
@@ -1381,6 +1520,13 @@
         const nextItem = reversed.find(it => it.cat === cat && !stratSolved[it.key]);
         activeTargetKey = nextItem ? { key: nextItem.key, cat } : null;
         renderStratTable();
+
+        if (activeTargetKey) {
+          setTimeout(() => {
+            const nextBtn = document.getElementById(`unit-${activeTargetKey.key}`);
+            if (nextBtn) nextBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 80);
+        }
       } else {
         btnEl.classList.remove("shake");
         void btnEl.offsetWidth;
