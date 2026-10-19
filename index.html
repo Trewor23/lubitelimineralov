@@ -83,7 +83,6 @@
     .vk-btn { background-color: #0077FF; color: #ffffff; }
     .vk-btn:hover { background-color: #0062d6; transform: translateY(-1px); }
 
-    /* Вертикальный текст для левых колонок ОСШ-2024 */
     .vert-box {
       writing-mode: vertical-rl;
       transform: rotate(180deg);
@@ -154,7 +153,9 @@
               <span>💬 Чат</span>
             </a>
             <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Справочник</button>
+            <button type="button" onclick="openGeoSubTab('minerals')" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Минералы (29)</button>
+            <span>•</span>
+            <button type="button" onclick="openGeoSubTab('rocks')" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Горные породы (41)</button>
             <span>•</span>
             <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('exam').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Тренажёр</button>
           </div>
@@ -176,14 +177,15 @@
   </header>
 
   <!-- ========================================================= -->
-  <!-- ВКЛАДКА 1: ГЕОЛОГИЯ (МИНЕРАЛОГИЯ)                         -->
+  <!-- ВКЛАДКА 1: ГЕОЛОГИЯ (МИНЕРАЛЫ + ГОРНЫЕ ПОРОДЫ)            -->
   <!-- ========================================================= -->
   <main id="tabContent-geology" class="max-w-6xl mx-auto px-4 mt-6 space-y-12">
 
     <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
       <a href="#about" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">О клубе</a>
-      <a href="#cleavage" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Спайность и секреты</a>
-      <a href="#catalog" class="px-3 py-1.5 rounded-lg badge-sage font-medium">Справочник минералов</a>
+      <a href="#cleavage" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Шпаргалки и диагностика</a>
+      <button type="button" onclick="openGeoSubTab('minerals')" class="px-3 py-1.5 rounded-lg badge-sage font-medium">💎 Минералы (29)</button>
+      <button type="button" onclick="openGeoSubTab('rocks')" class="px-3 py-1.5 rounded-lg badge-sand font-semibold">🌋 Горные породы (41)</button>
       <a href="#exam" class="px-3 py-1.5 rounded-lg badge-terracotta font-medium">Тренажёр</a>
       <a href="#rules" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Правила чата</a>
       <a href="#post-form" class="px-3 py-1.5 rounded-lg badge-sand font-medium">Отправить пост</a>
@@ -195,10 +197,10 @@
         <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-terracotta">Паспорт онлайн-сообщества ВКонтакте</span>
         <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Описание беседы</h2>
         <p class="text-[#54483d] leading-relaxed">
-          <strong>«Клуб любителей минералов»</strong> — просветительское онлайн-сообщество для всех, кто увлечён миром камня, геологией, минералогией и стратиграфией. Наш чат объединяет начинающих любителей и знатоков, готовых обсуждать химический состав, твёрдость по шкале Мооса, спайность, плотность и происхождение горных пород.
+          <strong>«Клуб любителей минералов»</strong> — просветительское онлайн-сообщество для всех, кто увлечён миром камня, геологией, минералогией, петрографией и стратиграфией. Наш чат объединяет начинающих любителей и знатоков, готовых обсуждать химический состав, твёрдость по шкале Мооса, спайность, структуры, текстуры и происхождение горных пород.
         </p>
         <p class="text-[#54483d] leading-relaxed">
-          <strong>Главная цель беседы</strong> — обмен знаниями, обсуждение научно-популярных материалов, подготовка к практическим работам, помощь в определении минералов по фотографиям и культурное общение единомышленников.
+          <strong>Главная цель беседы</strong> — обмен знаниями, обсуждение научно-популярных материалов, подготовка к практическим работам, помощь в определении минералов и горных пород по фотографиям и культурное общение единомышленников.
         </p>
       </div>
 
@@ -206,10 +208,10 @@
         <div class="space-y-3">
           <h3 class="font-bold text-lg text-[#3b5e49]">Навигация и рубрики чата</h3>
           <ul class="text-sm text-[#54483d] space-y-3">
-            <li>📌 <strong>Закреплённое сообщение:</strong> свод правил, шкала Мооса и справочник минералов.</li>
-            <li>🔹 <button type="button" onclick="jumpToForm('#минерал_дня')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#минерал_дня</button> — ежедневный разбор формулы, твёрдости и спайности одного камня.</li>
+            <li>📌 <strong>Закреплённое сообщение:</strong> свод правил, шкала Мооса, справочник минералов и горных пород.</li>
+            <li>🔹 <button type="button" onclick="jumpToForm('#минерал_дня')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#минерал_дня</button> — ежедневный разбор свойств одного минерала или породы.</li>
             <li>🔹 <button type="button" onclick="jumpToForm('#что_за_камень')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#что_за_камень</button> — помощь в определении образцов по фотографиям участников.</li>
-            <li>🔹 <button type="button" onclick="jumpToForm('#книжная_полка')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#книжная_полка</button> — учебные пособия, атласы и определители минералов.</li>
+            <li>🔹 <button type="button" onclick="jumpToForm('#книжная_полка')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#книжная_полка</button> — учебные пособия, атласы и определители.</li>
           </ul>
         </div>
         <a href="#post-form" class="block text-center w-full py-2.5 px-4 rounded-xl badge-sand text-xs font-bold hover:bg-[#e8decb] transition">
@@ -218,11 +220,11 @@
       </div>
     </section>
 
-    <!-- 2. Выдвижные вкладки: Спайность и секреты диагностики -->
+    <!-- 2. Выдвижные вкладки: Спайность, диагностика минералов и горных пород -->
     <section id="cleavage" class="pastel-card rounded-2xl p-6 md:p-8 space-y-5">
       <div class="space-y-1.5">
         <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage">Теоретическая памятка клуба</span>
-        <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Спайность минералов и секреты диагностики</h2>
+        <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Шпаргалки по диагностике минералов и горных пород</h2>
         <p class="text-sm text-[#5c5044]">Нажмите на любую вкладку ниже, чтобы развернуть или свернуть подробную информацию:</p>
       </div>
 
@@ -309,21 +311,76 @@
             </ul>
           </div>
         </div>
+
+        <!-- Вкладка 5: Горные породы (НОВАЯ ШПАРГАЛКА ПО КОНСПЕКТУ) -->
+        <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
+          <button type="button" onclick="togglePanel('info-rocks', 'arrow-rocks')" class="w-full px-5 py-3.5 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
+            <span class="font-bold text-sm sm:text-base text-[#2e2620]">🌋 Горные породы: структуры, текстуры и как не перепутать похожие породы</span>
+            <span id="arrow-rocks" class="text-[#3b5e49] font-bold transition-transform duration-300">▼</span>
+          </button>
+          <div id="info-rocks" class="hidden slide-fade px-5 pb-5 pt-3 text-sm text-[#4a3f35] space-y-3 border-t border-[#e6dccf] bg-[#fffdf9]/95">
+            <p><strong>Структура</strong> — строение породы на уровне размера, формы и степени кристалличности зёрен. <strong>Текстура</strong> — способ взаимного расположения составных частей породы в пространстве (массивная, слоистая, сланцеватая, полосчатая, пористая).</p>
+            <ul class="list-disc pl-5 space-y-2">
+              <li><strong>Дунит vs Пироксенит:</strong> обе породы ультраосновные интрузивные. Но у <em>дунита</em> оливин &gt; 90%, структура тонко-мелкозернистая; у <em>пироксенита</em> пироксен &gt; 90% и структура средне-крупнозернистая (чёрно-зелёная окраска).</li>
+              <li><strong>Интрузивные vs Эффузивные пары:</strong> <em>Габбро</em> (зернистое) $\leftrightarrow$ <em>Базальт</em> (тонкозернистый/аморфный); <em>Диорит</em> (полнокристаллический) $\leftrightarrow$ <em>Порфирит</em> (порфировая структура с крупными вкрапленниками плагиоклаза); <em>Гранит</em> (зернистый) $\leftrightarrow$ <em>Пегматит</em> (вростки кварца в полевом шпате) $\leftrightarrow$ <em>Обсидиан</em> (вулканическое стекло).</li>
+              <li><strong>Грубообломочные породы (окатанные vs угловатые):</strong> угловатые рыхлые обломки — <em>Щебень</em> (сцементированный — <em>Брекчия</em>); окатанные водой обломки — <em>Галечник</em> (сцементированный — <em>Конгломерат</em>).</li>
+              <li><strong>Глина vs Аргиллит vs Мергель vs Глинистый сланец:</strong> <em>Глина</em> размокает и набухает в воде; <em>Аргиллит</em> каменистый и в воде не размокает; <em>Мергель</em> вскипает от HCl и оставляет грязное глинистое пятно; <em>Глинистый сланец</em> (метаморфический) раскалывается на тонкие твёрдые плитки.</li>
+              <li><strong>Известняк vs Мрамор и Песчаник vs Кварцит:</strong> при метаморфизме известняк перекристаллизуется в полнокристаллический <em>Мрамор</em> (оба бурно кипят с HCl, царапаются ножом), а кварцевый песчаник превращается в монолитный <em>Кварцит</em> (оба царапают стекло и не реагируют с HCl).</li>
+              <li><strong>Четыре вида сланцев:</strong> <em>Глинистый</em> (пелитовый, тёмно-серый), <em>Слюдяной</em> (сверкает чешуйками слюды с кварцем), <em>Хлоритовый</em> (тёмно-зелёный чешуйчатый из хлорита), <em>Тальковый</em> (светло-зеленоватый, очень мягкий — царапается ногтем, жирный на ощупь).</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </section>
 
-    <!-- 3. Справочник минералов (все 29 образцов) -->
+    <!-- 3. ЕДИНЫЙ БЛОК СПРАВОЧНИКА: МИНЕРАЛЫ (29) И ГОРНЫЕ ПОРОДЫ (41) -->
     <section id="catalog" class="space-y-6">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Справочник минералов</h2>
-          <p class="text-[#6e5f51] text-sm mt-1">В каждой карточке нажмите «✨ Интересный факт и применение», чтобы развернуть описание</p>
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#e6dccf] pb-4">
+        <div class="space-y-2">
+          <!-- Переключатель: Минералы / Горные породы / Все вместе -->
+          <div class="inline-flex flex-wrap items-center gap-1.5 bg-[#efe7dc] p-1.5 rounded-2xl border border-[#dfd3c3]">
+            <button type="button" id="geoSubBtn-minerals" onclick="openGeoSubTab('minerals')"
+              class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">
+              💎 Минералы (29)
+            </button>
+            <button type="button" id="geoSubBtn-rocks" onclick="openGeoSubTab('rocks')"
+              class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+              🌋 Горные породы (41)
+            </button>
+            <button type="button" id="geoSubBtn-both" onclick="openGeoSubTab('both')"
+              class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
+              📚 Показать оба справочника
+            </button>
+          </div>
+          <p id="catalogSubDesc" class="text-[#6e5f51] text-xs sm:text-sm">
+            В каждой карточке нажмите «✨ Интересный факт и применение», чтобы развернуть описание.
+          </p>
         </div>
-        <input id="searchInput" type="text" placeholder="Поиск по названию, формуле, спайности..."
-          class="px-4 py-2.5 rounded-xl bg-[#fffdf9]/90 border border-[#d8cbb8] text-sm text-[#2e2620] placeholder-[#9c8d7e] focus:outline-none focus:border-[#3b5e49] w-full md:w-80 shadow-sm">
+
+        <input id="searchInput" type="text" placeholder="Поиск по названию, составу, структуре..."
+          class="px-4 py-2.5 rounded-xl bg-[#fffdf9]/90 border border-[#d8cbb8] text-sm text-[#2e2620] placeholder-[#9c8d7e] focus:outline-none focus:border-[#3b5e49] w-full lg:w-80 shadow-sm">
       </div>
-      <div id="filterContainer" class="flex flex-wrap gap-2"></div>
-      <div id="mineralsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+      <!-- Подраздел 3А: Минералы (29) -->
+      <div id="mineralsSectionBlock" class="space-y-5">
+        <div class="flex items-center justify-between">
+          <h3 class="text-xl sm:text-2xl font-bold text-[#2e2620]">💎 Справочник минералов (29 образцов)</h3>
+        </div>
+        <div id="filterContainer" class="flex flex-wrap gap-2"></div>
+        <div id="mineralsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
+
+      <!-- Подраздел 3Б: Горные породы (41) -->
+      <div id="rocksSectionBlock" class="hidden space-y-5 pt-2">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+          <div>
+            <h3 class="text-xl sm:text-2xl font-bold text-[#2e2620]">🌋 Справочник горных пород (41 образец)</h3>
+            <p class="text-xs text-[#6e5f51]">10 магматических • 22 осадочных (включая разделение солей и фосфорит) • 9 метаморфических</p>
+          </div>
+        </div>
+        <div id="rockFilterContainer" class="flex flex-wrap gap-2"></div>
+        <div id="rocksGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      </div>
     </section>
 
     <!-- 4. Тренажёр: 20 вопросов по минералам -->
@@ -391,8 +448,8 @@
           </select>
         </div>
         <div class="md:col-span-2 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-[#594c3f]">Название минерала и текст сообщения *</label>
-          <textarea id="formMessage" rows="3" required placeholder="Опишите окраску, блеск, спайность, твёрдость или ваш вопрос..." class="w-full px-4 py-3 rounded-xl bg-[#fffdf9] border border-[#d8cbb8] text-sm"></textarea>
+          <label class="block text-xs font-bold uppercase text-[#594c3f]">Название минерала/породы и текст сообщения *</label>
+          <textarea id="formMessage" rows="3" required placeholder="Опишите окраску, структуру, текстуру, спайность, твёрдость или ваш вопрос..." class="w-full px-4 py-3 rounded-xl bg-[#fffdf9] border border-[#d8cbb8] text-sm"></textarea>
         </div>
         <div class="md:col-span-2 flex items-center justify-between flex-wrap gap-4">
           <span class="text-xs text-[#7a6b5d]">Соблюдайте нормы речевого этикета сообщества.</span>
@@ -495,7 +552,7 @@
         👆 Нажмите <strong>«📖 Режим изучения»</strong> или выберите параметры в <strong>«🎯 Режиме практики»</strong>, чтобы открыть стратиграфическую шкалу.
       </div>
 
-      <!-- Таблица Общей стратиграфической шкалы (с вертикальным текстом левых колонок как в оригинале ОСШ-2024) -->
+      <!-- Таблица Общей стратиграфической шкалы -->
       <div id="stratTableContainer" class="hidden slide-fade overflow-x-auto rounded-xl border-2 border-[#594c3f] shadow-md bg-white">
         <table class="strat-table w-full text-left border-collapse">
           <thead id="stratTableHead"></thead>
@@ -505,7 +562,7 @@
     </div>
   </section>
 
-  <!-- Выдвижная шторка с плашками (компактная и удобная на мобильных) -->
+  <!-- Выдвижная шторка с плашками -->
   <div id="stratDrawer" class="fixed bottom-0 inset-x-0 z-40 hidden pastel-header border-t-2 border-[#b59e85] shadow-2xl p-2.5 sm:p-4 slide-fade">
     <div class="max-w-5xl mx-auto space-y-2">
       <div class="flex items-center justify-between gap-2">
@@ -571,7 +628,7 @@
 
   <script>
     // =========================================================================
-    // 1. БАЗОВЫЕ ФУНКЦИИ ИНТЕРФЕЙСА И МОДАЛЬНЫХ ОКОН
+    // 1. БАЗОВЫЕ ФУНКЦИИ ИНТЕРФЕЙСА, ПОДВКЛАДОК И МОДАЛЬНЫХ ОКОН
     // =========================================================================
     function togglePanel(panelId, arrowId) {
       const panel = document.getElementById(panelId);
@@ -606,6 +663,37 @@
         btnStrat.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       }
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    let currentGeoSubTab = "minerals"; // 'minerals' | 'rocks' | 'both'
+    function openGeoSubTab(sub) {
+      currentGeoSubTab = sub;
+      switchMainTab('geology');
+
+      const minBlock = document.getElementById("mineralsSectionBlock");
+      const rockBlock = document.getElementById("rocksSectionBlock");
+      const bMin = document.getElementById("geoSubBtn-minerals");
+      const bRock = document.getElementById("geoSubBtn-rocks");
+      const bBoth = document.getElementById("geoSubBtn-both");
+
+      bMin.className = sub === "minerals" ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green" : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+      bRock.className = sub === "rocks" ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green" : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+      bBoth.className = sub === "both" ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green" : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+
+      if (sub === "minerals") {
+        minBlock.classList.remove("hidden");
+        rockBlock.classList.add("hidden");
+      } else if (sub === "rocks") {
+        minBlock.classList.add("hidden");
+        rockBlock.classList.remove("hidden");
+        renderRocks();
+      } else {
+        minBlock.classList.remove("hidden");
+        rockBlock.classList.remove("hidden");
+        renderRocks();
+      }
+
+      setTimeout(() => document.getElementById("catalog").scrollIntoView({ behavior: "smooth" }), 50);
     }
 
     function jumpToForm(hashtag) {
@@ -667,486 +755,65 @@
     // =========================================================================
     // 2. ТОЧНАЯ МАТРИЦА ОБЩЕЙ СТРАТИГРАФИЧЕСКОЙ ШКАЛЫ (ОСШ-2024, 53 СТРОКИ)
     // =========================================================================
-    // Свойство vert: true разворачивает текст вертикально снизу вверх (как в оригинальной таблице ОСШ-2024)
     const stratRows = [
-      // КАЙНОЗОЙСКАЯ ЭРАТЕМА (KZ) — 15 строк
-      {
-        id: "Q_hol", eraGroup: "KZ", color: "#fff8d6",
-        cells: [
-          { cat: "empty", val: "", rs: 42, cs: 1, bg: "#ffffff" },
-          { cat: "eon", val: "Фанерозойская (фанерозойский)", rs: 42, cs: 1, bg: "#6d9eeb", vert: true },
-          { cat: "era", val: "Кайнозойская (кайнозойская) KZ", rs: 15, cs: 2, bg: "#f7e3a1", vert: true },
-          { cat: "system", val: "Четвертичная (четвертичный) Q", rs: 2, cs: 2, bg: "#fbf0be", vert: true },
-          { cat: "series", val: "Голоцен (голоценовая) H", rs: 1, cs: 1, bg: "#fef6d4" },
-          { cat: "empty", val: "", rs: 1, cs: 1, bg: "#fef6d4" }
-        ],
-        stages: [], ages: ["0.0117"]
-      },
-      {
-        id: "Q_ple", eraGroup: "KZ", color: "#fef3c4",
-        cells: [
-          { cat: "series", val: "Плейстоцен (плейстоценовая) P", rs: 1, cs: 1, bg: "#fef3c4" },
-          { cat: "empty", val: "", rs: 1, cs: 1, bg: "#fef3c4" }
-        ],
-        stages: ["Неоплейстоцен", "Эоплейстоцен", "Гелазский"],
-        ages: ["0.781", "1.806", "2.58"]
-      },
-      {
-        id: "N2_2", eraGroup: "KZ", color: "#f9f1c0",
-        cells: [
-          { cat: "system", val: "Неогеновая (неогеновый) N", rs: 5, cs: 2, bg: "#f4ebc2", vert: true },
-          { cat: "series", val: "Плиоцен (плиоценовая) N₂", rs: 2, cs: 1, bg: "#f7f0ca" },
-          { cat: "series", val: "Верхний N₂²", rs: 1, cs: 1, bg: "#f9f3d2" }
-        ],
-        stages: ["Пьяченцский"], ages: ["3.600"]
-      },
-      {
-        id: "N2_1", eraGroup: "KZ", color: "#f9f1c0",
-        cells: [
-          { cat: "series", val: "Нижний N₂¹", rs: 1, cs: 1, bg: "#f9f3d2" }
-        ],
-        stages: ["Занклский"], ages: ["5.333"]
-      },
-      {
-        id: "N1_3", eraGroup: "KZ", color: "#f5ecb6",
-        cells: [
-          { cat: "series", val: "Миоцен (миоценовая) N₁", rs: 3, cs: 1, bg: "#f5ecb6" },
-          { cat: "series", val: "Верхний N₁³", rs: 1, cs: 1, bg: "#f7efc0" }
-        ],
-        stages: ["Мессинский", "Тортонский"], ages: ["7.246", "11.63"]
-      },
-      {
-        id: "N1_2", eraGroup: "KZ", color: "#f5ecb6",
-        cells: [
-          { cat: "series", val: "Средний N₁²", rs: 1, cs: 1, bg: "#f7efc0" }
-        ],
-        stages: ["Серравальский", "Лангийский"], ages: ["13.82", "15.98"]
-      },
-      {
-        id: "N1_1", eraGroup: "KZ", color: "#f5ecb6",
-        cells: [
-          { cat: "series", val: "Нижний N₁¹", rs: 1, cs: 1, bg: "#f7efc0" }
-        ],
-        stages: ["Бурдигальский", "Аквитанский"], ages: ["20.45", "23.04"]
-      },
-      {
-        id: "P3_2", eraGroup: "KZ", color: "#f5efc4",
-        cells: [
-          { cat: "system", val: "Палеогеновая (палеогеновый) P", rs: 8, cs: 2, bg: "#fce5cd", vert: true },
-          { cat: "series", val: "Олигоцен (олигоценовая) P₃", rs: 2, cs: 1, bg: "#f2ecc2" },
-          { cat: "series", val: "Верхний P₃²", rs: 1, cs: 1, bg: "#f5f0ce" }
-        ],
-        stages: ["Хаттский"], ages: ["27.30"]
-      },
-      {
-        id: "P3_1", eraGroup: "KZ", color: "#f5efc4",
-        cells: [
-          { cat: "series", val: "Нижний P₃¹", rs: 1, cs: 1, bg: "#f5f0ce" }
-        ],
-        stages: ["Рюпельский"], ages: ["33.9"]
-      },
-      {
-        id: "P2_3", eraGroup: "KZ", color: "#f7f2c8",
-        cells: [
-          { cat: "series", val: "Эоцен (эоценовая) P₂", rs: 3, cs: 1, bg: "#f5f0c4" },
-          { cat: "series", val: "Верхний P₂³", rs: 1, cs: 1, bg: "#f7f3ce" }
-        ],
-        stages: ["Приабонский"], ages: ["37.71"]
-      },
-      {
-        id: "P2_2", eraGroup: "KZ", color: "#f7f2c8",
-        cells: [
-          { cat: "series", val: "Средний P₂²", rs: 1, cs: 1, bg: "#f7f3ce" }
-        ],
-        stages: ["Бартонский", "Лютетский"], ages: ["41.03", "48.07"]
-      },
-      {
-        id: "P2_1", eraGroup: "KZ", color: "#f7f2c8",
-        cells: [
-          { cat: "series", val: "Нижний P₂¹", rs: 1, cs: 1, bg: "#f7f3ce" }
-        ],
-        stages: ["Ипрский"], ages: ["56.0"]
-      },
-      {
-        id: "P1_3", eraGroup: "KZ", color: "#f4f587",
-        cells: [
-          { cat: "series", val: "Палеоцен (палеоценовая) P₁", rs: 3, cs: 1, bg: "#f2f57a" },
-          { cat: "series", val: "Верхний P₁³", rs: 1, cs: 1, bg: "#f4f78d" }
-        ],
-        stages: ["Танетский"], ages: ["59.24"]
-      },
-      {
-        id: "P1_2", eraGroup: "KZ", color: "#f4f587",
-        cells: [
-          { cat: "series", val: "Средний P₁²", rs: 1, cs: 1, bg: "#f4f78d" }
-        ],
-        stages: ["Зеландский"], ages: ["61.66"]
-      },
-      {
-        id: "P1_1", eraGroup: "KZ", color: "#f4f587",
-        cells: [
-          { cat: "series", val: "Нижний P₁¹", rs: 1, cs: 1, bg: "#f4f78d" }
-        ],
-        stages: ["Датский"], ages: ["66.0"]
-      },
-
-      // МЕЗОЗОЙСКАЯ ЭРАТЕМА (MZ) — 8 строк
-      {
-        id: "K_2", eraGroup: "MZ", color: "#f6fad9",
-        cells: [
-          { cat: "era", val: "Мезозойская (мезозойская) MZ", rs: 8, cs: 2, bg: "#a8e6b8", vert: true },
-          { cat: "system", val: "Меловая (меловой) K", rs: 2, cs: 2, bg: "#dcf5c4", vert: true },
-          { cat: "series", val: "Верхний (поздняя) K₂", rs: 1, cs: 2, bg: "#f6fad9" }
-        ],
-        stages: ["Маастрихтский", "Кампанский", "Сантонский", "Коньякский", "Туронский", "Сеноманский"],
-        ages: ["72.1±0.2", "83.6±0.2", "85.7±0.2", "89.8±0.3", "93.9±0.2", "100.5±0.1"]
-      },
-      {
-        id: "K_1", eraGroup: "MZ", color: "#dcf5c4",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) K₁", rs: 1, cs: 2, bg: "#dcf5c4" }
-        ],
-        stages: ["Альбский", "Аптский", "Барремский", "Готеривский", "Валанжинский", "Берриасский"],
-        ages: ["113.2±0.3", "121.4±0.6", "125.77", "132.6±0.6", "137.05±0.2", "143.1±0.6"]
-      },
-      {
-        id: "J_3", eraGroup: "MZ", color: "#dcf0fa",
-        cells: [
-          { cat: "system", val: "Юрская (юрский) J", rs: 3, cs: 2, bg: "#d0e4f5", vert: true },
-          { cat: "series", val: "Верхний (поздняя) J₃", rs: 1, cs: 2, bg: "#dcf0fa" }
-        ],
-        stages: ["Титонский", "Кимериджский", "Оксфордский"],
-        ages: ["149.2±0.7", "154.8±0.8", "161.5±1.0"]
-      },
-      {
-        id: "J_2", eraGroup: "MZ", color: "#b3d7f2",
-        cells: [
-          { cat: "series", val: "Средний (средняя) J₂", rs: 1, cs: 2, bg: "#b3d7f2" }
-        ],
-        stages: ["Келловейский", "Батский", "Байосский", "Ааленский"],
-        ages: ["165.3±1.1", "168.2±1.2", "170.9±0.8", "174.7±0.8"]
-      },
-      {
-        id: "J_1", eraGroup: "MZ", color: "#a8cdf0",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) J₁", rs: 1, cs: 2, bg: "#a8cdf0" }
-        ],
-        stages: ["Тоарский", "Плинсбахский", "Синемюрский", "Геттангский"],
-        ages: ["184.2±0.3", "192.9±0.3", "199.3±0.3", "201.4±0.2"]
-      },
-      {
-        id: "T_3", eraGroup: "MZ", color: "#fae6f7",
-        cells: [
-          { cat: "system", val: "Триасовая (триасовый) T", rs: 3, cs: 2, bg: "#ebd3f0", vert: true },
-          { cat: "series", val: "Верхний (поздняя) T₃", rs: 1, cs: 2, bg: "#fae6f7" }
-        ],
-        stages: ["Рэтский", "Норийский", "Карнийский"],
-        ages: ["~ 205.7", "~ 227.3", "~ 237"]
-      },
-      {
-        id: "T_2", eraGroup: "MZ", color: "#f0c4eb",
-        cells: [
-          { cat: "series", val: "Средний (средняя) T₂", rs: 1, cs: 2, bg: "#f0c4eb" }
-        ],
-        stages: ["Ладинский", "Анизийский"],
-        ages: ["241.464±0.28", "246.7"]
-      },
-      {
-        id: "T_1", eraGroup: "MZ", color: "#e3b3eb",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) T₁", rs: 1, cs: 2, bg: "#e3b3eb" }
-        ],
-        stages: ["Оленекский", "Индский"],
-        ages: ["249.9", "251.902±0.024"]
-      },
-
-      // ПАЛЕОЗОЙСКАЯ ЭРАТЕМА (PZ) — 19 строк
-      {
-        id: "P_3", eraGroup: "PZ", color: "#fce8cc",
-        cells: [
-          { cat: "era", val: "Палеозойская (палеозойская) PZ", rs: 19, cs: 2, bg: "#d4cfa9", vert: true },
-          { cat: "system", val: "Пермская (пермский) P", rs: 3, cs: 2, bg: "#fcdbb6", vert: true },
-          { cat: "series", val: "Татарский (татарская) P₃", rs: 1, cs: 2, bg: "#fce8cc" }
-        ],
-        stages: ["Вятский", "Северодвинский"],
-        ages: ["259.51±0.2", "264.28±0.16"]
-      },
-      {
-        id: "P_2", eraGroup: "PZ", color: "#fcdfba",
-        cells: [
-          { cat: "series", val: "Биармийский (биармийская) P₂", rs: 1, cs: 2, bg: "#fcdfba" }
-        ],
-        stages: ["Уржумский", "Казанский"],
-        ages: ["266.9±0.4", "274.04±0.4"]
-      },
-      {
-        id: "P_1", eraGroup: "PZ", color: "#fcd5a7",
-        cells: [
-          { cat: "series", val: "Приуральский (приуральская) P₁", rs: 1, cs: 2, bg: "#fcd5a7" }
-        ],
-        stages: ["Уфимский", "Кунгурский", "Артинский", "Сакмарский", "Ассельский"],
-        ages: ["—", "283.3±0.4", "290.1±0.26", "293.52±0.17", "298.9±0.15"]
-      },
-      {
-        id: "C_3", eraGroup: "PZ", color: "#dce0db",
-        cells: [
-          { cat: "system", val: "Каменноугольная (каменноугольный) C", rs: 3, cs: 2, bg: "#b5bab8", vert: true },
-          { cat: "series", val: "Верхний (поздняя) C₃", rs: 1, cs: 2, bg: "#dce0db" }
-        ],
-        stages: ["Гжельский", "Касимовский"],
-        ages: ["303.7±0.1", "307.0±0.1"]
-      },
-      {
-        id: "C_2", eraGroup: "PZ", color: "#b5bab8",
-        cells: [
-          { cat: "series", val: "Средний (средняя) C₂", rs: 1, cs: 2, bg: "#b5bab8" }
-        ],
-        stages: ["Московский", "Башкирский"],
-        ages: ["315.2±0.2", "323.4±0.4"]
-      },
-      {
-        id: "C_1", eraGroup: "PZ", color: "#a4b3b8",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) C₁", rs: 1, cs: 2, bg: "#a4b3b8" }
-        ],
-        stages: ["Серпуховский", "Визейский", "Турнейский"],
-        ages: ["330.3±0.4", "346.7±0.4", "358.86±0.19"]
-      },
-      {
-        id: "D_3", eraGroup: "PZ", color: "#f7dec4",
-        cells: [
-          { cat: "system", val: "Девонская (девонский) D", rs: 3, cs: 2, bg: "#e3bd96", vert: true },
-          { cat: "series", val: "Верхний (поздняя) D₃", rs: 1, cs: 2, bg: "#f7dec4" }
-        ],
-        stages: ["Фаменский", "Франский"],
-        ages: ["372.15±0.46", "382.31±1.36"]
-      },
-      {
-        id: "D_2", eraGroup: "PZ", color: "#e3c5a6",
-        cells: [
-          { cat: "series", val: "Средний (средняя) D₂", rs: 1, cs: 2, bg: "#e3c5a6" }
-        ],
-        stages: ["Живетский", "Эйфельский"],
-        ages: ["387.95±1.04", "393.47±0.99"]
-      },
-      {
-        id: "D_1", eraGroup: "PZ", color: "#deb69b",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) D₁", rs: 1, cs: 2, bg: "#deb69b" }
-        ],
-        stages: ["Эмсский", "Пражский", "Лохковский"],
-        ages: ["410.62±1.95", "413.02±1.91", "419.62±1.36"]
-      },
-      {
-        id: "S_4", eraGroup: "PZ", color: "#e5ebcc",
-        cells: [
-          { cat: "system", val: "Силурийская (силурийский) S", rs: 4, cs: 1, bg: "#d9e3b8", vert: true },
-          { cat: "system", val: "Верх. S₂", rs: 2, cs: 1, bg: "#e5ebcc", vert: true },
-          { cat: "series", val: "Пржидольский (пржидольская) S₂²", rs: 1, cs: 2, bg: "#e5ebcc" }
-        ],
-        stages: [], ages: ["422.7±1.6"]
-      },
-      {
-        id: "S_3", eraGroup: "PZ", color: "#e5ebcc",
-        cells: [
-          { cat: "series", val: "Лудловский (лудловская) S₂¹", rs: 1, cs: 2, bg: "#e5ebcc" }
-        ],
-        stages: ["Лудфордский", "Горстийский"],
-        ages: ["425.0±1.5", "426.7±1.5"]
-      },
-      {
-        id: "S_2", eraGroup: "PZ", color: "#d6dbba",
-        cells: [
-          { cat: "system", val: "Нижняя S₁", rs: 2, cs: 1, bg: "#d6dbba", vert: true },
-          { cat: "series", val: "Венлокский (венлокская) S₁²", rs: 1, cs: 2, bg: "#d6dbba" }
-        ],
-        stages: ["Гомерский", "Шейнвудский"],
-        ages: ["430.6±1.3", "432.9±1.2"]
-      },
-      {
-        id: "S_1", eraGroup: "PZ", color: "#d6dbba",
-        cells: [
-          { cat: "series", val: "Лландоверийский (лландоверийская) S₁¹", rs: 1, cs: 2, bg: "#d6dbba" }
-        ],
-        stages: ["Теличский", "Аэронский", "Рудданский"],
-        ages: ["438.6±1.0", "440.5±1.0", "443.1±0.9"]
-      },
-      {
-        id: "O_3", eraGroup: "PZ", color: "#cff2e5",
-        cells: [
-          { cat: "system", val: "Ордовикская (ордовикский) O", rs: 3, cs: 2, bg: "#a4dec8", vert: true },
-          { cat: "series", val: "Верхний (поздняя) O₃", rs: 1, cs: 2, bg: "#cff2e5" }
-        ],
-        stages: ["Хирнантский", "Катийский", "Сандбийский"],
-        ages: ["445.2±0.9", "452.8±0.7", "458.2±0.7"]
-      },
-      {
-        id: "O_2", eraGroup: "PZ", color: "#bee8d6",
-        cells: [
-          { cat: "series", val: "Средний (средняя) O₂", rs: 1, cs: 2, bg: "#bee8d6" }
-        ],
-        stages: ["Дарривильский", "Дапинский"],
-        ages: ["469.4±0.9", "471.3±1.4"]
-      },
-      {
-        id: "O_1", eraGroup: "PZ", color: "#abdec8",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) O₁", rs: 1, cs: 2, bg: "#abdec8" }
-        ],
-        stages: ["Флоский", "Тремадокский"],
-        ages: ["477.1±1.2", "486.85±1.5"]
-      },
-      {
-        id: "Cm_3", eraGroup: "PZ", color: "#d2f0f2",
-        cells: [
-          { cat: "system", val: "Кембрийская (кембрийский) Є", rs: 3, cs: 2, bg: "#a8d4d4", vert: true },
-          { cat: "series", val: "Верхний (поздняя) Є₃", rs: 1, cs: 2, bg: "#d2f0f2" }
-        ],
-        stages: ["Батырбайский", "Аксайский", "Сакский"],
-        ages: ["—", "—", "~ 497"]
-      },
-      {
-        id: "Cm_2", eraGroup: "PZ", color: "#c2ebed",
-        cells: [
-          { cat: "series", val: "Средний (средняя) Є₂", rs: 1, cs: 2, bg: "#c2ebed" }
-        ],
-        stages: ["Аюсокканский", "Майский", "Амгинский"],
-        ages: ["500", "~ 504,5", "509"]
-      },
-      {
-        id: "Cm_1", eraGroup: "PZ", color: "#c2f0eb",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) Є₁", rs: 1, cs: 2, bg: "#c2f0eb" }
-        ],
-        stages: ["Тойонский", "Ботомский", "Атдабанский", "Томмотский"],
-        ages: ["—", "—", "—", "535±1"]
-      },
-
-      // ПРОТЕРОЗОЙСКАЯ (PR) И АРХЕЙСКАЯ (AR) АКРОТЕМЫ (DOCM) — 11 строк
-      {
-        id: "V_2", eraGroup: "DOCM", color: "#fad4d4",
-        cells: [
-          { cat: "akron", val: "Протерозойская (протерозойский) PR", rs: 7, cs: 1, bg: "#f4bab8", vert: true },
-          { cat: "eon", val: "Верхнепротерозойская (позднепротерозойский) PR₂", rs: 5, cs: 1, bg: "#f4bab8", vert: true },
-          { cat: "empty", val: "", rs: 2, cs: 2, bg: "#f4bab8" },
-          { cat: "system", val: "Вендская (вендский) V", rs: 2, cs: 2, bg: "#fad4d4" },
-          { cat: "series", val: "Верхний (поздняя) V₂", rs: 1, cs: 2, bg: "#fad4d4" }
-        ],
-        stages: [], ages: ["555-570"]
-      },
-      {
-        id: "V_1", eraGroup: "DOCM", color: "#fad4d4",
-        cells: [
-          { cat: "series", val: "Нижний (ранняя) V₁", rs: 1, cs: 2, bg: "#fad4d4" }
-        ],
-        stages: [], ages: ["600"]
-      },
-      {
-        id: "RF_3", eraGroup: "DOCM", color: "#f7886a",
-        cells: [
-          { cat: "era", val: "Рифейская RF", rs: 3, cs: 1, bg: "#f7886a", vert: true },
-          { cat: "era", val: "Верхнерифейская RF₃", rs: 1, cs: 1, bg: "#f7886a" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["1030"]
-      },
-      {
-        id: "RF_2", eraGroup: "DOCM", color: "#f7886a",
-        cells: [
-          { cat: "era", val: "Среднерифейская RF₂", rs: 1, cs: 1, bg: "#f7886a" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["1350"]
-      },
-      {
-        id: "RF_1", eraGroup: "DOCM", color: "#f7886a",
-        cells: [
-          { cat: "era", val: "Нижнерифейская RF₁", rs: 1, cs: 1, bg: "#f7886a" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["1650"]
-      },
-      {
-        id: "KR_2", eraGroup: "DOCM", color: "#f5769a",
-        cells: [
-          { cat: "eon", val: "Нижнепротерозойская (раннепротерозойский) PR₁ (Карельская KR)", rs: 2, cs: 1, bg: "#f4bab8", vert: true },
-          { cat: "era", val: "Верхнекарельская KR₂", rs: 1, cs: 2, bg: "#f5769a" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["2100"]
-      },
-      {
-        id: "KR_1", eraGroup: "DOCM", color: "#f5769a",
-        cells: [
-          { cat: "era", val: "Нижнекарельская KR₁", rs: 1, cs: 2, bg: "#f5769a" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["2500"]
-      },
-      {
-        id: "LP_3", eraGroup: "DOCM", color: "#ebb5d8",
-        cells: [
-          { cat: "akron", val: "Архейская (архейский) AR", rs: 4, cs: 1, bg: "#ebbae0", vert: true },
-          { cat: "eon", val: "Верхнеархейская (позднеархейский) AR₂ (Лопийская LP)", rs: 3, cs: 1, bg: "#f2cde8", vert: true },
-          { cat: "era", val: "Верхнелопийская LP₃", rs: 1, cs: 2, bg: "#ebb5d8" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["2800"]
-      },
-      {
-        id: "LP_2", eraGroup: "DOCM", color: "#e396c8",
-        cells: [
-          { cat: "era", val: "Среднелопийская LP₂", rs: 1, cs: 2, bg: "#e396c8" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["3000"]
-      },
-      {
-        id: "LP_1", eraGroup: "DOCM", color: "#db6eb8",
-        cells: [
-          { cat: "era", val: "Нижнелопийская LP₁", rs: 1, cs: 2, bg: "#db6eb8" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: ["3200"]
-      },
-      {
-        id: "SM_1", eraGroup: "DOCM", color: "#f2cde8",
-        cells: [
-          { cat: "eon", val: "Нижнеархейская (раннеархейский) AR₁ (Саамская SM)", rs: 1, cs: 1, bg: "#f2cde8", vert: true },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" },
-          { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }
-        ],
-        stages: [], ages: []
-      }
+      { id: "Q_hol", eraGroup: "KZ", color: "#fff8d6", cells: [{ cat: "empty", val: "", rs: 42, cs: 1, bg: "#ffffff" }, { cat: "eon", val: "Фанерозойская (фанерозойский)", rs: 42, cs: 1, bg: "#6d9eeb", vert: true }, { cat: "era", val: "Кайнозойская (кайнозойская) KZ", rs: 15, cs: 2, bg: "#f7e3a1", vert: true }, { cat: "system", val: "Четвертичная (четвертичный) Q", rs: 2, cs: 2, bg: "#fbf0be", vert: true }, { cat: "series", val: "Голоцен (голоценовая) H", rs: 1, cs: 1, bg: "#fef6d4" }, { cat: "empty", val: "", rs: 1, cs: 1, bg: "#fef6d4" }], stages: [], ages: ["0.0117"] },
+      { id: "Q_ple", eraGroup: "KZ", color: "#fef3c4", cells: [{ cat: "series", val: "Плейстоцен (плейстоценовая) P", rs: 1, cs: 1, bg: "#fef3c4" }, { cat: "empty", val: "", rs: 1, cs: 1, bg: "#fef3c4" }], stages: ["Неоплейстоцен", "Эоплейстоцен", "Гелазский"], ages: ["0.781", "1.806", "2.58"] },
+      { id: "N2_2", eraGroup: "KZ", color: "#f9f1c0", cells: [{ cat: "system", val: "Неогеновая (неогеновый) N", rs: 5, cs: 2, bg: "#f4ebc2", vert: true }, { cat: "series", val: "Плиоцен (плиоценовая) N₂", rs: 2, cs: 1, bg: "#f7f0ca" }, { cat: "series", val: "Верхний N₂²", rs: 1, cs: 1, bg: "#f9f3d2" }], stages: ["Пьяченцский"], ages: ["3.600"] },
+      { id: "N2_1", eraGroup: "KZ", color: "#f9f1c0", cells: [{ cat: "series", val: "Нижний N₂¹", rs: 1, cs: 1, bg: "#f9f3d2" }], stages: ["Занклский"], ages: ["5.333"] },
+      { id: "N1_3", eraGroup: "KZ", color: "#f5ecb6", cells: [{ cat: "series", val: "Миоцен (миоценовая) N₁", rs: 3, cs: 1, bg: "#f5ecb6" }, { cat: "series", val: "Верхний N₁³", rs: 1, cs: 1, bg: "#f7efc0" }], stages: ["Мессинский", "Тортонский"], ages: ["7.246", "11.63"] },
+      { id: "N1_2", eraGroup: "KZ", color: "#f5ecb6", cells: [{ cat: "series", val: "Средний N₁²", rs: 1, cs: 1, bg: "#f7efc0" }], stages: ["Серравальский", "Лангийский"], ages: ["13.82", "15.98"] },
+      { id: "N1_1", eraGroup: "KZ", color: "#f5ecb6", cells: [{ cat: "series", val: "Нижний N₁¹", rs: 1, cs: 1, bg: "#f7efc0" }], stages: ["Бурдигальский", "Аквитанский"], ages: ["20.45", "23.04"] },
+      { id: "P3_2", eraGroup: "KZ", color: "#f5efc4", cells: [{ cat: "system", val: "Палеогеновая (палеогеновый) P", rs: 8, cs: 2, bg: "#fce5cd", vert: true }, { cat: "series", val: "Олигоцен (олигоценовая) P₃", rs: 2, cs: 1, bg: "#f2ecc2" }, { cat: "series", val: "Верхний P₃²", rs: 1, cs: 1, bg: "#f5f0ce" }], stages: ["Хаттский"], ages: ["27.30"] },
+      { id: "P3_1", eraGroup: "KZ", color: "#f5efc4", cells: [{ cat: "series", val: "Нижний P₃¹", rs: 1, cs: 1, bg: "#f5f0ce" }], stages: ["Рюпельский"], ages: ["33.9"] },
+      { id: "P2_3", eraGroup: "KZ", color: "#f7f2c8", cells: [{ cat: "series", val: "Эоцен (эоценовая) P₂", rs: 3, cs: 1, bg: "#f5f0c4" }, { cat: "series", val: "Верхний P₂³", rs: 1, cs: 1, bg: "#f7f3ce" }], stages: ["Приабонский"], ages: ["37.71"] },
+      { id: "P2_2", eraGroup: "KZ", color: "#f7f2c8", cells: [{ cat: "series", val: "Средний P₂²", rs: 1, cs: 1, bg: "#f7f3ce" }], stages: ["Бартонский", "Лютетский"], ages: ["41.03", "48.07"] },
+      { id: "P2_1", eraGroup: "KZ", color: "#f7f2c8", cells: [{ cat: "series", val: "Нижний P₂¹", rs: 1, cs: 1, bg: "#f7f3ce" }], stages: ["Ипрский"], ages: ["56.0"] },
+      { id: "P1_3", eraGroup: "KZ", color: "#f4f587", cells: [{ cat: "series", val: "Палеоцен (палеоценовая) P₁", rs: 3, cs: 1, bg: "#f2f57a" }, { cat: "series", val: "Верхний P₁³", rs: 1, cs: 1, bg: "#f4f78d" }], stages: ["Танетский"], ages: ["59.24"] },
+      { id: "P1_2", eraGroup: "KZ", color: "#f4f587", cells: [{ cat: "series", val: "Средний P₁²", rs: 1, cs: 1, bg: "#f4f78d" }], stages: ["Зеландский"], ages: ["61.66"] },
+      { id: "P1_1", eraGroup: "KZ", color: "#f4f587", cells: [{ cat: "series", val: "Нижний P₁¹", rs: 1, cs: 1, bg: "#f4f78d" }], stages: ["Датский"], ages: ["66.0"] },
+      { id: "K_2", eraGroup: "MZ", color: "#f6fad9", cells: [{ cat: "era", val: "Мезозойская (мезозойская) MZ", rs: 8, cs: 2, bg: "#a8e6b8", vert: true }, { cat: "system", val: "Меловая (меловой) K", rs: 2, cs: 2, bg: "#dcf5c4", vert: true }, { cat: "series", val: "Верхний (поздняя) K₂", rs: 1, cs: 2, bg: "#f6fad9" }], stages: ["Маастрихтский", "Кампанский", "Сантонский", "Коньякский", "Туронский", "Сеноманский"], ages: ["72.1±0.2", "83.6±0.2", "85.7±0.2", "89.8±0.3", "93.9±0.2", "100.5±0.1"] },
+      { id: "K_1", eraGroup: "MZ", color: "#dcf5c4", cells: [{ cat: "series", val: "Нижний (ранняя) K₁", rs: 1, cs: 2, bg: "#dcf5c4" }], stages: ["Альбский", "Аптский", "Барремский", "Готеривский", "Валанжинский", "Берриасский"], ages: ["113.2±0.3", "121.4±0.6", "125.77", "132.6±0.6", "137.05±0.2", "143.1±0.6"] },
+      { id: "J_3", eraGroup: "MZ", color: "#dcf0fa", cells: [{ cat: "system", val: "Юрская (юрский) J", rs: 3, cs: 2, bg: "#d0e4f5", vert: true }, { cat: "series", val: "Верхний (поздняя) J₃", rs: 1, cs: 2, bg: "#dcf0fa" }], stages: ["Титонский", "Кимериджский", "Оксфордский"], ages: ["149.2±0.7", "154.8±0.8", "161.5±1.0"] },
+      { id: "J_2", eraGroup: "MZ", color: "#b3d7f2", cells: [{ cat: "series", val: "Средний (средняя) J₂", rs: 1, cs: 2, bg: "#b3d7f2" }], stages: ["Келловейский", "Батский", "Байосский", "Ааленский"], ages: ["165.3±1.1", "168.2±1.2", "170.9±0.8", "174.7±0.8"] },
+      { id: "J_1", eraGroup: "MZ", color: "#a8cdf0", cells: [{ cat: "series", val: "Нижний (ранняя) J₁", rs: 1, cs: 2, bg: "#a8cdf0" }], stages: ["Тоарский", "Плинсбахский", "Синемюрский", "Геттангский"], ages: ["184.2±0.3", "192.9±0.3", "199.3±0.3", "201.4±0.2"] },
+      { id: "T_3", eraGroup: "MZ", color: "#fae6f7", cells: [{ cat: "system", val: "Триасовая (триасовый) T", rs: 3, cs: 2, bg: "#ebd3f0", vert: true }, { cat: "series", val: "Верхний (поздняя) T₃", rs: 1, cs: 2, bg: "#fae6f7" }], stages: ["Рэтский", "Норийский", "Карнийский"], ages: ["~ 205.7", "~ 227.3", "~ 237"] },
+      { id: "T_2", eraGroup: "MZ", color: "#f0c4eb", cells: [{ cat: "series", val: "Средний (средняя) T₂", rs: 1, cs: 2, bg: "#f0c4eb" }], stages: ["Ладинский", "Анизийский"], ages: ["241.464±0.28", "246.7"] },
+      { id: "T_1", eraGroup: "MZ", color: "#e3b3eb", cells: [{ cat: "series", val: "Нижний (ранняя) T₁", rs: 1, cs: 2, bg: "#e3b3eb" }], stages: ["Оленекский", "Индский"], ages: ["249.9", "251.902±0.024"] },
+      { id: "P_3", eraGroup: "PZ", color: "#fce8cc", cells: [{ cat: "era", val: "Палеозойская (палеозойская) PZ", rs: 19, cs: 2, bg: "#d4cfa9", vert: true }, { cat: "system", val: "Пермская (пермский) P", rs: 3, cs: 2, bg: "#fcdbb6", vert: true }, { cat: "series", val: "Татарский (татарская) P₃", rs: 1, cs: 2, bg: "#fce8cc" }], stages: ["Вятский", "Северодвинский"], ages: ["259.51±0.2", "264.28±0.16"] },
+      { id: "P_2", eraGroup: "PZ", color: "#fcdfba", cells: [{ cat: "series", val: "Биармийский (биармийская) P₂", rs: 1, cs: 2, bg: "#fcdfba" }], stages: ["Уржумский", "Казанский"], ages: ["266.9±0.4", "274.04±0.4"] },
+      { id: "P_1", eraGroup: "PZ", color: "#fcd5a7", cells: [{ cat: "series", val: "Приуральский (приуральская) P₁", rs: 1, cs: 2, bg: "#fcd5a7" }], stages: ["Уфимский", "Кунгурский", "Артинский", "Сакмарский", "Ассельский"], ages: ["—", "283.3±0.4", "290.1±0.26", "293.52±0.17", "298.9±0.15"] },
+      { id: "C_3", eraGroup: "PZ", color: "#dce0db", cells: [{ cat: "system", val: "Каменноугольная (каменноугольный) C", rs: 3, cs: 2, bg: "#b5bab8", vert: true }, { cat: "series", val: "Верхний (поздняя) C₃", rs: 1, cs: 2, bg: "#dce0db" }], stages: ["Гжельский", "Касимовский"], ages: ["303.7±0.1", "307.0±0.1"] },
+      { id: "C_2", eraGroup: "PZ", color: "#b5bab8", cells: [{ cat: "series", val: "Средний (средняя) C₂", rs: 1, cs: 2, bg: "#b5bab8" }], stages: ["Московский", "Башкирский"], ages: ["315.2±0.2", "323.4±0.4"] },
+      { id: "C_1", eraGroup: "PZ", color: "#a4b3b8", cells: [{ cat: "series", val: "Нижний (ранняя) C₁", rs: 1, cs: 2, bg: "#a4b3b8" }], stages: ["Серпуховский", "Визейский", "Турнейский"], ages: ["330.3±0.4", "346.7±0.4", "358.86±0.19"] },
+      { id: "D_3", eraGroup: "PZ", color: "#f7dec4", cells: [{ cat: "system", val: "Девонская (девонский) D", rs: 3, cs: 2, bg: "#e3bd96", vert: true }, { cat: "series", val: "Верхний (поздняя) D₃", rs: 1, cs: 2, bg: "#f7dec4" }], stages: ["Фаменский", "Франский"], ages: ["372.15±0.46", "382.31±1.36"] },
+      { id: "D_2", eraGroup: "PZ", color: "#e3c5a6", cells: [{ cat: "series", val: "Средний (средняя) D₂", rs: 1, cs: 2, bg: "#e3c5a6" }], stages: ["Живетский", "Эйфельский"], ages: ["387.95±1.04", "393.47±0.99"] },
+      { id: "D_1", eraGroup: "PZ", color: "#deb69b", cells: [{ cat: "series", val: "Нижний (ранняя) D₁", rs: 1, cs: 2, bg: "#deb69b" }], stages: ["Эмсский", "Пражский", "Лохковский"], ages: ["410.62±1.95", "413.02±1.91", "419.62±1.36"] },
+      { id: "S_4", eraGroup: "PZ", color: "#e5ebcc", cells: [{ cat: "system", val: "Силурийская (силурийский) S", rs: 4, cs: 1, bg: "#d9e3b8", vert: true }, { cat: "system", val: "Верх. S₂", rs: 2, cs: 1, bg: "#e5ebcc", vert: true }, { cat: "series", val: "Пржидольский (пржидольская) S₂²", rs: 1, cs: 2, bg: "#e5ebcc" }], stages: [], ages: ["422.7±1.6"] },
+      { id: "S_3", eraGroup: "PZ", color: "#e5ebcc", cells: [{ cat: "series", val: "Лудловский (лудловская) S₂¹", rs: 1, cs: 2, bg: "#e5ebcc" }], stages: ["Лудфордский", "Горстийский"], ages: ["425.0±1.5", "426.7±1.5"] },
+      { id: "S_2", eraGroup: "PZ", color: "#d6dbba", cells: [{ cat: "system", val: "Нижняя S₁", rs: 2, cs: 1, bg: "#d6dbba", vert: true }, { cat: "series", val: "Венлокский (венлокская) S₁²", rs: 1, cs: 2, bg: "#d6dbba" }], stages: ["Гомерский", "Шейнвудский"], ages: ["430.6±1.3", "432.9±1.2"] },
+      { id: "S_1", eraGroup: "PZ", color: "#d6dbba", cells: [{ cat: "series", val: "Лландоверийский (лландоверийская) S₁¹", rs: 1, cs: 2, bg: "#d6dbba" }], stages: ["Теличский", "Аэронский", "Рудданский"], ages: ["438.6±1.0", "440.5±1.0", "443.1±0.9"] },
+      { id: "O_3", eraGroup: "PZ", color: "#cff2e5", cells: [{ cat: "system", val: "Ордовикская (ордовикский) O", rs: 3, cs: 2, bg: "#a4dec8", vert: true }, { cat: "series", val: "Верхний (поздняя) O₃", rs: 1, cs: 2, bg: "#cff2e5" }], stages: ["Хирнантский", "Катийский", "Сандбийский"], ages: ["445.2±0.9", "452.8±0.7", "458.2±0.7"] },
+      { id: "O_2", eraGroup: "PZ", color: "#bee8d6", cells: [{ cat: "series", val: "Средний (средняя) O₂", rs: 1, cs: 2, bg: "#bee8d6" }], stages: ["Дарривильский", "Дапинский"], ages: ["469.4±0.9", "471.3±1.4"] },
+      { id: "O_1", eraGroup: "PZ", color: "#abdec8", cells: [{ cat: "series", val: "Нижний (ранняя) O₁", rs: 1, cs: 2, bg: "#abdec8" }], stages: ["Флоский", "Тремадокский"], ages: ["477.1±1.2", "486.85±1.5"] },
+      { id: "Cm_3", eraGroup: "PZ", color: "#d2f0f2", cells: [{ cat: "system", val: "Кембрийская (кембрийский) Є", rs: 3, cs: 2, bg: "#a8d4d4", vert: true }, { cat: "series", val: "Верхний (поздняя) Є₃", rs: 1, cs: 2, bg: "#d2f0f2" }], stages: ["Батырбайский", "Аксайский", "Сакский"], ages: ["—", "—", "~ 497"] },
+      { id: "Cm_2", eraGroup: "PZ", color: "#c2ebed", cells: [{ cat: "series", val: "Средний (средняя) Є₂", rs: 1, cs: 2, bg: "#c2ebed" }], stages: ["Аюсокканский", "Майский", "Амгинский"], ages: ["500", "~ 504,5", "509"] },
+      { id: "Cm_1", eraGroup: "PZ", color: "#c2f0eb", cells: [{ cat: "series", val: "Нижний (ранняя) Є₁", rs: 1, cs: 2, bg: "#c2f0eb" }], stages: ["Тойонский", "Ботомский", "Атдабанский", "Томмотский"], ages: ["—", "—", "—", "535±1"] },
+      { id: "V_2", eraGroup: "DOCM", color: "#fad4d4", cells: [{ cat: "akron", val: "Протерозойская (протерозойский) PR", rs: 7, cs: 1, bg: "#f4bab8", vert: true }, { cat: "eon", val: "Верхнепротерозойская (позднепротерозойский) PR₂", rs: 5, cs: 1, bg: "#f4bab8", vert: true }, { cat: "empty", val: "", rs: 2, cs: 2, bg: "#f4bab8" }, { cat: "system", val: "Вендская (вендский) V", rs: 2, cs: 2, bg: "#fad4d4" }, { cat: "series", val: "Верхний (поздняя) V₂", rs: 1, cs: 2, bg: "#fad4d4" }], stages: [], ages: ["555-570"] },
+      { id: "V_1", eraGroup: "DOCM", color: "#fad4d4", cells: [{ cat: "series", val: "Нижний (ранняя) V₁", rs: 1, cs: 2, bg: "#fad4d4" }], stages: [], ages: ["600"] },
+      { id: "RF_3", eraGroup: "DOCM", color: "#f7886a", cells: [{ cat: "era", val: "Рифейская RF", rs: 3, cs: 1, bg: "#f7886a", vert: true }, { cat: "era", val: "Верхнерифейская RF₃", rs: 1, cs: 1, bg: "#f7886a" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["1030"] },
+      { id: "RF_2", eraGroup: "DOCM", color: "#f7886a", cells: [{ cat: "era", val: "Среднерифейская RF₂", rs: 1, cs: 1, bg: "#f7886a" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["1350"] },
+      { id: "RF_1", eraGroup: "DOCM", color: "#f7886a", cells: [{ cat: "era", val: "Нижнерифейская RF₁", rs: 1, cs: 1, bg: "#f7886a" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["1650"] },
+      { id: "KR_2", eraGroup: "DOCM", color: "#f5769a", cells: [{ cat: "eon", val: "Нижнепротерозойская (раннепротерозойский) PR₁ (Карельская KR)", rs: 2, cs: 1, bg: "#f4bab8", vert: true }, { cat: "era", val: "Верхнекарельская KR₂", rs: 1, cs: 2, bg: "#f5769a" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["2100"] },
+      { id: "KR_1", eraGroup: "DOCM", color: "#f5769a", cells: [{ cat: "era", val: "Нижнекарельская KR₁", rs: 1, cs: 2, bg: "#f5769a" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["2500"] },
+      { id: "LP_3", eraGroup: "DOCM", color: "#ebb5d8", cells: [{ cat: "akron", val: "Архейская (архейский) AR", rs: 4, cs: 1, bg: "#ebbae0", vert: true }, { cat: "eon", val: "Верхнеархейская (позднеархейский) AR₂ (Лопийская LP)", rs: 3, cs: 1, bg: "#f2cde8", vert: true }, { cat: "era", val: "Верхнелопийская LP₃", rs: 1, cs: 2, bg: "#ebb5d8" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["2800"] },
+      { id: "LP_2", eraGroup: "DOCM", color: "#e396c8", cells: [{ cat: "era", val: "Среднелопийская LP₂", rs: 1, cs: 2, bg: "#e396c8" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["3000"] },
+      { id: "LP_1", eraGroup: "DOCM", color: "#db6eb8", cells: [{ cat: "era", val: "Нижнелопийская LP₁", rs: 1, cs: 2, bg: "#db6eb8" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: ["3200"] },
+      { id: "SM_1", eraGroup: "DOCM", color: "#f2cde8", cells: [{ cat: "eon", val: "Нижнеархейская (раннеархейский) AR₁ (Саамская SM)", rs: 1, cs: 1, bg: "#f2cde8", vert: true }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }, { cat: "empty", val: "", rs: 1, cs: 2, bg: "#ffffff" }], stages: [], ages: [] }
     ];
 
-    const catLabels = {
-      akron: "Акрон",
-      eon: "Эон",
-      era: "Эра",
-      system: "Период",
-      series: "Отдел",
-      stage: "Ярус",
-      age: "Возраст"
-    };
-
-    let stratMainMode = null;   // null | 'study' | 'practice'
-    let stratLevel = null;      // null | 'easy' | 'medium' | 'hard'
-    let stratInputMode = null;  // null | 'chips' | 'keyboard'
-    let stratEraFilter = "ALL"; // 'ALL' | 'KZ' | 'MZ' | 'PZ' | 'DOCM'
-    let compactColsMode = false;
-    let stratSolved = {};
-    let lastSolvedKey = null;
-    let activeTargetKey = null;
+    const catLabels = { akron: "Акрон", eon: "Эон", era: "Эра", system: "Период", series: "Отдел", stage: "Ярус", age: "Возраст" };
+    let stratMainMode = null, stratLevel = null, stratInputMode = null, stratEraFilter = "ALL", compactColsMode = false;
+    let stratSolved = {}, lastSolvedKey = null, activeTargetKey = null;
 
     function getHiddenCatsForLevel(lvl) {
       if (lvl === "easy") return ["akron", "eon", "era", "system"];
@@ -1161,11 +828,7 @@
       closeStratDrawer();
       ["ALL", "KZ", "MZ", "PZ", "DOCM"].forEach(k => {
         const b = document.getElementById(`eraFilter-${k}`);
-        if (b) {
-          b.className = k === era
-            ? "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green"
-            : "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light";
-        }
+        if (b) b.className = k === era ? "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green" : "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light";
       });
       renderStratTable();
     }
@@ -1174,31 +837,18 @@
       compactColsMode = !compactColsMode;
       const btn = document.getElementById("compactColsBtn");
       if (btn) {
-        btn.className = compactColsMode
-          ? "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-green flex items-center gap-1.5"
-          : "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5";
-        btn.innerHTML = compactColsMode
-          ? "<span>👁️ Показать все столбцы</span>"
-          : "<span>📱 Скрыть неигровые столбцы</span>";
+        btn.className = compactColsMode ? "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-green flex items-center gap-1.5" : "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5";
+        btn.innerHTML = compactColsMode ? "<span>👁️ Показать все столбцы</span>" : "<span>📱 Скрыть неигровые столбцы</span>";
       }
       renderStratTable();
     }
 
     function selectStratMainMode(mode) {
-      stratMainMode = mode;
-      stratSolved = {};
-      lastSolvedKey = null;
-      activeTargetKey = null;
-      closeStratDrawer();
-
-      const btnStudy = document.getElementById("stratMainBtn-study");
-      const btnPractice = document.getElementById("stratMainBtn-practice");
-      const levelBar = document.getElementById("stratLevelBar");
-      const inputBar = document.getElementById("stratInputBar");
-      const mobileToolbar = document.getElementById("stratMobileToolbar");
-      const statsBox = document.getElementById("stratStatsBox");
-      const emptyPrompt = document.getElementById("stratEmptyPrompt");
-      const tableContainer = document.getElementById("stratTableContainer");
+      stratMainMode = mode; stratSolved = {}; lastSolvedKey = null; activeTargetKey = null; closeStratDrawer();
+      const btnStudy = document.getElementById("stratMainBtn-study"), btnPractice = document.getElementById("stratMainBtn-practice");
+      const levelBar = document.getElementById("stratLevelBar"), inputBar = document.getElementById("stratInputBar");
+      const mobileToolbar = document.getElementById("stratMobileToolbar"), statsBox = document.getElementById("stratStatsBox");
+      const emptyPrompt = document.getElementById("stratEmptyPrompt"), tableContainer = document.getElementById("stratTableContainer");
 
       if (mode === "study") {
         btnStudy.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
@@ -1214,11 +864,8 @@
       } else {
         btnPractice.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
         btnStudy.className = "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
-        stratLevel = null;
-        stratInputMode = null;
-        ["easy", "medium", "hard"].forEach(k => {
-          document.getElementById(`stratLvlBtn-${k}`).className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
-        });
+        stratLevel = null; stratInputMode = null;
+        ["easy", "medium", "hard"].forEach(k => { document.getElementById(`stratLvlBtn-${k}`).className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light"; });
         levelBar.classList.remove("hidden"); levelBar.classList.add("flex");
         inputBar.classList.add("hidden"); inputBar.classList.remove("flex");
         mobileToolbar.classList.add("hidden"); mobileToolbar.classList.remove("flex");
@@ -1230,84 +877,50 @@
     }
 
     function selectStratLevel(lvl) {
-      stratLevel = lvl;
-      stratSolved = {};
-      lastSolvedKey = null;
-      activeTargetKey = null;
-      closeStratDrawer();
+      stratLevel = lvl; stratSolved = {}; lastSolvedKey = null; activeTargetKey = null; closeStratDrawer();
+      if (window.innerWidth < 768 && (lvl === "easy" || lvl === "medium")) compactColsMode = true;
+      else if (lvl === "hard") compactColsMode = false;
 
-      // На телефоне (< 768px) автоматически включаем компактный вид колонок для Лёгкого и Среднего уровней
-      if (window.innerWidth < 768 && (lvl === "easy" || lvl === "medium")) {
-        compactColsMode = true;
-      } else if (lvl === "hard") {
-        compactColsMode = false;
-      }
       const cBtn = document.getElementById("compactColsBtn");
       if (cBtn) {
         cBtn.classList.toggle("hidden", lvl === "hard");
-        cBtn.className = compactColsMode
-          ? "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-green flex items-center gap-1.5"
-          : "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5";
-        cBtn.innerHTML = compactColsMode
-          ? "<span>👁️ Показать все столбцы</span>"
-          : "<span>📱 Скрыть неигровые столбцы</span>";
+        cBtn.className = compactColsMode ? "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-green flex items-center gap-1.5" : "px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5";
+        cBtn.innerHTML = compactColsMode ? "<span>👁️ Показать все столбцы</span>" : "<span>📱 Скрыть неигровые столбцы</span>";
       }
 
       ["easy", "medium", "hard"].forEach(k => {
-        document.getElementById(`stratLvlBtn-${k}`).className = k === lvl
-          ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
-          : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        document.getElementById(`stratLvlBtn-${k}`).className = k === lvl ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green" : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       });
 
       const inputBar = document.getElementById("stratInputBar");
       inputBar.classList.remove("hidden"); inputBar.classList.add("flex");
 
-      if (stratInputMode) {
-        renderStratTable();
-      } else {
-        ["chips", "keyboard"].forEach(m => {
-          document.getElementById(`stratInpBtn-${m}`).className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
-        });
+      if (stratInputMode) renderStratTable();
+      else {
+        ["chips", "keyboard"].forEach(m => { document.getElementById(`stratInpBtn-${m}`).className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light"; });
         document.getElementById("stratEmptyPrompt").innerHTML = "👆 Выберите способ ввода: <strong>«🧩 Плашки»</strong> или <strong>«⌨️ Клавиатура»</strong>.";
       }
     }
 
     function selectStratInputMode(inpMode) {
-      stratInputMode = inpMode;
-      lastSolvedKey = null;
-      activeTargetKey = null;
+      stratInputMode = inpMode; lastSolvedKey = null; activeTargetKey = null;
       if (inpMode === "keyboard") closeStratDrawer();
-
       ["chips", "keyboard"].forEach(m => {
-        document.getElementById(`stratInpBtn-${m}`).className = m === inpMode
-          ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
-          : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        document.getElementById(`stratInpBtn-${m}`).className = m === inpMode ? "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green" : "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       });
-
       document.getElementById("stratEmptyPrompt").classList.add("hidden");
-      const statsBox = document.getElementById("stratStatsBox");
-      statsBox.classList.remove("hidden"); statsBox.classList.add("flex");
-      const mobileToolbar = document.getElementById("stratMobileToolbar");
-      mobileToolbar.classList.remove("hidden"); mobileToolbar.classList.add("flex");
+      const statsBox = document.getElementById("stratStatsBox"); statsBox.classList.remove("hidden"); statsBox.classList.add("flex");
+      const mobileToolbar = document.getElementById("stratMobileToolbar"); mobileToolbar.classList.remove("hidden"); mobileToolbar.classList.add("flex");
       document.getElementById("stratTableContainer").classList.remove("hidden");
       renderStratTable();
     }
 
-    function resetStratTraining() {
-      stratSolved = {};
-      lastSolvedKey = null;
-      activeTargetKey = null;
-      closeStratDrawer();
-      renderStratTable();
-    }
+    function resetStratTraining() { stratSolved = {}; lastSolvedKey = null; activeTargetKey = null; closeStratDrawer(); renderStratTable(); }
 
-    // Возвращает строки с учётом фильтра по эрам и динамически корректирует rowspan для Фанерозоя
     function getFilteredRows() {
       if (stratEraFilter === "ALL") return stratRows;
       const subset = stratRows.filter(r => r.eraGroup === stratEraFilter);
       if (stratEraFilter === "DOCM" || subset.length === 0) return subset;
-
-      // Для KZ, MZ, PZ гарантируем, что в первой строке фильтра есть ячейки Акрона (пустая) и Эона (Фанерозой) с точным rowspan
       return subset.map((r, idx) => {
         if (idx !== 0) return r;
         const clonedCells = r.cells.map((c, cIdx) => ({ ...c, origKey: `${r.id}_c${cIdx}` }));
@@ -1325,27 +938,18 @@
     }
 
     function getAllPlayableItems(hiddenCats) {
-      const list = [];
-      const seenKeys = new Set();
-      const rows = getFilteredRows();
-
+      const list = [], seenKeys = new Set(), rows = getFilteredRows();
       rows.forEach(row => {
         row.cells.forEach((c, idx) => {
           const key = c.origKey || `${row.id}_c${idx}`;
           if (c.cat !== "empty" && c.val && hiddenCats.includes(c.cat) && !seenKeys.has(key)) {
-            seenKeys.add(key);
-            list.push({ key, cat: c.cat, val: c.val });
+            seenKeys.add(key); list.push({ key, cat: c.cat, val: c.val });
           }
         });
-        if (hiddenCats.includes("stage") && row.stages.length > 0) {
-          const stStr = row.stages.join(" / ");
-          list.push({ key: `${row.id}_stage`, cat: "stage", val: stStr });
-        }
+        if (hiddenCats.includes("stage") && row.stages.length > 0) list.push({ key: `${row.id}_stage`, cat: "stage", val: row.stages.join(" / ") });
         if (hiddenCats.includes("age")) {
           const validAges = row.ages.filter(a => a && a !== "—");
-          if (validAges.length > 0) {
-            list.push({ key: `${row.id}_age`, cat: "age", val: validAges.join(" / ") });
-          }
+          if (validAges.length > 0) list.push({ key: `${row.id}_age`, cat: "age", val: validAges.join(" / ") });
         }
       });
       return list;
@@ -1356,9 +960,7 @@
       const isHidden = stratMainMode === "practice" && hiddenCats.includes(cat) && !stratSolved[key];
       if (!isHidden) {
         const isJustSolved = (key === lastSolvedKey);
-        const popCls = isJustSolved
-          ? "pop-ok font-bold text-[#14532d] rounded px-1 py-0.5"
-          : (stratSolved[key] ? "font-bold text-[#1e4620]" : "");
+        const popCls = isJustSolved ? "pop-ok font-bold text-[#14532d] rounded px-1 py-0.5" : (stratSolved[key] ? "font-bold text-[#1e4620]" : "");
         const vertCls = isVert ? "vert-box" : "";
         return `<div class="${popCls} ${vertCls}">${displayHtml}</div>`;
       }
@@ -1380,15 +982,12 @@
       const hiddenCats = stratMainMode === "practice" ? getHiddenCatsForLevel(stratLevel) : [];
       const playable = getAllPlayableItems(hiddenCats);
       const solvedCount = playable.filter(it => stratSolved[it.key]).length;
-
       document.getElementById("stratSolvedCount").textContent = solvedCount;
       document.getElementById("stratTotalCount").textContent = playable.length;
 
-      // Проверяем, какие колонки показывать в компактном мобильном режиме
       const hideSeriesCol = stratMainMode === "practice" && compactColsMode && stratLevel === "easy";
       const hideStagesAgesCol = stratMainMode === "practice" && compactColsMode && (stratLevel === "easy" || stratLevel === "medium");
 
-      // Шапка таблицы с вертикальными заголовками для узких левых столбцов
       const thead = document.getElementById("stratTableHead");
       thead.innerHTML = `
         <tr class="bg-[#f3ece1] text-[#2e2620] text-[11px] sm:text-xs font-bold border-b-2 border-[#594c3f] text-center">
@@ -1406,19 +1005,13 @@
 
       const rowsToRender = getFilteredRows();
       const tbody = document.getElementById("stratTableBody");
-
       tbody.innerHTML = rowsToRender.map(row => {
         const tdsHtml = row.cells.map((cell, idx) => {
-          // Если включён компактный режим на Лёгком уровне — пропускаем колонки Отделов (series и пустые ячейки отделов)
-          if (hideSeriesCol && (cell.cat === "series" || (cell.cat === "empty" && idx >= row.cells.length - 2 && row.eraGroup !== "KZ" || (row.eraGroup === "KZ" && idx === row.cells.length - 1)))) {
-            return "";
-          }
+          if (hideSeriesCol && (cell.cat === "series" || (cell.cat === "empty" && idx >= row.cells.length - 2 && row.eraGroup !== "KZ" || (row.eraGroup === "KZ" && idx === row.cells.length - 1)))) return "";
           const key = cell.origKey || `${row.id}_c${idx}`;
           const isCellHidden = stratMainMode === "practice" && hiddenCats.includes(cell.cat) && cell.val && !stratSolved[key];
           const content = renderSingleInteractiveUnit(key, cell.cat, cell.val, cell.val, hiddenCats, cell.vert);
-          const fontCls = (cell.cat === "akron" || cell.cat === "eon" || cell.cat === "era" || cell.cat === "system")
-            ? "font-bold text-center"
-            : "font-semibold";
+          const fontCls = (cell.cat === "akron" || cell.cat === "eon" || cell.cat === "era" || cell.cat === "system") ? "font-bold text-center" : "font-semibold";
           const tdBg = isCellHidden ? "#faf6f0" : (cell.bg || row.color);
           return `<td rowspan="${cell.rs}" colspan="${cell.cs}" style="background-color: ${tdBg};"
             class="p-1 sm:p-1.5 border-b border-r border-[#7a6b5d] align-middle transition-colors duration-300 ${fontCls}">${content}</td>`;
@@ -1429,18 +1022,14 @@
           const stageKey = `${row.id}_stage`;
           const stageRaw = row.stages.length > 0 ? row.stages.join(" / ") : "";
           const isStageHidden = stratMainMode === "practice" && hiddenCats.includes("stage") && stageRaw && !stratSolved[stageKey];
-          const stageHtml = row.stages.length > 0
-            ? `<div class="flex flex-col divide-y divide-[#7a6b5d] -m-1">${row.stages.map(s => `<div class="py-0.5 px-1.5 text-center leading-tight">${s}</div>`).join("")}</div>`
-            : "";
+          const stageHtml = row.stages.length > 0 ? `<div class="flex flex-col divide-y divide-[#7a6b5d] -m-1">${row.stages.map(s => `<div class="py-0.5 px-1.5 text-center leading-tight">${s}</div>`).join("")}</div>` : "";
           const stageCellContent = renderSingleInteractiveUnit(stageKey, "stage", stageHtml, stageRaw, hiddenCats, false);
           const stageBg = row.stages.length > 0 ? (isStageHidden ? "#faf6f0" : row.color) : "#ffffff";
 
           const ageKey = `${row.id}_age`;
           const validAges = row.ages.filter(a => a && a !== "—");
           const ageRaw = validAges.length > 0 ? validAges.join(" / ") : "";
-          const ageHtml = row.ages.length > 0
-            ? `<div class="flex flex-col divide-y divide-[#dfd3c3] -m-1">${row.ages.map(a => `<div class="py-0.5 px-1 text-center font-mono leading-tight">${a}</div>`).join("")}</div>`
-            : "";
+          const ageHtml = row.ages.length > 0 ? `<div class="flex flex-col divide-y divide-[#dfd3c3] -m-1">${row.ages.map(a => `<div class="py-0.5 px-1 text-center font-mono leading-tight">${a}</div>`).join("")}</div>` : "";
           const ageCellContent = renderSingleInteractiveUnit(ageKey, "age", ageHtml, ageRaw, hiddenCats, false);
 
           rightColsHtml = `
@@ -1448,30 +1037,20 @@
             <td class="p-1 border-b border-[#7a6b5d] bg-white align-middle text-[10px] sm:text-[11px]">${ageCellContent}</td>
           `;
         }
-
         return `<tr>${tdsHtml}${rightColsHtml}</tr>`;
       }).join("");
 
       lastSolvedKey = null;
-
-      if (activeTargetKey && stratInputMode === "chips") {
-        renderDrawerChips(activeTargetKey.cat);
-      }
+      if (activeTargetKey && stratInputMode === "chips") renderDrawerChips(activeTargetKey.cat);
     }
 
     function selectStratUnit(key, cat) {
-      lastSolvedKey = null;
-      activeTargetKey = { key, cat };
-      renderStratTable();
+      lastSolvedKey = null; activeTargetKey = { key, cat }; renderStratTable();
       document.getElementById("stratDrawer").classList.remove("hidden");
       renderDrawerChips(cat);
-
-      // Плавно прокручиваем выбранную ячейку в центр экрана над шторкой
       setTimeout(() => {
         const activeBtn = document.getElementById(`unit-${key}`);
-        if (activeBtn) {
-          activeBtn.scrollIntoView({ behavior: "smooth", block: "center" });
-        }
+        if (activeBtn) activeBtn.scrollIntoView({ behavior: "smooth", block: "center" });
       }, 60);
     }
 
@@ -1487,14 +1066,12 @@
       const hiddenCats = getHiddenCatsForLevel(stratLevel);
       const playable = getAllPlayableItems(hiddenCats);
       const remaining = playable.filter(it => it.cat === cat && !stratSolved[it.key]);
-
       remaining.sort((a, b) => a.val.localeCompare(b.val, 'ru'));
 
       if (remaining.length === 0) {
         container.innerHTML = `<span class="text-xs font-bold text-[#3b5e49]">🎉 Все ячейки этой категории открыты!</span>`;
         return;
       }
-
       container.innerHTML = remaining.map(item => `
         <button type="button" onclick="pickStratChip('${item.key}', '${cat}', this)"
           class="px-2.5 sm:px-3.5 py-1.5 rounded-xl border border-[#b59e85] bg-[#fffdf9] hover:bg-[#efe7dc] text-[11px] sm:text-xs font-bold text-[#2e2620] shadow-sm transition text-left">
@@ -1515,12 +1092,10 @@
         const justSolved = activeTargetKey.key;
         stratSolved[justSolved] = true;
         lastSolvedKey = justSolved;
-
         const reversed = [...playable].reverse();
         const nextItem = reversed.find(it => it.cat === cat && !stratSolved[it.key]);
         activeTargetKey = nextItem ? { key: nextItem.key, cat } : null;
         renderStratTable();
-
         if (activeTargetKey) {
           setTimeout(() => {
             const nextBtn = document.getElementById(`unit-${activeTargetKey.key}`);
@@ -1528,11 +1103,8 @@
           }, 80);
         }
       } else {
-        btnEl.classList.remove("shake");
-        void btnEl.offsetWidth;
-        btnEl.classList.add("shake");
-        btnEl.style.borderColor = "#b85c38";
-        btnEl.style.backgroundColor = "#f9ebe4";
+        btnEl.classList.remove("shake"); void btnEl.offsetWidth; btnEl.classList.add("shake");
+        btnEl.style.borderColor = "#b85c38"; btnEl.style.backgroundColor = "#f9ebe4";
       }
     }
 
@@ -1543,13 +1115,10 @@
       const playable = getAllPlayableItems(hiddenCats);
       const targetItem = playable.find(it => it.key === key);
       if (!targetItem) return;
-
       const target = targetItem.val.toLowerCase().replace(/ё/g, "е");
       const firstWord = target.split(/[\s,(/]+/)[0];
       if (target.includes(userVal) && (userVal.length >= 2 || userVal === target || userVal === firstWord)) {
-        stratSolved[key] = true;
-        lastSolvedKey = key;
-        renderStratTable();
+        stratSolved[key] = true; lastSolvedKey = key; renderStratTable();
       } else {
         inputEl.classList.add("shake", "border-red-500");
         setTimeout(() => inputEl.classList.remove("shake"), 400);
@@ -1560,23 +1129,18 @@
       const hiddenCats = getHiddenCatsForLevel(stratLevel);
       if (hiddenCats.length === 0) return;
       const playable = getAllPlayableItems(hiddenCats);
-
       if (activeTargetKey && !stratSolved[activeTargetKey.key]) {
-        stratSolved[activeTargetKey.key] = true;
-        lastSolvedKey = activeTargetKey.key;
+        stratSolved[activeTargetKey.key] = true; lastSolvedKey = activeTargetKey.key;
       } else {
         const reversed = [...playable].reverse();
         const next = reversed.find(it => !stratSolved[it.key]);
-        if (next) {
-          stratSolved[next.key] = true;
-          lastSolvedKey = next.key;
-        }
+        if (next) { stratSolved[next.key] = true; lastSolvedKey = next.key; }
       }
       renderStratTable();
     }
 
     // =========================================================================
-    // 3. ПОЛНАЯ БАЗА 29 МИНЕРАЛОВ И 20 ВЫДВИЖНЫХ ВОПРОСОВ ТРЕНАЖЁРА
+    // 3. БАЗА 29 МИНЕРАЛОВ + БАЗА 41 ГОРНОЙ ПОРОДЫ + 20 ВОПРОСОВ ТРЕНАЖЁРА
     // =========================================================================
     const minerals = [
       { num: "1", name: "Графит", wiki: "Графит", wikiEn: "Graphite", group: "Самородные элементы", formula: "C", hardness: "1–2 (низкая, пачкает руки)", density: "2 г/см³ (низкая)", cleavage: "Весьма совершенная по базису (расщепляется на тонкие чешуйки)", color: "Серебристо-чёрная", extra: "Самородный элемент (один и тот же элемент с алмазом); оставляет чёрную черту", fact: "Состоит из углерода (C), как и алмаз, но имеет слоистое строение. Из него делают грифели карандашей, огнеупорные тигли и стержни реакторов." },
@@ -1610,183 +1174,49 @@
       { num: "32", name: "Лабрадор (плагиоклаз)", wiki: "Лабрадор_(минерал)", wikiEn: "Labradorite", group: "Силикаты", formula: "Плагиоклаз", hardness: "6", density: "~2,7 г/см³", cleavage: "Совершенная (в двух направлениях)", color: "Тёмная (чёрная) окраска", extra: "Изометричная форма кристаллов; яркий синеватый отлив", fact: "При повороте к свету вспыхивает ярким синеватым отливом. Ценный облицовочный камень.", high: true }
     ];
 
-    const examQuestions = [
-      { id: 1, title: "Как отличить пирит от халькопирита по 3 признакам?", prompt: "Перед тобой два золотисто-латунных сульфида с металлическим блеском и без спайности. Инструментов и стекла нет! Назови 3 признака, по которым ты отличишь пирит от халькопирита прямо в руках.", options: ["У пирита совершенная спайность по кубу, серебристо-серая окраска и солёный вкус, а у халькопирита спайность отсутствует и поверхность матовая", "У пирита высокая сила кристаллизации (крупные кристаллы), устойчивая к окислению поверхность и больший вес в руке, а у халькопирита низкая сила кристаллизации и он подвержен окислению", "Пирит обладает дощатой формой кристаллов и синеватым отливом, а халькопирит образует шаровидные конкреции и пахнет жжёной костью", "Пирит легко расщепляется на тонкие чешуйки и пачкает руки, а халькопирит образует бочонковидные кристаллы и сильно магнитит"], correct: 1, oralAnswer: "1) Сила кристаллизации: у пирита она высокая (крупные кристаллы), у халькопирита низкая. 2) Окисление: поверхность пирита устойчива к окислению, а халькопирит сильно подвержен окислению. 3) Плотность и твёрдость: пирит тяжелее (5 г/см³ против 4 г/см³) и твёрже (6–6,5 против 3,5–4)." },
-      { id: 2, title: "Покажи самый твёрдый минерал в коллекции", prompt: "Покажи мне в лотке самый твёрдый минерал из всех 29! По какой уникальной форме кристалла и окраске ты его сразу нашёл глазами?", options: ["Кварц — крупные шестигранные призмы, молочно-белая или бесцветная окраска", "Оливин — изометричная зернистая форма кристаллов, тёмно-зелёная окраска", "Корунд — бочонковидная форма минерала, сапфировая (синеватая) или рубиновая окраска", "Пирит — правильные кубические кристаллы со штриховкой, золотисто-латунная окраска"], correct: 2, oralAnswer: "Самый твёрдый минерал — окисел алюминия КОРУНД (Al₂O₃). Твёрдость равна 9, плотность — 4, спайность отсутствует. Узнаётся по бочонковидной форме кристалла и сапфировой (синеватой) либо рубиновой окраске." },
-      { id: 3, title: "Покажи самый мягкий минерал в коллекции", prompt: "Покажи минерал с самой минимальной твёрдостью в нашем списке. По каким внешним признакам ты его узнаешь?", options: ["Гипс — светлая белая окраска, совершенная прямоугольная спайность, растворяется в воде", "Галит — прозрачная или синяя окраска, совершенная спайность по кубу, солёный вкус", "Мусковит — светлая полупрозрачная окраска, совершенная спайность по тонким пластинкам", "Тальк — светлая яблочно-зелёная окраска, совершенная чешуйчатая спайность"], correct: 3, oralAnswer: "Самый мягкий минерал — ТАЛЬК (слоистый силикат). Твёрдость 1 по шкале Мооса, средняя плотность около 3, светлая яблочно-зелёная окраска и совершенная чешуйчатая спайность." },
-      { id: 4, title: "Найди самый тяжёлый минерал (проверка на вес в руке)", prompt: "Взвесь образцы на ладони и покажи самый тяжёлый минерал во всей коллекции. Какие две внешние приметы выдают его с первого взгляда?", options: ["Галенит (свинцовый блеск) — серебристо-серая окраска с металлическим блеском и совершенная спайность по кубу", "Магнетит — железно-чёрная окраска с металлическим блеском и полное отсутствие спайности", "Гематит — тёмно-стальная окраска со следами ржавчины и отсутствие спайности", "Пирит — золотисто-латунная окраска с металлическим блеском и крупные кристаллы без спайности"], correct: 0, oralAnswer: "Рекордсмен по плотности — сульфид свинца ГАЛЕНИТ (PbS), плотность 7,5 г/см³. Определяется по серебристо-серой окраске с металлическим блеском и совершенной спайности по кубу." },
-      { id: 5, title: "Оливин против Роговой обманки (два тёмно-зелёных силиката)", prompt: "Рядом лежат два тёмно-зелёных (до чёрного) силиката. Как ты безошибочно отличишь оливин от роговой обманки только глазами?", options: ["У оливина дощатая форма кристаллов и совершенная спайность, а у роговой обманки кристаллы изометричные и спайности нет", "Оливин расщепляется на тонкие чешуйки с перламутровым блеском, а роговая обманка образует шаровидные конкреции", "У оливина изометричная форма кристаллов и отсутствие спайности, а у роговой обманки — дощатая форма кристаллов и совершенная спайность", "У оливина бочонковидная форма и синеватый отлив, а у роговой обманки спайность по кубу и металлический блеск"], correct: 2, oralAnswer: "Оливин (островной силикат, твёрдость 6,5–7, плотность ~4) имеет изометричные кристаллы и не имеет спайности. Роговая обманка (ленточный силикат, твёрдость 6, плотность 3) имеет дощатую форму кристаллов и совершенную спайность." },
-      { id: 6, title: "Апатит против Фосфорита (два фосфата)", prompt: "Покажи два фосфата из нашего списка. У обоих одинаковая твёрдость и отсутствует спайность. Как их мгновенно различить по форме и окраске?", options: ["Апатит чёрный и образует шаровидные конкреции, а фосфорит голубоватый и образует шестигранные призмы", "Апатит зеленовато-голубоватый и образует крупные кристаллы (призмы), а фосфорит чёрно-тёмно-зелёный и имеет конкреционное строение (шар)", "Апатит жёлтый с раковистым изломом, а фосфорит серебристо-серый с кубической спайностью", "Апатит образует бочонковидные рубиновые кристаллы, а фосфорит — дощатые чёрные агрегаты"], correct: 1, oralAnswer: "У обоих фосфатов твёрдость 5 и нет спайности. Апатит (Ca₅(PO₄)₃) зеленовато-голубоватый и образует призматические кристаллы. Фосфорит (Ca₅(PO₄)₃OH) чёрно-тёмно-зелёный, имеет конкреционное строение (шар) и запах жжёной кости." },
-      { id: 7, title: "Ортоклаз против Лабрадора (два полевых шпата)", prompt: "Вот два силиката с изометричной формой кристаллов, совершенной спайностью и одинаковой твёрдостью. Как за секунду отличить ортоклаз от лабрадора?", options: ["У ортоклаза тёмная окраска и синеватый отлив, а у лабрадора светлая розоватая окраска без отлива", "У ортоклаза яблочно-зелёная окраска и чешуйчатое строение, а у лабрадора золотисто-латунный цвет", "У ортоклаза голубовато-фиолетовая окраска, а у лабрадора ржаво-коричневый цвет и землистый излом", "У ортоклаза светлая окраска, а у лабрадора — тёмная (чёрная) окраска и характерный синеватый отлив"], correct: 3, oralAnswer: "Оба имеют твёрдость 6, изометричную форму и совершенную спайность. У ортоклаза светлая окраска, а у лабрадора — тёмная (чёрная) окраска и синеватый отлив." },
-      { id: 8, title: "Три галоида: Галит, Сильвин и Карналлит", prompt: "Перед тобой три растворимых галоида. Как на глаз и на ощупь сразу отделить карналлит, а затем различить галит и сильвин?", options: ["Карналлит без спайности, желтовато-коричневый и жирный на ощупь; галит и сильвин колются по кубу, но галит чисто солёный, а сильвин горько-солёный", "Карналлит колется по кубу и синего цвета; галит жирный на ощупь и без спайности, а сильвин образует чёрные пластинки", "Карналлит и галит не имеют спайности и горькие на вкус, а сильвин отличается спайностью по октаэдру и фиолетовым цветом", "Все три минерала колются по ромбоэдру, но карналлит белый, галит жёлтый, а сильвин тёмно-зелёный"], correct: 0, oralAnswer: "Карналлит (KCl·MgCl₂(H₂O)₆, тв. ~2) выдают отсутствие спайности, желтовато-коричневая окраска, жирность на ощупь и гигроскопичность. Галит (NaCl) и сильвин (KCl) колются по кубу, но галит чисто солёный, а сильвин горько-солёный." },
-      { id: 9, title: "Биотит против Мусковита (две слюды)", prompt: "Покажи два слоистых силиката с блеском до алмазного и совершенной спайностью по пластинкам. Как они называются и чем отличаются?", options: ["Тальк и каолин: тальк тёмно-коричневый и твёрдый, а каолин прозрачный и колющийся по кубу", "Гипс и ангидрит: гипс чёрный и непрозрачный, а ангидрит светлый с перламутровым отливом", "Биотит и мусковит: биотит — это чёрная (тёмно-коричневая) слюда, а мусковит — светлая слюда", "Ортоклаз и лабрадор: ортоклаз расслаивается на чёрные чешуйки, а лабрадор — на белые листы"], correct: 2, oralAnswer: "Оба — слюды (слоистые силикаты, твёрдость 2,5, плотность ~3, совершенная спайность по пластинкам). Биотит — чёрная (тёмно-коричневая) слюда, мусковит — светлая слюда." },
-      { id: 10, title: "Графит против Серы (два самородных элемента)", prompt: "Найди на столе два самородных элемента. Назови их и скажи, чем они противоположны внешне.", options: ["Галенит и пирит: галенит серебристо-серый со спайностью по кубу, а пирит латунно-жёлтый без спайности", "Графит и сера: графит серебристо-чёрный с совершенной спайностью, а сера жёлтая и спайность у неё отсутствует", "Магнетит и лимонит: магнетит чёрный с металлическим блеском, а лимонит ржаво-жёлтый и матовый", "Биотит и флюорит: биотит чёрный и пластинчатый, а флюорит жёлтый со спайностью по октаэдру"], correct: 1, oralAnswer: "1) Графит (C) — серебристо-чёрный, чёрная черта, совершенная спайность, твёрдость 2, плотность 2. 2) Сера (S) — жёлтая, спайность отсутствует, твёрдость 1–2, плотность 2,5, легкоплавкая." },
-      { id: 11, title: "Три окисла железа: Магнетит, Гематит и Лимонит", prompt: "Укажи на три окисла железа без спайности. Как они различаются по окраске, цвету черты и магнитным свойствам?", options: ["Магнетит даёт бурую черту и не магнитит; гематит даёт чёрную черту и сильно магнитит; лимонит даёт белую черту", "Магнетит ржаво-жёлтый; гематит серебристо-серый со спайностью по кубу; лимонит чисто чёрный и магнитит", "У всех трёх минералов чёрная черта и сильная магнитность, а различаются они только формой кристаллов", "Магнетит чёрный с чёрной чертой и магнитит; гематит с красновато-бурой чертой (магнитит при нагревании); лимонит ржавый с ржавой чертой"], correct: 3, oralAnswer: "1) Магнетит (Fe₃O₄): плотность 5–5,2, твёрдость 6, чёрная окраска и черта, ферромагнетик. 2) Гематит (Fe₂O₃): плотность 5, твёрдость ~6, красновато-бурая черта, магнитит при нагревании. 3) Лимонит (Fe₂O₃ + (H₂O)n): плотность 3,5–4, твёрдость <5, ржавая окраска и черта." },
-      { id: 12, title: "Кварц среди светлых минералов (без царапанья!)", prompt: "В лотке лежат светлые образцы: кварц, кальцит, гипс и ортоклаз. Как только по характеру скола (спайности) сразу выбрать кварц?", options: ["У кварца спайность полностью отсутствует (неровный раковистый излом), а у остальных трёх видна совершенная спайность с ровными гранями", "Кварц раскалывается на идеальные ромбоэдры, а кальцит, гипс и ортоклаз не имеют спайности", "Кварц расщепляется на тонкие гибкие пластинки, тогда как остальные три минерала колются по кубу", "У кварца матовый землистый излом и он пачкает руки, а остальные три имеют металлический блеск"], correct: 0, oralAnswer: "У кальцита, гипса и ортоклаза спайность совершенная, а у окисла кварца (SiO₂, твёрдость 7, плотность ~2,65–3) спайность полностью отсутствует." },
-      { id: 13, title: "Гипс против Ангидрита (два сульфата кальция)", prompt: "Перед тобой два светлых сульфата с совершенной прямоугольной спайностью. Как отличить гипс от ангидрита по весу в руке, оттенку и составу?", options: ["Гипс безводный, более тяжёлый и голубовато-серый, а ангидрит содержит воду и заметно легче на ладони", "Гипс содержит воду, он легче в руке и мягче, а безводный ангидрит ощутимо тяжелее, твёрже и имеет голубовато-серый оттенок", "Гипс отличается горько-солёным вкусом и жирностью на ощупь, а ангидрит бурно вскипает от воды", "Гипс образует тёмно-зелёные призмы, а ангидрит встречается только в виде чёрных шаровидных конкреций"], correct: 1, oralAnswer: "Гипс (CaSO₄·2H₂O) легче (плотность 2), мягче (твёрдость 2) и растворяется в воде. Безводный ангидрит (CaSO₄) тяжелее (плотность 3), твёрже (твёрдость 3) и имеет голубовато-серую окраску." },
-      { id: 14, title: "Три карбоната: Кальцит, Доломит и Магнезит", prompt: "Покажи три светлых карбоната с ромбоэдрической спайностью. В каком порядке возрастает их твёрдость и как каждый ведёт себя с кислотой (HCl)?", options: ["Магнезит (в куске) → Доломит (в порошке) → Кальцит (только при нагревании)", "Доломит (в куске) → Кальцит (при нагревании) → Магнезит (в порошке)", "Кальцит (сразу в куске) → Доломит (в порошке) → Магнезит (только при нагревании)", "Кальцит (в порошке) → Магнезит (сразу в куске) → Доломит (только при нагревании)"], correct: 2, oralAnswer: "1) Кальцит (CaCO₃) — твёрдость 3, реагирует с кислотой сразу в куске. 2) Доломит (CaMg(CO₃)₂) — твёрдость 3,5, реагирует в порошке. 3) Магнезит (MgCO₃) — твёрдость 4, реагирует с HCl при нагревании." },
-      { id: 15, title: "Загадка про глинистые пластинки в 0,01 мм", prompt: "Покажи серовато-белый слоистый силикат с низкой твёрдостью и совершенной спайностью, который состоит из пластинок размером 0,01 мм.", options: ["Тальк — в воде полностью растворяется и придаёт ей горько-солёный вкус", "Мусковит — в воде распадается на крупные прозрачные шестигранные призмы", "Ангидрит — в воде мгновенно чернеет и приобретает металлический блеск", "Каолин — глинистый силикат, который в воде набухает и становится пластичным"], correct: 3, oralAnswer: "Это КАОЛИН (слоистый силикат, пластинки 0,01 мм, серовато-белая окраска, низкая твёрдость). В воде он набухает и становится пластичным." },
-      { id: 16, title: "Разноцветный галоид со спайностью по октаэдру", prompt: "Какой галоид в нашей коллекции имеет голубовато-фиолетовую окраску и совершенную спайность по кубу и октаэдру?", options: ["Флюорит", "Карналлит", "Апатит", "Корунд"], correct: 0, oralAnswer: "Это ФЛЮОРИТ (твёрдость 4, плотность 3, голубовато-фиолетовая окраска, совершенная спайность по октаэдру/кубу, термолюминесценция)." },
-      { id: 17, title: "Четыре мотива структуры силикатов на столе", prompt: "Назови по одному образцу для каждого из 4 мотивов структуры силикатов: островного, ленточного (поясного), слоистого и каркасного.", options: ["Островной — ортоклаз; Ленточный — биотит; Слоистый — оливин; Каркасный — роговая обманка", "Островной — оливин; Ленточный — роговая обманка; Слоистый — биотит (или мусковит/тальк/каолин); Каркасный — ортоклаз", "Островной — роговая обманка; Ленточный — тальк; Слоистый — лабрадор; Каркасный — оливин", "Островной — кварц; Ленточный — апатит; Слоистый — гипс; Каркасный — кальцит"], correct: 1, oralAnswer: "1) Островной — оливин. 2) Ленточный (поясной) — роговая обманка. 3) Слоистый — биотит, мусковит, тальк, каолин. 4) Каркасный — ортоклаз и лабрадор." },
-      { id: 18, title: "Пятёрка минералов с металлическим блеском", prompt: "Отбери из лотка все 5 минералов с металлическим блеском. У кого из этих пяти есть совершенная спайность?", options: ["Пирит, халькопирит, галенит, магнетит, гематит — спайность есть у всех пяти минералов", "Графит, сера, пирит, биотит, лабрадор — спайность отсутствует только у серы и пирита", "Пирит, халькопирит, галенит, магнетит, гематит — совершенная спайность (по кубу) есть только у галенита, у остальных четырёх спайности нет", "Галенит, магнетит, гематит, лимонит, оливин — совершенная спайность есть только у магнетита и гематита"], correct: 2, oralAnswer: "Металлический блеск имеют пирит, халькопирит, галенит, магнетит и гематит. Совершенная спайность по кубу есть только у галенита (PbS)." },
-      { id: 19, title: "Тёмная тройка: Графит, Магнетит и Галенит", prompt: "Расположи их строго в порядке возрастания веса в руке (от самого лёгкого к самому тяжёлому) и укажи их спайность!", options: ["Магнетит (по кубу) → Графит (нет спайности) → Галенит (по пластинкам)", "Галенит (по кубу) → Магнетит (нет спайности) → Графит (совершенная)", "Графит (нет спайности) → Галенит (нет спайности) → Магнетит (по кубу)", "Графит (совершенная спайность) → Магнетит (спайность отсутствует) → Галенит (совершенная спайность по кубу)"], correct: 3, oralAnswer: "1) Графит (плотность 2, совершенная спайность). 2) Магнетит (плотность 5–5,2, спайность отсутствует). 3) Галенит (плотность 7,5 г/см³, совершенная спайность по кубу)." },
-      { id: 20, title: "Блиц по геометрии: Бочонок, Шар и Дощечка", prompt: "Быстро покажи в лотке три минерала по их характерной форме: 1) бочонковидный, 2) шаровидный (конкреционный), 3) дощатый.", options: ["1) Бочонковидный — корунд; 2) Шаровидный — фосфорит; 3) Дощатый — роговая обманка", "1) Бочонковидный — апатит; 2) Шаровидный — оливин; 3) Дощатый — биотит", "1) Бочонковидный — кварц; 2) Шаровидный — карналлит; 3) Дощатый — ангидрит", "1) Бочонковидный — флюорит; 2) Шаровидный — гематит; 3) Дощатый — ортоклаз"], correct: 0, oralAnswer: "1) Бочонковидная форма — КОРУНД (Al₂O₃, тв. 9). 2) Конкреционное строение (шар) — ФОСФОРИТ (тв. 5). 3) Дощатая форма — РОГОВАЯ ОБМАНКА (тв. 6)." }
-    ];
+    // Полная база 41 горной породы (10 магматических + 22 осадочных + 9 метаморфических)
+    const rocks = [
+      // I. Магматические (1–10)
+      { num: "1", name: "Дунит (Оливинит)", wiki: "Дунит", wikiEn: "Dunite", group: "Магматические", subType: "Ультраосновная интрузивная", composition: "Оливин > 90%, пироксен < 10%", structure: "Кристаллическая зернистая (тонко- и мелкозернистая)", texture: "Массивная плотная", diagnosis: "По преобладанию зёрен оливина со стеклянным блеском, тёмно-зелёная до чёрной окраска, высокая плотность", fact: "Назван в честь горы Дун в Новой Зеландии. Слагает самую верхнюю часть мантии Земли и служит коренным источником месторождений платины и хромитов." },
+      { num: "2", name: "Пироксенит", wiki: "Пироксенит", wikiEn: "Pyroxenite", group: "Магматические", subType: "Ультраосновная интрузивная", composition: "Пироксен > 90%, оливин < 10%", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По чёрно-зелёной окраске и более крупнозернистой структуре с заметной спайностью кристаллов пироксена", fact: "Образуется при глубинной кристаллизации ультраосновной магмы. Часто ассоциирует с дунитами в расслоённых интрузиях Урала и Бушвельда." },
+      { num: "3", name: "Габбро", wiki: "Габбро", wikiEn: "Gabbro", group: "Магматические", subType: "Основная интрузивная", composition: "Роговая обманка, пироксен, кальциевый плагиоклаз (лабрадор)", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По средне-крупнозернистой структуре, тёмной окраске, зёрнам роговой обманки и плагиоклаза (лабрадора)", fact: "Глубинный аналог базальта, слагающий нижний слой океанической земной коры. Благодаря высокой прочности и красивой полировке используется как благородный облицовочный камень." },
+      { num: "4", name: "Базальт", wiki: "Базальт", wikiEn: "Basalt", group: "Магматические", subType: "Основная эффузивная", composition: "Роговая обманка, пироксен, кальциевый плагиоклаз", structure: "Мелко- и тонкозернистая, порфировая, аморфная (скрытокристаллическая)", texture: "Массивная пористая или плотная", diagnosis: "По тёмно-серой/чёрной матовой массе, тонкозернистой или скрытокристаллической структуре и пористой/плотной текстуре", fact: "Самая распространённая вулканическая порода на Земле, Луне и Марсе — из базальтов сложено дно всех мировых океанов. При остывании лавы часто образует шестигранные столбы." },
+      { num: "5", name: "Диорит", wiki: "Диорит", wikiEn: "Diorite", group: "Магматические", subType: "Средняя интрузивная", composition: "Полевой шпат (плагиоклаз), слюда, роговая обманка (кварц почти отсутствует)", structure: "Кристаллическая зернистая (среднезернистая)", texture: "Массивная плотная", diagnosis: "По минеральному составу и текстуре: пёстрая расцветка «соль с перцем» (чередование светлого шпата и тёмной роговой обманки без видимого кварца)", fact: "Название от греч. «диоризо» (разграничиваю) — из-за контрастных белых и чёрных зёрен. Из необычайно прочного диорита в Древнем Египте и Месопотамии высекали статуи фараонов и стелу законов Хаммурапи." },
+      { num: "6", name: "Порфирит (Андезитовый порфирит)", wiki: "Порфирит", wikiEn: "Andesite_porphyry", group: "Магматические", subType: "Средняя эффузивная", composition: "Полевой шпат (плагиоклаз), слюда, роговая обманка", structure: "Порфировая", texture: "Массивная плотная", diagnosis: "По характерной порфировой структуре: крупные светлые таблитчатые вкрапленники плагиоклаза погружены в тёмную тонкозернистую основную массу", fact: "Возникает при двухэтапном остывании магмы: крупные кристаллы успевают вырасти ещё на глубине, а остальной расплав быстро застывает при излиянии на поверхность." },
+      { num: "7", name: "Нефелиновый сиенит", wiki: "Нефелиновый_сиенит", wikiEn: "Nepheline_syenite", group: "Магматические", subType: "Средняя интрузивная щелочная", composition: "Нефелин, щелочные полевые шпаты, натриевый плагиоклаз, ленточные силикаты (роговая обманка, эгирин)", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По минеральному составу: присутствие серовато-зелёного нефелина с характерным жирным блеском и полное отсутствие кварца", fact: "Крупнейший в мире массив нефелиновых сиенитов находится в Хибинах на Кольском полуострове. Служит ценной комплексной рудой для получения алюминия, соды и редких земель." },
+      { num: "8", name: "Гранит", wiki: "Гранит", wikiEn: "Granite", group: "Магматические", subType: "Кислая интрузивная", composition: "Кварц, калиевый полевой шпат (ортоклаз), натриевый плагиоклаз, слюда (биотит/мусковит), роговая обманка", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По минеральному составу: отчётливо различимы стекловидные серые зёрна кварца, розовый/светлый полевой шпат и блестящие чешуйки слюды", fact: "От лат. «гранум» (зерно). Главная порода континентальной коры Земли («гранитный слой» материков), эталон долговечности в архитектуре и строительстве набережных." },
+      { num: "9", name: "Пегматит", wiki: "Пегматит", wikiEn: "Pegmatite", group: "Магматические", subType: "Полуглубинная (жильная) кислая", composition: "Кварц, калиевый полевой шпат, слюда", structure: "Пегматитовая (крупно- и гигантозернистая; закономерное прорастание кварца в полевом шпате)", texture: "Массивная плотная", diagnosis: "По характерной структуре («письменный гранит» / еврейский камень: вростки кварца в шпате напоминают клинопись) и гигантским кристаллам слюды и шпата", fact: "Кристаллизуется из остаточного расплава, насыщенного летучими парами и газами. Природная кладовая гигантских кристаллов слюды, топаза, берилла, турмалина и редких металлов." },
+      { num: "10", name: "Обсидиан", wiki: "Обсидиан", wikiEn: "Obsidian", group: "Магматические", subType: "Эффузивная кислая", composition: "Вулканическое стекло (богатое кремнезёмом SiO₂)", structure: "Аморфная (стекловатая)", texture: "Массивная плотная", diagnosis: "По аморфной стекловатой структуре, крупному раковистому излому с бритвенно-острыми краями и яркому стеклянному блеску", fact: "Образуется при мгновенном охлаждении вязкой кислой лавы, когда атомы не успевают выстроиться в кристаллическую решётку. Сколы обсидиана тоньше и острее хирургической стали." },
 
-    const groups = ["Все", "Самородные элементы", "Сульфиды", "Галоиды", "Окислы", "Карбонаты", "Сульфаты и фосфаты", "Силикаты"];
-    let activeGroup = "Все";
-    const imageCache = {};
-    const answeredQuestions = {};
+      // II. Осадочные горные породы (11–32)
+      { num: "11", name: "Туф (вулканический)", wiki: "Вулканический_туф", wikiEn: "Tuff", group: "Осадочные (обломочные)", subType: "Пирокластическая вулканогенно-осадочная", composition: "Литокластический материал (обломки лавы), кристаллокласты, витрокласты (вулканический пепел и стекло)", structure: "Обломочная, аморфная (пирокластическая)", texture: "Массивная пористая", diagnosis: "По вулканогенному остроугольному материалу, шероховатости, малому весу и высокой пористости", fact: "Образуется при спекании и цементации вулканического пепла и пемзы. Благодаря лёгкости и теплоизоляции из розового и фельзитового туфа построена большая часть Еревана." },
+      { num: "12", name: "Щебень", wiki: "Щебень", wikiEn: "Crushed_stone", group: "Осадочные (обломочные)", subType: "Грубообломочная рыхлая", composition: "Неокатанные угловатые обломки различных пород (> 10 мм)", structure: "Щебёночная (псефитовая)", texture: "Массивная пористая (рыхлая беспорядочная)", diagnosis: "По угловатому неокатанному щебёночному материалу и отсутствию цемента", fact: "В природе накапливается у подножия крутых склонов и скал в результате физического (морозного и температурного) выветривания горных пород." },
+      { num: "13", name: "Брекчия", wiki: "Брекчия", wikiEn: "Breccia", group: "Осадочные (обломочные)", subType: "Грубообломочная сцементированная", composition: "Угловатый щебень различных пород + природный цемент (кремнистый, карбонатный, железистый)", structure: "Щебёночная (псефитовая)", texture: "Слоистая или массивная, пористая или плотная (в зависимости от цемента)", diagnosis: "По неокатанным остроугольным обломкам (щебню), скреплённым минеральным цементом", fact: "От итал. «брекчия» (пролом, руины). Поскольку обломки сохранили острые углы, это указывает геологам на то, что материал захоронился вблизи места разрушения без долгого переноса водой." },
+      { num: "14", name: "Галечник", wiki: "Галечник", wikiEn: "Pebble", group: "Осадочные (обломочные)", subType: "Грубообломочная рыхлая", composition: "Окатанная галька различных пород (10–100 мм)", structure: "Галечная (псефитовая)", texture: "Слоистая или массивная рыхлая, пористая", diagnosis: "По гладким окатанным водой обломкам (гальке) без цемента", fact: "Округлая форма гальки формируется при длительном перекатывании и взаимном истирании камней в бурных горных реках и полосе морского прибоя." },
+      { num: "15", name: "Конгломерат", wiki: "Конгломерат_(порода)", wikiEn: "Conglomerate_(geology)", group: "Осадочные (обломочные)", subType: "Грубообломочная сцементированная", composition: "Окатанная галька различных пород + цемент", structure: "Галечная (псефитовая)", texture: "Массивная, пористая или плотная", diagnosis: "По окатанной гладкой гальке, прочно скреплённой природным цементом", fact: "Сцементированный древний галечник. Древние кварцевые конгломераты Южной Африки (Витватерсранд) являются крупнейшим на планете месторождением золота и урана." },
+      { num: "16", name: "Песчаник", wiki: "Песчаник", wikiEn: "Sandstone", group: "Осадочные (обломочные)", subType: "Среднеобломочная сцементированная", composition: "Кварц, полевые шпаты, обломки пород (0,1–2 мм) + цемент", structure: "Псаммитовая (песчаная)", texture: "Слоистая или массивная, пористая или плотная", diagnosis: "По отчётливо видимой зернистой псаммитовой структуре, шероховатости и высокой твёрдости зёрен кварца (царапает стекло)", fact: "Благодаря системе связанных пор между песчинками песчаники служат главными природными коллекторами (резервуарами) для залежей нефти, природного газа и артезианских вод." },
+      { num: "17", name: "Алевролит", wiki: "Алевролит", wikiEn: "Siltstone", group: "Осадочные (обломочные)", subType: "Мелкообломочная сцементированная", composition: "Алевритовый материал (кварц, полевые шпаты, слюда 0,01–0,1 мм, аналогично песчаникам) + цемент", structure: "Алевритовая", texture: "Слоистая или массивная", diagnosis: "По алевритовой структуре (отдельные зёрна почти не различимы глазом, но поверхность слегка шероховатая) и способности царапать стекло", fact: "От греч. «алеврон» (мука) и «литос» (камень). Занимает промежуточное положение между песчаниками и глинами, часто переслаиваясь с ними в нефтегазоносных бассейнах." },
+      { num: "18", name: "Глина", wiki: "Глина", wikiEn: "Clay", group: "Осадочные (обломочные)", subType: "Глинистая порода", composition: "Глинистые минералы (каолинит, монтмориллонит, гидрослюды < 0,01 мм)", structure: "Пелитовая (тонкодисперсная)", texture: "Слоистая или массивная пористая", diagnosis: "По глинистым минералам: мягкая (не царапает стекло), мажет руки, при смачивании водой разбухает и становится пластичной", fact: "В сухой глине поры заполнены воздухом, но при намокании чешуйки глинистых минералов связывают воду и полностью перекрывают фильтрацию, образуя надёжные водоупоры и покрышки нефтяных залежей." },
+      { num: "19", name: "Аргиллит", wiki: "Аргиллит", wikiEn: "Argillite", group: "Осадочные (обломочные)", subType: "Уплотнённая глинистая порода", composition: "Глинистые минералы (уплотнённые и обезвоженные при диагенезе)", structure: "Пелитовая", texture: "Слоистая, массивная плотная", diagnosis: "По пелитовой структуре и высокой плотности: в отличие от обычной глины не разбухает и не размокает в воде, стекло не царапает", fact: "Камнеподобная порода, образующаяся при погружении глин на большие глубины под давлением вышележащих толщ. Служит непроницаемой флюидоупорной покрышкой для месторождений углеводородов." },
+      { num: "20", name: "Мергель", wiki: "Мергель", wikiEn: "Marl", group: "Осадочные (хемогенные и биогенные)", subType: "Смешанная глинисто-карбонатная порода", composition: "Глинистые минералы (25–75%), карбонаты — кальцит/доломит (25–75%)", structure: "Пелитовая и кристаллическая зернистая", texture: "Слоистая или массивная, плотная или пористая", diagnosis: "По карбонатно-глинистому составу: бурно вскипает с каплей соляной кислоты (HCl), но после реакции на камне остаётся мутное грязно-глинистое пятно", fact: "Переходная порода между известняками и глинами. Мергели с содержанием 75–80% карбоната кальция являются идеальным природным сырьём для производства портландцемента без добавок." },
+      { num: "21", name: "Известняк", wiki: "Известняк", wikiEn: "Limestone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Кальцит > 75%, примесь доломита и глины", structure: "По генезису: биоморфная (органогенная), кристаллическая зернистая, оолитовая, обломочная", texture: "Слоистая, массивная, пористая или плотная", diagnosis: "По карбонатному материалу: невысокая твёрдость (3 — легко царапается ножом) и мгновенное бурное вскипание от холодной капли HCl без грязного остатка", fact: "Образуется преимущественно из скелетов и раковин морских организмов. Из блоков нуммулитового известняка возведены египетские пирамиды в Гизе, а из белого известняка строилась белокаменная Москва." },
+      { num: "22", name: "Доломит (порода)", wiki: "Доломит_(порода)", wikiEn: "Dolostone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Минерал доломит CaMg(CO₃)₂ > 75%, кальцит < 25%", structure: "Биоморфная, скрыто- и мелкокристаллическая зернистая, обломочная", texture: "Слоистая, массивная, пористая (кавернозная) или плотная", diagnosis: "По доломиту: внешне похож на известняк, но чуть твёрже (3,5) и с холодной соляной кислотой (HCl) реагирует только в порошке (при царапании ножом)", fact: "Часто образуется при замещении известкового ила магнием морской воды. Благодаря развитию каверн и трещин служит важнейшим карбонатным коллектором нефти и газа в Волго-Уральской провинции." },
+      { num: "23", name: "Яшма", wiki: "Яшма", wikiEn: "Jasper", group: "Осадочные (хемогенные и биогенные)", subType: "Силицитовая (кремнистая) хемогенно-биогенная порода", composition: "Халцедон, микрокристаллический кварц (SiO₂) + пигментирующие примеси окислов железа и марганца", structure: "Кристаллическая тонко- и микрозернистая (скрытокристаллическая)", texture: "Слоистая (ленточная), массивная плотная, пятнистая", diagnosis: "По кремнистому составу: очень высокая твёрдость (~7, легко царапает сталь и стекло), раковистый излом, непрозрачность и пёстрая окраска", fact: "Формируется из кремнистых остатков радиолярий и вулканогенного кремнезёма на дне древних морей. Уральские пейзажные и ленточные яшмы прославили русское камнерезное искусство в залах Эрмитажа." },
+      { num: "24", name: "Ангидрит (порода)", wiki: "Ангидрит", wikiEn: "Anhydrite", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная хемогенная эвапоритовая порода", composition: "Минерал ангидрит (CaSO₄) > 75%", structure: "Кристаллическая зернистая (мелко- и среднезернистая)", texture: "Слоистая, массивная плотная", diagnosis: "По ангидриту: светлая голубовато-серая порода, в отличие от гипса не царапается ногтем (твёрдость 3–3,5), а в отличие от известняка не вскипает от кислоты", fact: "Кристаллизуется на дне жарких усыхающих лагун (эвапорит). Толщи ангидрита пластичны под давлением и служат герметичными региональными покрышками над крупнейшими газовыми и нефтяными месторождениями." },
+      { num: "25", name: "Гипс (порода)", wiki: "Гипс_(порода)", wikiEn: "Gypsum", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная хемогенная эвапоритовая порода", composition: "Минерал гипс (CaSO₄·2H₂O) > 75%", structure: "Кристаллическая зернистая, волокнистая (селенит)", texture: "Слоистая, массивная плотная", diagnosis: "По гипсу: светлая белая или розоватая порода с очень низкой твёрдостью (2 — легко царапается ногтем) и отсутствием реакции с HCl", fact: "В Пермском крае (Кунгур) мощные толщи пермских гипсов и ангидритов создали знаменитую Кунгурскую ледяную пещеру, а уральский волокнистый гипс-селенит известен во всём мире." },
+      { num: "26", name: "Каменная соль", wiki: "Каменная_соль", wikiEn: "Halite", group: "Осадочные (хемогенные и биогенные)", subType: "Галоидная эвапоритовая осадочная порода", composition: "Галит (NaCl) > 75%", structure: "Кристаллическая зернистая", texture: "Слоистая или массивная плотная", diagnosis: "По минералу галиту: совершенная спайность зёрен по кубу, низкая твёрдость (2,5), лёгкая растворимость в воде и чистый солёный вкус", fact: "Под давлением перекрывающих пород пласты каменной соли текут как пластилин и всплывают вверх, образуя гигантские соляные купола, вокруг которых формируются ловушки для нефти." },
+      { num: "27", name: "Сильвинит", wiki: "Сильвинит", wikiEn: "Sylvinite", group: "Осадочные (хемогенные и биогенные)", subType: "Галоидная эвапоритовая осадочная порода (калийная соль)", composition: "Сильвин (KCl) и галит (NaCl)", structure: "Кристаллическая зернистая (крупно- и среднезернистая)", texture: "Слоистая (полосчатая) или массивная плотная", diagnosis: "По пёстрой сургучно-красной, розовой и синей полосчатой окраске, кубической спайности зёрен и горько-солёному жгучему вкусу", fact: "Важнейшая калийная руда для производства удобрений. Крупнейшее в мире Верхнекамское месторождение калийно-магниевых солей в Пермском крае (Соликамск, Березники) сложено именно пермскими сильвинитами." },
+      { num: "28", name: "Карналлитит (Карналлитовая порода)", wiki: "Карналлит", wikiEn: "Carnallite", group: "Осадочные (хемогенные и биогенные)", subType: "Галоидная эвапоритовая осадочная порода", composition: "Карналлит KCl·MgCl₂(H₂O)₆ > 75%, примесь галита", structure: "Кристаллическая зернистая", texture: "Слоистая или массивная плотная", diagnosis: "По карналлиту: красновато-бурая или жёлтая окраска, отсутствие спайности, горько-солёный вкус, жирность на ощупь и сильная гигроскопичность (отсыревает на воздухе)", fact: "Выпадает в осадок на самой последней стадии испарения рассолов солеродного бассейна. Служит главным сырьём для выплавки металлического магния и получения брома." },
+      { num: "29", name: "Бурый железняк", wiki: "Бурый_железняк", wikiEn: "Limonite", group: "Осадочные (хемогенные и биогенные)", subType: "Железистая хемогенно-биогенная порода", composition: "Гидроокислы железа (лимонит, гётит) и гематит", structure: "Кристаллическая, бобовая, оолитовая, землистая", texture: "Слоистая или массивная, пористая (шлаковидная) либо плотная", diagnosis: "По минералам железа: ржаво-бурая и тёмно-коричневая окраска, оолитовое/бобовое строение, большой вес в руке и характерная жёлто-бурая черта", fact: "Осадочная железная руда, образующаяся в озёрах, болотах и прибрежных морских лагунах при участии железобактерий, а также в корах выветривания («железных шляпах»)." },
+      { num: "30", name: "Боксит", wiki: "Бокситы", wikiEn: "Bauxite", group: "Осадочные (хемогенные и биогенные)", subType: "Аллитовая (алюминийсодержащая) осадочная порода", composition: "Гидроокислы алюминия (гиббсит, диаспор, бёмит) + гидроокислы железа и глинистые минералы", structure: "Бобовая, оолитовая, пелитовая", texture: "Слоистая, массивная, пористая или плотная", diagnosis: "По минеральному составу, кирпично-красной или бурой окраске и характерным концентрическим стяжениям (бобовинам и оолитам)", fact: "Назван по местности Ле-Бо на юге Франции. Главная алюминиевая руда планеты, образующаяся при глубоком химическом выветривании алюмосиликатных пород во влажном тропическом климате." },
+      { num: "31", name: "Фосфорит (порода)", wiki: "Фосфориты", wikiEn: "Phosphorite", group: "Осадочные (хемогенные и биогенные)", subType: "Фосфорсодержащая хемогенно-биогенная порода", composition: "Минералы группы апатита (скрытокристаллический фторкарбонатапатит) > 50% + кварц, кальцит, глауконит", structure: "Кристаллическая зернистая, конкреционная, оолитовая", texture: "Слоистая или массивная плотная (желваковая)", diagnosis: "По конкреционной (шаровидной) форме или плотным тёмно-серым/чёрным стяжениям, высокому весу и запаху жжёной кости при трении", fact: "Формируется на континентальном шельфе морей в зонах подъёма глубинных холодных вод (апвеллинга), богатых фосфором и планктоном. Основа производства фосфорных удобрений." },
+      { num: "32", name: "Каменный уголь", wiki: "Каменный_уголь", wikiEn: "Bituminous_coal", group: "Осадочные (хемогенные и биогенные)", subType: "Каустобиолитовая (органогенная горючая) осадочная порода", composition: "Метаморфизованные растительные остатки — углерод (75–92%) и летучие битуминозные вещества", structure: "Аморфная (однородная или полосчатая)", texture: "Слоистая, массивная, трещиноватая", diagnosis: "По чёрному цвету (и чёрной черте), смоляному или стеклянному блеску, малой плотности (~1,3 г/см³ — очень лёгкий в руке) и способности гореть", fact: "Аккумулированная солнечная энергия древних папоротниковых и хвощовых лесов каменноугольного и пермского периодов. Служит не только топливом, но и коксом для выплавки чугуна." },
 
-    function renderFilters() {
-      document.getElementById("filterContainer").innerHTML = groups.map(g => `
-        <button type="button" onclick="setGroup('${g}')"
-          class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition shadow-sm ${
-            activeGroup === g ? 'btn-green font-bold scale-105' : 'btn-light'
-          }">${g}</button>
-      `).join("");
-    }
-    function setGroup(g) { activeGroup = g; renderFilters(); renderMinerals(); }
-
-    function renderMinerals() {
-      const query = document.getElementById("searchInput").value.toLowerCase().trim();
-      const filtered = minerals.filter(m => {
-        const matchGroup = activeGroup === "Все" || m.group === activeGroup;
-        const matchSearch = m.name.toLowerCase().includes(query) || m.formula.toLowerCase().includes(query) || m.cleavage.toLowerCase().includes(query) || m.extra.toLowerCase().includes(query);
-        return matchGroup && matchSearch;
-      });
-
-      document.getElementById("mineralsGrid").innerHTML = filtered.map(m => `
-        <article class="pastel-card mineral-card ${m.high ? 'high-hardness' : ''} rounded-2xl overflow-hidden flex flex-col justify-between">
-          <div>
-            <div class="relative h-48 bg-[#efe8dd] flex items-center justify-center overflow-hidden border-b border-[#e6dccf]">
-              <img id="img-${m.num}" src="${imageCache[m.num] || ''}" alt="${m.name}" class="mineral-img w-full h-full object-cover ${imageCache[m.num] ? '' : 'hidden'}">
-              <div id="placeholder-${m.num}" class="${imageCache[m.num] ? 'hidden' : 'flex'} flex-col items-center justify-center text-[#8c7b6b] text-xs">
-                <span class="text-3xl mb-1">🪨</span><span>Загрузка фото...</span>
-              </div>
-              <span class="absolute top-3 left-3 px-2.5 py-1 rounded-lg text-xs font-bold bg-[#fffdf9]/90 text-[#3b5e49] border border-[#c8ddd0] shadow-sm">№ ${m.num} • ${m.group}</span>
-              ${m.high ? `<span class="absolute top-3 right-3 px-2 py-0.5 rounded-md text-[10px] font-bold badge-sage shadow-sm">✨ Высокая твёрдость</span>` : ''}
-            </div>
-            <div class="p-5 space-y-3">
-              <div class="flex items-baseline justify-between gap-2">
-                <h3 class="font-bold text-lg text-[#2e2620]">${m.name}</h3>
-                <span class="text-xs font-mono font-semibold px-2.5 py-0.5 rounded badge-sand shrink-0">${m.formula}</span>
-              </div>
-              <div class="space-y-2 text-xs bg-[#f6f0e6]/90 p-3.5 rounded-xl border border-[#e5dac9]">
-                <div class="flex justify-between gap-2 border-b border-[#e5dac9] pb-1.5"><span class="text-[#7a6b5d]">Твёрдость (Моос):</span><strong class="text-[#2e2620] text-right">${m.hardness}</strong></div>
-                <div class="flex justify-between gap-2 border-b border-[#e5dac9] pb-1.5"><span class="text-[#7a6b5d]">Плотность:</span><strong class="text-[#2e2620] text-right">${m.density}</strong></div>
-                <div class="pt-0.5"><span class="text-[#7a6b5d] font-medium">Спайность и излом:</span><p class="font-semibold text-[#3b5e49] mt-0.5 leading-snug">${m.cleavage}</p></div>
-                <div class="pt-0.5"><span class="text-[#7a6b5d]">Окраска:</span><strong class="text-[#2e2620]"> ${m.color}</strong></div>
-              </div>
-              <p class="text-xs text-[#54483d] leading-relaxed"><strong class="text-[#7a6b5d]">Характерные признаки:</strong> ${m.extra}</p>
-              <div class="pt-1">
-                <button type="button" onclick="togglePanel('fact-${m.num}', 'fact-arrow-${m.num}')" class="w-full px-3.5 py-2 rounded-xl text-xs font-semibold badge-sage flex items-center justify-between hover:opacity-90 transition">
-                  <span>✨ Интересный факт и применение</span><span id="fact-arrow-${m.num}" class="transition-transform duration-300">▼</span>
-                </button>
-                <div id="fact-${m.num}" class="hidden slide-fade mt-2 p-3 rounded-xl bg-[#f3ece1]/95 border border-[#dfd3c3] text-xs text-[#3d342c] leading-relaxed">${m.fact}</div>
-              </div>
-            </div>
-          </div>
-        </article>
-      `).join("");
-
-      filtered.forEach(m => loadWikiPhoto(m));
-    }
-
-    async function loadWikiPhoto(mineral) {
-      if (imageCache[mineral.num]) return;
-      try {
-        let res = await fetch(`https://ru.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(mineral.wiki)}`);
-        let data = await res.json();
-        let imgUrl = data?.thumbnail?.source;
-        if (!imgUrl && mineral.wikiEn) {
-          res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(mineral.wikiEn)}`);
-          data = await res.json();
-          imgUrl = data?.thumbnail?.source;
-        }
-        if (imgUrl) {
-          imageCache[mineral.num] = imgUrl;
-          const imgEl = document.getElementById(`img-${mineral.num}`);
-          const phEl = document.getElementById(`placeholder-${mineral.num}`);
-          if (imgEl && phEl) { imgEl.src = imgUrl; imgEl.classList.remove("hidden"); phEl.classList.add("hidden"); }
-        }
-      } catch (e) {}
-    }
-
-    function renderExam() {
-      document.getElementById("examContainer").innerHTML = examQuestions.map(q => `
-        <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/85 overflow-hidden transition hover:border-[#c2b09b]">
-          <button type="button" onclick="togglePanel('q-body-${q.id}', 'q-arrow-${q.id}')" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
-            <div class="flex items-center gap-3">
-              <span id="q-badge-${q.id}" class="w-7 h-7 rounded-lg badge-sand flex items-center justify-center text-xs font-bold shrink-0">${q.id}</span>
-              <span class="font-bold text-sm sm:text-base text-[#2e2620]">${q.title}</span>
-            </div>
-            <span id="q-arrow-${q.id}" class="text-[#6e5a44] font-bold transition-transform duration-300">▼</span>
-          </button>
-          <div id="q-body-${q.id}" class="hidden slide-fade px-5 pb-5 pt-3 border-t border-[#e6dccf] bg-[#fffdf9]/95 space-y-4">
-            <div class="p-3.5 rounded-xl bg-[#f6f0e6] border border-[#e5dac9] text-sm text-[#3d342c]">${q.prompt}</div>
-            <div class="space-y-2" id="q-options-${q.id}">
-              ${q.options.map((opt, idx) => `
-                <button type="button" id="q-${q.id}-opt-${idx}" onclick="selectExamOption(${q.id}, ${idx})" class="w-full text-left p-3 rounded-xl border border-[#dfd3c3] bg-[#faf6f0] hover:bg-[#f3ece1] text-xs sm:text-sm text-[#3d342c] transition">${opt}</button>
-              `).join("")}
-            </div>
-            <div>
-              <button type="button" onclick="togglePanel('q-oral-${q.id}', 'q-oral-arrow-${q.id}')" class="px-4 py-2 rounded-xl badge-sage text-xs font-semibold flex items-center gap-2 hover:opacity-90 transition">
-                <span>Ответ</span><span id="q-oral-arrow-${q.id}" class="transition-transform duration-300">▼</span>
-              </button>
-              <div id="q-oral-${q.id}" class="hidden slide-fade mt-2.5 p-4 rounded-xl bg-[#e6efe9]/85 border border-[#c8ddd0] text-xs sm:text-sm text-[#2e4738] leading-relaxed">${q.oralAnswer}</div>
-            </div>
-          </div>
-        </div>
-      `).join("");
-    }
-
-    function selectExamOption(qId, selectedIdx) {
-      if (answeredQuestions[qId] !== undefined) return;
-      const q = examQuestions.find(item => item.id === qId);
-      if (!q) return;
-      answeredQuestions[qId] = selectedIdx;
-      q.options.forEach((_, idx) => {
-        const btn = document.getElementById(`q-${qId}-opt-${idx}`);
-        if (!btn) return;
-        if (idx === q.correct) btn.className = "w-full text-left p-3 rounded-xl border-2 border-[#3b5e49] bg-[#e6efe9] text-[#233d2c] font-semibold text-xs sm:text-sm";
-        else if (idx === selectedIdx) btn.className = "w-full text-left p-3 rounded-xl border-2 border-[#b85c38] bg-[#f9ebe4] text-[#7a3118] text-xs sm:text-sm";
-        else btn.className = "w-full text-left p-3 rounded-xl border border-[#e6dccf] bg-[#faf6f0] opacity-60 text-xs sm:text-sm";
-      });
-      const badge = document.getElementById(`q-badge-${qId}`);
-      if (badge) badge.className = selectedIdx === q.correct ? "w-7 h-7 rounded-lg bg-[#3b5e49] text-white flex items-center justify-center text-xs font-bold shrink-0" : "w-7 h-7 rounded-lg bg-[#8c4a32] text-white flex items-center justify-center text-xs font-bold shrink-0";
-      document.getElementById(`q-oral-${qId}`)?.classList.remove("hidden");
-      let score = 0;
-      examQuestions.forEach(item => { if (answeredQuestions[item.id] === item.correct) score++; });
-      document.getElementById("quizScore").textContent = score;
-    }
-
-    function toggleAllQuestions(expand) {
-      examQuestions.forEach(q => {
-        const body = document.getElementById(`q-body-${q.id}`);
-        const arrow = document.getElementById(`q-arrow-${q.id}`);
-        if (body) {
-          if (expand) {
-            body.classList.remove("hidden");
-            if (arrow) arrow.style.transform = "rotate(180deg)";
-          } else {
-            body.classList.add("hidden");
-            if (arrow) arrow.style.transform = "rotate(0deg)";
-          }
-        }
-      });
-    }
-
-    function resetExam() {
-      Object.keys(answeredQuestions).forEach(k => delete answeredQuestions[k]);
-      document.getElementById("quizScore").textContent = "0";
-      renderExam();
-    }
-
-    document.getElementById("searchInput").addEventListener("input", renderMinerals);
-    renderFilters();
-    renderMinerals();
-    renderExam();
-  </script>
-</body>
-</html>
+      // III. Метаморфические горные породы (33–41)
+      { num: "33", name: "Мрамор", wiki: "Мрамор", wikiEn: "Marble", group: "Метаморфические", subType: "Контактовый или региональный метаморфизм (по известнякам и доломитам)", composition: "Кальцит (CaCO₃), реже доломит", structure: "Крупно-, средне- или мелкозернистая кристаллическая (гранобластовая)", texture: "Массивная плотная (иногда пятнистая или полосчатая)", diagnosis: "По составу и структуре: искристый сахаровидный излом из перекристаллизованных зёрен кальцита, твёрдость 3 (царапается ножом), бурное вскипание с HCl", fact: "В переводе с греческого — «блестящий камень». При метаморфизме органические остатки известняка полностью исчезают, превращаясь в равнозернистый просвечивающий агрегат кристаллов кальцита." },
+      { num: "34", name: "Кварцит", wiki: "Кварцит", wikiEn: "Quartzite", group: "Метаморфические", subType: "Контактовый или региональный метаморфизм (по кварцевым песчаникам)", composition: "Кварц (SiO₂)", structure: "Кристаллическая зернистая (гранобластовая)", texture: "Массивная плотная", diagnosis: "По кварцу: исключительная твёрдость (7 — легко режет стекло), сливной занозистый излом с жирным/стеклянным блеском и отсутствие реакции с кислотой", fact: "При метаморфизме зёрна кварцевого песка и кремнистый цемент срастаются в единый монолит так прочно, что при ударе трещина проходит прямо сквозь зёрна. Малиновым шокшинским кварцитом облицован саркофаг Наполеона." },
+      { num: "35", name: "Глинистый сланец", wiki: "Глинистый_сланец", wikiEn: "Slate", group: "Метаморфические", subType: "Региональный метаморфизм (начальная стадия по глинам и аргиллитам)", composition: "Глинистые минералы, серицит, хлорит, углистое вещество", structure: "Пелитовая (тонкочешуйчатая)", texture: "Сланцеватая плотная", diagnosis: "По глинистым минералам, тусклому матовому или шелковистому блеску и идеальной сланцеватой текстуре (раскалывается на тонкие ровные плитки)", fact: "Так как глинистые частицы под направленным давлением развернулись параллельно друг другу, порода приобрела кливаж — способность колоться на тонкие водонепроницаемые кровельные плитки и грифельные доски." },
+      { num: "36", name: "Слюдяной сланец (кристаллический)", wiki: "Кристаллические_сланцы", wikiEn: "Mica_schist", group: "Метаморфические", subType: "Региональный метаморфизм", composition: "Слюда (мусковит, биотит) и кварц (часто с вкрапленниками граната)", structure: "Чешуйчатая (лепидобластовая) и кристаллическая зернистая", texture: "Сланцеватая плотная", diagnosis: "По минеральному составу, текстуре и структуре: поверхности раскола сплошь покрыты крупными сверкающими чешуйками светлой или чёрной слюды", fact: "Образуется при более глубоком региональном метаморфизме глин и песчаников, когда глинистое вещество полностью перекристаллизуется в пластинки мусковита и биотита." },
+      { num: "37", name: "Хлоритовый сланец", wiki: "Хлоритовый_сланец", wikiEn: "Greenschist", group: "Метаморфические", subType: "Региональный метаморфизм", composition: "Хлорит (с примесью актинолита, талька, кварца, магнетита)", structure: "Чешуйчатая (лепидобластовая)", texture: "Сланцеватая плотная", diagnosis: "По хлориту, структуре и текстуре: тёмно-зелёная чешуйчатая порода с невысокой твёрдостью (2–2,5, легко царапается ножом), не жирная в отличие от талька", fact: "Индикатор так называемой «зеленосланцевой фации» регионального метаморфизма (температура 300–450 °C). В хлоритовых сланцах часто встречаются идеальные октаэдрические кристаллы магнетита." },
+      { num: "38", name: "Тальковый сланец", wiki: "Тальковый_сланец", wikiEn: "Talc_schist", group: "Метаморфические", subType: "Региональный и гидротермальный метаморфизм ультраосновных пород", composition: "Тальк (часто с примесью магнезита и хлорита)", structure: "Чешуйчатая (лепидобластовая)", texture: "Сланцеватая плотная", diagnosis: "По тальку, структуре и текстуре: светло-зеленоватая или белая чешуйчатая порода с минимальной твёрдостью (1 — легко царапается ногтем) и ярко выраженной жирностью на ощупь", fact: "Тальково-магнезитовая разновидность («горшечный» или «мыльный камень» — талькохлорит) обладает огромной теплоёмкостью и используется для облицовки печей, каминов и банных каменок." },
+      { num: "39", name: "Серпентинит (Змеевик)", wiki: "Серпентинит", wikiEn: "Serpentinite", group: "Метаморфические", subType: "Метаморфизм (гидротермальный метасоматоз ультраосновных пород — дуни
