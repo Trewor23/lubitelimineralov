@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Клуб любителей минералов — Минералогия, Петрография и Стратиграфия</title>
+  <title>Клуб любителей минералов — Геология и Стратиграфия</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -83,7 +83,6 @@
     .vk-btn { background-color: #0077FF; color: #ffffff; }
     .vk-btn:hover { background-color: #0062d6; transform: translateY(-1px); }
 
-    /* Вертикальный текст для левых колонок ОСШ-2024 */
     .vert-box {
       writing-mode: vertical-rl;
       transform: rotate(180deg);
@@ -96,9 +95,9 @@
       margin: 0 auto;
     }
     .strat-cell-btn {
-      width: 100%; min-height: 26px; border: 1.5px dashed #7a6b5d; border-radius: 6px;
+      width: 100%; min-height: 28px; border: 1.5px dashed #7a6b5d; border-radius: 6px;
       background: #fffdf9; color: #4a3f35; font-size: 11px; font-weight: 600;
-      padding: 3px 5px; transition: all 0.18s ease; cursor: pointer;
+      padding: 4px 6px; transition: all 0.18s ease; cursor: pointer;
       display: inline-flex; align-items: center; justify-content: center;
     }
     .strat-cell-btn.vert-btn {
@@ -125,7 +124,7 @@
     }
   </style>
 </head>
-<body class="min-h-screen pb-40">
+<body class="min-h-screen pb-44">
 
   <div class="geo-bg">
     <div class="geo-blob geo-blob-1"></div>
@@ -156,40 +155,41 @@
             <span>•</span>
             <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Минералы</button>
             <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('rocks-catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Горные породы</button>
+            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('rocks-catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Породы</button>
             <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('exam').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Тренажёр</button>
+            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('formula-trainer').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Формулы</button>
+            <span>•</span>
+            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('exam').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Тест (20)</button>
           </div>
         </div>
       </div>
 
-      <!-- Переключатель вкладок: Геология / Стратиграфия -->
       <div class="flex items-center gap-1.5 bg-[#efe7dc] p-1 rounded-2xl border border-[#dfd3c3] w-full sm:w-auto">
         <button type="button" id="tabBtn-geology" onclick="switchMainTab('geology')"
           class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">
-          🪨 Геология (Минералы и Породы)
+          🪨 Геология
         </button>
         <button type="button" id="tabBtn-stratigraphy" onclick="switchMainTab('stratigraphy')"
           class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-          ⏳ Стратиграфия (Шкала)
+          ⏳ Стратиграфия
         </button>
       </div>
     </div>
   </header>
 
   <!-- ========================================================= -->
-  <!-- ВКЛАДКА 1: ГЕОЛОГИЯ (МИНЕРАЛЫ + ГОРНЫЕ ПОРОДЫ + ТРЕНАЖЁР) -->
+  <!-- ВКЛАДКА 1: ГЕОЛОГИЯ (МИНЕРАЛЫ + ПОРОДЫ + ФОРМУЛЫ + ТЕСТ)  -->
   <!-- ========================================================= -->
   <main id="tabContent-geology" class="max-w-6xl mx-auto px-4 mt-6 space-y-12">
 
     <div class="flex flex-wrap gap-2 text-xs sm:text-sm">
       <a href="#about" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">О клубе</a>
-      <a href="#cleavage" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Шпаргалки и секреты</a>
+      <a href="#cleavage" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Шпаргалки</a>
       <a href="#catalog" class="px-3 py-1.5 rounded-lg badge-sage font-medium">💎 Минералы (29)</a>
-      <a href="#rocks-catalog" class="px-3 py-1.5 rounded-lg badge-sand font-medium">🌋 Горные породы (29)</a>
-      <a href="#exam" class="px-3 py-1.5 rounded-lg badge-terracotta font-medium">📝 Тренажёр</a>
-      <a href="#rules" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Правила чата</a>
-      <a href="#post-form" class="px-3 py-1.5 rounded-lg badge-sand font-medium">Отправить пост</a>
+      <a href="#rocks-catalog" class="px-3 py-1.5 rounded-lg badge-sand font-medium">🌋 Горные породы</a>
+      <a href="#formula-trainer" class="px-3 py-1.5 rounded-lg badge-sage font-bold">🧩 Интерактив: Формулы и структуры</a>
+      <a href="#exam" class="px-3 py-1.5 rounded-lg badge-terracotta font-medium">📝 Тест по минералам (20)</a>
+      <a href="#rules" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Правила</a>
     </div>
 
     <!-- 1. Описание и навигация -->
@@ -201,7 +201,7 @@
           <strong>«Клуб любителей минералов»</strong> — просветительское онлайн-сообщество для всех, кто увлечён миром камня, геологией, минералогией, петрографией и стратиграфией. Наш чат объединяет начинающих любителей и знатоков, готовых обсуждать химический состав, твёрдость по шкале Мооса, спайность, структуры и текстуры горных пород.
         </p>
         <p class="text-[#54483d] leading-relaxed">
-          <strong>Главная цель беседы</strong> — обмен знаниями, обсуждение научно-популярных материалов, подготовка к практическим работам, помощь в определении минералов и горных пород по фотографиям и культурное общение единомышленников.
+          <strong>Главная цель беседы</strong> — обмен знаниями, подготовка к практическим работам, помощь в определении минералов и горных пород по фотографиям и культурное общение единомышленников.
         </p>
       </div>
 
@@ -209,61 +209,59 @@
         <div class="space-y-3">
           <h3 class="font-bold text-lg text-[#3b5e49]">Навигация и рубрики чата</h3>
           <ul class="text-sm text-[#54483d] space-y-3">
-            <li>📌 <strong>Закреплённое сообщение:</strong> свод правил, шкала Мооса, справочник минералов и горных пород.</li>
-            <li>🔹 <button type="button" onclick="jumpToForm('#минерал_дня')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#минерал_дня</button> — ежедневный разбор формулы, свойств минерала или горной породы.</li>
-            <li>🔹 <button type="button" onclick="jumpToForm('#что_за_камень')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#что_за_камень</button> — помощь в определении образцов по фотографиям участников.</li>
-            <li>🔹 <button type="button" onclick="jumpToForm('#книжная_полка')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#книжная_полка</button> — учебные пособия, атласы и определители.</li>
+            <li>📌 <strong>Закреплённое сообщение:</strong> свод правил, шкала Мооса, справочник минералов и пород.</li>
+            <li>🔹 <button type="button" onclick="jumpToForm('#минерал_дня')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#минерал_дня</button> — разбор формулы и свойств образца.</li>
+            <li>🔹 <button type="button" onclick="jumpToForm('#что_за_камень')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#что_за_камень</button> — определение образцов по фото.</li>
+            <li>🔹 <button type="button" onclick="jumpToForm('#книжная_полка')" class="px-1.5 py-0.5 rounded bg-[#e6efe9] text-[#3b5e49] font-semibold hover:underline">#книжная_полка</button> — учебные пособия и определители.</li>
           </ul>
         </div>
         <a href="#post-form" class="block text-center w-full py-2.5 px-4 rounded-xl badge-sand text-xs font-bold hover:bg-[#e8decb] transition">
-          ✍️ Заполнить форму для рубрики (внизу сайта) ↓
+          ✍️ Заполнить форму для рубрики ↓
         </a>
       </div>
     </section>
 
-    <!-- 2. Выдвижные вкладки: Спайность, Моос и Петрография (Горные породы) -->
+    <!-- 2. Выдвижные вкладки: Шпаргалки -->
     <section id="cleavage" class="pastel-card rounded-2xl p-6 md:p-8 space-y-5">
       <div class="space-y-1.5">
         <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage">Теоретическая памятка клуба</span>
         <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Диагностика минералов и горных пород</h2>
-        <p class="text-sm text-[#5c5044]">Нажмите на любую вкладку ниже, чтобы развернуть подробную шпаргалку по минералогии или петрографии:</p>
+        <p class="text-sm text-[#5c5044]">Нажмите на любую вкладку ниже, чтобы развернуть шпаргалку:</p>
       </div>
 
       <div class="space-y-3">
-        <!-- Вкладка 1 -->
         <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
           <button type="button" onclick="togglePanel('info-cleavage', 'arrow-cleavage')" class="w-full px-5 py-3.5 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
             <span class="font-bold text-sm sm:text-base text-[#2e2620]">💎 Что такое спайность минералов и её 4 основных вида</span>
             <span id="arrow-cleavage" class="text-[#3b5e49] font-bold transition-transform duration-300">▼</span>
           </button>
           <div id="info-cleavage" class="hidden slide-fade px-5 pb-5 pt-3 text-sm text-[#4a3f35] space-y-4 border-t border-[#e6dccf] bg-[#fffdf9]/95">
-            <p><strong>Спайность</strong> — это способность кристаллических минералов раскалываться при ударе по ровным плоским поверхностям (плоскостям спайности), зависящим от внутреннего строения кристаллической решётки.</p>
+            <p><strong>Спайность</strong> — способность минералов раскалываться по ровным плоским поверхностям.</p>
             <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
+              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
                 <div class="text-xs font-bold uppercase text-[#3b5e49]">1. Весьма совершенная</div>
-                <p class="text-xs text-[#54483d]">Минерал легко расщепляется даже ногтем на тончайшие гибкие листочки и чешуйки в одном направлении.</p>
-                <p class="text-xs font-semibold text-[#7a644e]">Примеры: биотит, мусковит, тальк, графит, гипс.</p>
+                <p class="text-xs text-[#54483d]">Расщепляется на тонкие листочки и чешуйки.</p>
+                <p class="text-xs font-semibold text-[#7a644e]">Биотит, мусковит, тальк, графит, гипс.</p>
               </div>
-              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
-                <div class="text-xs font-bold uppercase text-[#3b5e49]">2. Совершенная (куб / ромбоэдр)</div>
-                <p class="text-xs text-[#54483d]">При ударе камень распадается на правильные кубики (90°) или ромбоэдры (75°/105°).</p>
-                <p class="text-xs font-semibold text-[#7a644e]">По кубу: галит, сильвин, галенит. По ромбоэдру: кальцит, доломит, магнезит.</p>
+              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
+                <div class="text-xs font-bold uppercase text-[#3b5e49]">2. По кубу / ромбоэдру</div>
+                <p class="text-xs text-[#54483d]">Распадается на кубики (90°) или ромбоэдры.</p>
+                <p class="text-xs font-semibold text-[#7a644e]">Куб: галит, сильвин, галенит. Ромбоэдр: кальцит, доломит, магнезит.</p>
               </div>
-              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
-                <div class="text-xs font-bold uppercase text-[#3b5e49]">3. Совершенная (октаэдр / призма)</div>
-                <p class="text-xs text-[#54483d]">Выкалываются восьмигранники (октаэдры) либо удлинённые столбики и ступенчатые таблички.</p>
-                <p class="text-xs font-semibold text-[#7a644e]">По октаэдру: флюорит. По призме: роговая обманка, ортоклаз, лабрадор.</p>
+              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
+                <div class="text-xs font-bold uppercase text-[#3b5e49]">3. По октаэдру / призме</div>
+                <p class="text-xs text-[#54483d]">Выкалываются восьмигранники или столбики.</p>
+                <p class="text-xs font-semibold text-[#7a644e]">Октаэдр: флюорит. Призма: роговая обманка, ортоклаз, лабрадор.</p>
               </div>
-              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
+              <div class="p-4 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
                 <div class="text-xs font-bold uppercase text-[#8c4a32]">4. Отсутствует</div>
-                <p class="text-xs text-[#54483d]">Связи равнопрочны во всех направлениях — ровных плоскостей нет, образуется раковистый или неровный излом.</p>
-                <p class="text-xs font-semibold text-[#7a644e]">Кварц, корунд, пирит, халькопирит, сера, магнетит, гематит, лимонит, оливин.</p>
+                <p class="text-xs text-[#54483d]">Ровных плоскостей нет (все 5 окислов и др.).</p>
+                <p class="text-xs font-semibold text-[#7a644e]">Кварц, корунд, магнетит, гематит, лимонит, пирит, халькопирит, сера, оливин.</p>
               </div>
             </div>
           </div>
         </div>
 
-        <!-- Вкладка 2 -->
         <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
           <button type="button" onclick="togglePanel('info-mohs', 'arrow-mohs')" class="w-full px-5 py-3.5 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
             <span class="font-bold text-sm sm:text-base text-[#2e2620]">🔍 Распределение минералов по шкале твёрдости Мооса (от 1 до 9)</span>
@@ -271,366 +269,27 @@
           </button>
           <div id="info-mohs" class="hidden slide-fade px-5 pb-5 pt-3 text-sm text-[#4a3f35] space-y-2 border-t border-[#e6dccf] bg-[#fffdf9]/95">
             <ul class="list-disc pl-5 space-y-1.5">
-              <li><strong>Твёрдость 1–2 (очень мягкие):</strong> <em>тальк (1)</em>, <em>сера (1–2)</em>, <em>каолин (1–2)</em>, <em>графит (2)</em>, <em>карналлит (~2)</em>, <em>гипс (2)</em>.</li>
-              <li><strong>Твёрдость 2,5–3,5 (мягкие):</strong> <em>галенит (2,5)</em>, <em>галит (2,5)</em>, <em>сильвин (2,5)</em>, <em>биотит (2,5)</em>, <em>мусковит (2,5)</em>, <em>кальцит (3)</em>, <em>ангидрит (3)</em>, <em>доломит (3,5)</em>.</li>
-              <li><strong>Твёрдость 3,5–5 (средняя твёрдость):</strong> <em>халькопирит (3,5–4)</em>, <em>флюорит (4)</em>, <em>магнезит (4)</em>, <em>лимонит (&lt;5)</em>, <em>апатит (5)</em> и <em>фосфорит (5)</em>.</li>
-              <li><strong>Твёрдость 6–9 (высокая твёрдость, царапают стекло):</strong> <em>магнетит (6)</em>, <em>гематит (~6)</em>, <em>роговая обманка (6)</em>, <em>ортоклаз (6)</em>, <em>лабрадор (6)</em>, <em>пирит (6–6,5)</em>, <em>оливин (6,5–7)</em>, <em>кварц (7)</em> и <em>корунд (9)</em>.</li>
+              <li><strong>Твёрдость 1–2:</strong> тальк (1), сера (1–2), каолин (1–2), графит (2), карналлит (~2), гипс (2).</li>
+              <li><strong>Твёрдость 2,5–3,5:</strong> галенит (2,5), галит (2,5), сильвин (2,5), биотит (2,5), мусковит (2,5), кальцит (3), ангидрит (3), доломит (3,5).</li>
+              <li><strong>Твёрдость 3,5–5:</strong> халькопирит (3,5–4), флюорит (4), магнезит (4), лимонит (&lt;5), апатит (5), фосфорит (5).</li>
+              <li><strong>Твёрдость 6–9 (царапают стекло):</strong> магнетит (6), гематит (~6), роговая обманка (6), ортоклаз (6), лабрадор (6), пирит (6–6,5), оливин (6,5–7), кварц (7), корунд (9).</li>
             </ul>
           </div>
         </div>
 
-        <!-- Вкладка 3 -->
         <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
           <button type="button" onclick="togglePanel('info-twins', 'arrow-twins')" class="w-full px-5 py-3.5 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
-            <span class="font-bold text-sm sm:text-base text-[#2e2620]">👯 Минералы-двойники: как не перепутать похожие камни</span>
+            <span class="font-bold text-sm sm:text-base text-[#2e2620]">👯 Минералы-двойники и диагностические реакции</span>
             <span id="arrow-twins" class="text-[#3b5e49] font-bold transition-transform duration-300">▼</span>
           </button>
           <div id="info-twins" class="hidden slide-fade px-5 pb-5 pt-3 text-sm text-[#4a3f35] space-y-2 border-t border-[#e6dccf] bg-[#fffdf9]/95">
-            <ul class="list-disc pl-5 space-y-2">
-              <li><strong>Пирит vs Халькопирит:</strong> у пирита крупные кристаллы (высокая сила кристаллизации), устойчивая к окислению поверхность, плотность 5 г/см³ и твёрдость 6–6,5. Халькопирит сплошной (низкая сила кристаллизации), подвержен окислению, плотность 4 г/см³, твёрдость 3,5–4.</li>
-              <li><strong>Кальцит vs Доломит vs Магнезит:</strong> твёрдость растёт от 3 (кальцит — реакция с HCl сразу в куске) к 3,5 (доломит — реакция в порошке) и 4 (магнезит — реакция при нагревании).</li>
-              <li><strong>Магнетит vs Гематит vs Лимонит:</strong> три окисла железа без спайности. Магнетит чёрный с чёрной чертой и сам магнитит; гематит с красновато-бурой чертой и магнитит при нагревании; лимонит ржавый с ржавой чертой и твёрдостью &lt; 5.</li>
-              <li><strong>Оливин vs Роговая обманка:</strong> у оливина изометричные зёрна и нет спайности, у роговой обманки — дощатые кристаллы и совершенная спайность.</li>
-              <li><strong>Гипс vs Ангидрит:</strong> водный гипс (CaSO₄·2H₂O) имеет твёрдость 2 и плотность 2, а безводный ангидрит (CaSO₄) тяжелее (плотность 3), твёрже (3) и имеет голубовато-серый оттенок.</li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Вкладка 4 -->
-        <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
-          <button type="button" onclick="togglePanel('info-effects', 'arrow-effects')" class="w-full px-5 py-3.5 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
-            <span class="font-bold text-sm sm:text-base text-[#2e2620]">⚡ Необычные физические и оптические эффекты наших минералов</span>
-            <span id="arrow-effects" class="text-[#3b5e49] font-bold transition-transform duration-300">▼</span>
-          </button>
-          <div id="info-effects" class="hidden slide-fade px-5 pb-5 pt-3 text-sm text-[#4a3f35] space-y-1.5 border-t border-[#e6dccf] bg-[#fffdf9]/95">
             <ul class="list-disc pl-5 space-y-1.5">
-              <li><strong>Свечение в темноте (термолюминесценция):</strong> галоид <em>флюорит</em> светится в темноте при нагревании.</li>
-              <li><strong>Гигроскопичность:</strong> <em>карналлит</em> жирный на ощупь и активно впитывает влагу из воздуха.</li>
-              <li><strong>Запах жжёной кости:</strong> шаровидные конкреции <em>фосфорита</em> пахнут жжёной костью при ударе и трении.</li>
-              <li><strong>Синеватый отлив:</strong> тёмный плагиоклаз <em>лабрадор</em> вспыхивает ярким синим отливом на плоскостях спайности.</li>
-              <li><strong>Пластичность в воде:</strong> глинистый силикат <em>каолин</em> (пластинки 0,01 мм) при намокании набухает и становится пластичным.</li>
+              <li><strong>Пирит vs Халькопирит:</strong> пирит с высокой силой кристаллизации (крупные кристаллы), не окисляется, плотность 5, твёрдость 6–6,5. Халькопирит с низкой силой кристаллизации, окисляется, плотность 4, твёрдость 3,5–4.</li>
+              <li><strong>Кальцит vs Доломит vs Магнезит:</strong> реакция с HCl: кальцит — при обычных условиях (в куске), доломит — в порошке, магнезит — при нагревании.</li>
+              <li><strong>Магнетит vs Гематит vs Лимонит:</strong> магнетит магнитит в обычной среде (чёрная черта), гематит магнитит при нагревании (красновато-бурая черта), лимонит не магнитит (ржавая черта).</li>
             </ul>
           </div>
         </div>
-
-        <!-- НОВАЯ ВКЛАДКА 5: Шпаргалка по Горным породам (Петрография) -->
-        <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
-          <button type="button" onclick="togglePanel('info-rocks', 'arrow-rocks')" class="w-full px-5 py-3.5 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
-            <span class="font-bold text-sm sm:text-base text-[#2e2620]">🌋 Горные породы: структуры, текстуры и как не перепутать породы-двойники</span>
-            <span id="arrow-rocks" class="text-[#3b5e49] font-bold transition-transform duration-300">▼</span>
-          </button>
-          <div id="info-rocks" class="hidden slide-fade px-5 pb-5 pt-3 text-sm text-[#4a3f35] space-y-3 border-t border-[#e6dccf] bg-[#fffdf9]/95">
-            <div class="grid md:grid-cols-3 gap-3">
-              <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
-                <div class="text-xs font-bold uppercase text-[#8c4a32]">1. Магматические (10 пород)</div>
-                <p class="text-xs text-[#54483d]">Делятся по глубине на <strong>интрузивные</strong> (полнокристаллические зернистые: дунит, пироксенит, габбро, диорит, нефелиновый сиенит, гранит), <strong>полуглубинные</strong> (пегматит) и <strong>эффузивные</strong> (излившиеся — порфировые, скрытокристаллические или стекловатые: базальт, порфирит, обсидиан).</p>
-              </div>
-              <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
-                <div class="text-xs font-bold uppercase text-[#6e5a44]">2. Осадочные (20 пород)</div>
-                <p class="text-xs text-[#54483d]">Включают <strong>вулканогенно-обломочные</strong> (туф), <strong>обломочные</strong> (щебень, брекчия, галечник, конгломерат, песчаник, алевролит), <strong>глинистые</strong> (глина, аргиллит, мергель) и <strong>хемогенно-биогенные</strong> (известняк, доломит, яшма, ангидрит, гипс, соли, бурый железняк, боксит, фосфорит, каменный уголь).</p>
-              </div>
-              <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1">
-                <div class="text-xs font-bold uppercase text-[#3b5e49]">3. Метаморфические (9 пород)</div>
-                <p class="text-xs text-[#54483d]">Образуются при изменении пород под действием температуры, давления и флюидов: <strong>региональный и контактовый метаморфизм</strong> (мрамор, кварцит, глинистый, слюдяной, хлоритовый, тальковый сланцы, гнейс), <strong>метасоматоз</strong> (серпентинит) и <strong>динамометаморфизм</strong> (тектоническая брекчия).</p>
-              </div>
-            </div>
-            <ul class="list-disc pl-5 space-y-1.5 text-xs sm:text-sm pt-1">
-              <li><strong>Дунит vs Пироксенит:</strong> обе ультраосновные интрузивные породы, но в дуните &gt;90% оливина (тонко-мелкозернистая структура), а в пироксените &gt;90% пироксена (средне-крупнозернистая структура, чёрно-зелёная окраска).</li>
-              <li><strong>Габбро vs Базальт:</strong> одинаковый основной состав (роговая обманка/пироксен + кальциевый плагиоклаз), но габбро — глубинная крупнозернистая порода, а базальт — излившаяся тонкозернистая/аморфная (часто пористая).</li>
-              <li><strong>Диорит vs Порфирит:</strong> одинаковый средний состав, но диорит равномерно-зернистый (интрузивный), а порфирит имеет характерную порфировую структуру (светлые вкрапленники плагиоклаза в тёмной массе).</li>
-              <li><strong>Гранит vs Гнейс:</strong> одинаковый минеральный состав (кварц, полевой шпат, слюда), но у гранита массивная однородная текстура, а у метаморфического гнейса — чёткая полосчатая (гнейсовидная) текстура.</li>
-              <li><strong>Щебень и Брекчия vs Галечник и Конгломерат:</strong> щебень (рыхлый) и брекчия (сцементированная) состоят из <em>неокатанных угловатых</em> обломков; галечник (рыхлый) и конгломерат (сцементированный) — из <em>окатанных</em>.</li>
-              <li><strong>Глина vs Аргиллит vs Мергель:</strong> все три с пелитовой структурой и не царапают стекло, но глина разбухает в воде, каменистый аргиллит в воде не размокает, а мергель (25–75% карбонатов) вскипает от капли кислоты HCl.</li>
-              <li><strong>Песчаник vs Кварцит и Известняк vs Мрамор:</strong> при метаморфизме песчаник переходит в сливной сверхпрочный кварцит, а известняк — в полнокристаллический крупнозернистый мрамор (оба карбоната бурно вскипают с HCl).</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3А. Справочник минералов (29 образцов) -->
-    <section id="catalog" class="space-y-6">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage mb-1">Раздел 1 • Минералогия</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">💎 Справочник минералов (29 образцов)</h2>
-          <p class="text-[#6e5f51] text-sm mt-1">В каждой карточке нажмите «✨ Интересный факт и применение», чтобы развернуть описание</p>
-        </div>
-        <input id="searchInput" type="text" placeholder="Поиск минерала по названию, формуле..."
-          class="px-4 py-2.5 rounded-xl bg-[#fffdf9]/90 border border-[#d8cbb8] text-sm text-[#2e2620] placeholder-[#9c8d7e] focus:outline-none focus:border-[#3b5e49] w-full md:w-80 shadow-sm">
-      </div>
-      <div id="filterContainer" class="flex flex-wrap gap-2"></div>
-      <div id="mineralsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </section>
-
-    <!-- 3Б. Справочник горных пород (29 образцов из конспекта) -->
-    <section id="rocks-catalog" class="space-y-6 pt-6 border-t-2 border-[#e2d6c5]">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sand mb-1">Раздел 2 • Петрография</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">🌋 Справочник горных пород (29 образцов)</h2>
-          <p class="text-[#6e5f51] text-sm mt-1">Магматические, осадочные и метаморфические породы: генезис, минеральный состав, структура, текстура и диагностика</p>
-        </div>
-        <input id="rockSearchInput" type="text" placeholder="Поиск породы по составу, структуре..."
-          class="px-4 py-2.5 rounded-xl bg-[#fffdf9]/90 border border-[#d8cbb8] text-sm text-[#2e2620] placeholder-[#9c8d7e] focus:outline-none focus:border-[#3b5e49] w-full md:w-80 shadow-sm">
-      </div>
-      <div id="rockFilterContainer" class="flex flex-wrap gap-2"></div>
-      <div id="rocksGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    </section>
-
-    <!-- 4. Тренажёр: Переключатель Минералы (20) / Горные породы (15) -->
-    <section id="exam" class="pastel-card rounded-2xl p-6 md:p-8 space-y-6">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#e6dccf] pb-5">
-        <div class="space-y-2">
-          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-terracotta">Практический тренажёр</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Проверка знаний: Минералы и Горные породы</h2>
-          <div class="flex flex-wrap gap-2 pt-1">
-            <button type="button" id="quizTabBtn-minerals" onclick="switchQuizCategory('minerals')"
-              class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">
-              💎 Вопросы по минералам (20)
-            </button>
-            <button type="button" id="quizTabBtn-rocks" onclick="switchQuizCategory('rocks')"
-              class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-              🌋 Вопросы по горным породам (15)
-            </button>
-          </div>
-        </div>
-        <div class="flex flex-wrap items-center gap-3 shrink-0">
-          <div class="px-4 py-2 rounded-xl badge-sage font-bold text-sm">
-            Счёт: <span id="quizScore">0</span> / <span id="quizTotal">20</span>
-          </div>
-          <button type="button" onclick="toggleAllQuestions(true)" class="px-3.5 py-2 rounded-xl bg-[#f3ece1] hover:bg-[#e6dccf] text-[#4a3f35] text-xs font-semibold transition">Развернуть все</button>
-          <button type="button" onclick="toggleAllQuestions(false)" class="px-3.5 py-2 rounded-xl bg-[#f3ece1] hover:bg-[#e6dccf] text-[#4a3f35] text-xs font-semibold transition">Свернуть все</button>
-          <button type="button" onclick="resetExam()" class="px-3.5 py-2 rounded-xl badge-terracotta text-xs font-semibold hover:opacity-90 transition">Сбросить ответы</button>
-        </div>
-      </div>
-      <div id="examContainer" class="space-y-3"></div>
-    </section>
-
-    <!-- 5. Правила сообщества ВКонтакте -->
-    <section id="rules" class="pastel-card rounded-2xl p-6 md:p-8 space-y-6">
-      <div class="space-y-1">
-        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sand">Нормы общения и модерация</span>
-        <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Правила сообщества ВКонтакте</h2>
-      </div>
-      <div class="grid md:grid-cols-3 gap-6">
-        <div class="bg-[#f5efe6]/85 p-5 rounded-xl border border-[#e2d6c5] space-y-2.5">
-          <h3 class="font-bold text-[#3b5e49]">I. Речевой этикет и культура общения</h3>
-          <p class="text-sm text-[#4a3f35]">1. <strong>Взаимоуважение:</strong> аргументированная критика гипотез без перехода на личности.</p>
-          <p class="text-sm text-[#4a3f35]">2. <strong>Чистота русского языка:</strong> запрет на нецензурную лексику и грубый жаргон.</p>
-          <p class="text-sm text-[#4a3f35]">3. <strong>Цифровой этикет:</strong> не дробить мысль на десятки коротких строк и не писать КАПСОМ.</p>
-        </div>
-        <div class="bg-[#f5efe6]/85 p-5 rounded-xl border border-[#e2d6c5] space-y-2.5">
-          <h3 class="font-bold text-[#6e5a44]">II. Тематические рамки и содержание</h3>
-          <p class="text-sm text-[#4a3f35]">1. <strong>Научный подход:</strong> опираемся на геологию, петрографию и минералогию, без эзотерики и гороскопов.</p>
-          <p class="text-sm text-[#4a3f35]">2. <strong>Требования к фото:</strong> чёткие снимки при дневном свете с указанием известных свойств.</p>
-          <p class="text-sm text-[#4a3f35]">3. <strong>Запрет на шум:</strong> без спама стикерами и несогласованной рекламы.</p>
-        </div>
-        <div class="bg-[#f5efe6]/85 p-5 rounded-xl border border-[#e2d6c5] space-y-2.5">
-          <h3 class="font-bold text-[#8c4a32]">III. Порядок модерации</h3>
-          <p class="text-sm text-[#4a3f35]">1. <strong>Первое нарушение:</strong> устное замечание администратора.</p>
-          <p class="text-sm text-[#4a3f35]">2. <strong>Повторное нарушение:</strong> временное ограничение отправки сообщений или исключение из чата.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- 6. Форма для заполнения по рубрикам чата -->
-    <section id="post-form" class="pastel-card rounded-2xl p-6 md:p-8 space-y-6">
-      <div class="space-y-1.5">
-        <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage">Интерактивная форма для участников</span>
-        <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">Отправить сообщение в рубрику чата</h2>
-      </div>
-      <form onsubmit="submitClubForm(event)" class="grid md:grid-cols-2 gap-5 bg-[#f5efe6]/85 p-6 rounded-2xl border border-[#e2d6c5]">
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-[#594c3f]">Ваше имя или никнейм *</label>
-          <input type="text" id="formAuthor" required placeholder="Например: Иван" class="w-full px-4 py-2.5 rounded-xl bg-[#fffdf9] border border-[#d8cbb8] text-sm">
-        </div>
-        <div class="space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-[#594c3f]">Выберите рубрику (хештег) *</label>
-          <select id="formHashtag" required class="w-full px-4 py-2.5 rounded-xl bg-[#fffdf9] border border-[#d8cbb8] text-sm">
-            <option value="#минерал_дня">#минерал_дня — заметка о свойствах минерала или породы</option>
-            <option value="#что_за_камень">#что_за_камень — помощь в определении образца</option>
-            <option value="#книжная_полка">#книжная_полка — рекомендация книги или атласа</option>
-          </select>
-        </div>
-        <div class="md:col-span-2 space-y-1.5">
-          <label class="block text-xs font-bold uppercase text-[#594c3f]">Название образца и текст сообщения *</label>
-          <textarea id="formMessage" rows="3" required placeholder="Опишите окраску, структуру, текстуру, спайность, твёрдость или ваш вопрос..." class="w-full px-4 py-3 rounded-xl bg-[#fffdf9] border border-[#d8cbb8] text-sm"></textarea>
-        </div>
-        <div class="md:col-span-2 flex items-center justify-between flex-wrap gap-4">
-          <span class="text-xs text-[#7a6b5d]">Соблюдайте нормы речевого этикета сообщества.</span>
-          <button type="submit" class="px-6 py-3 rounded-xl bg-[#3b5e49] hover:bg-[#2e4b3a] text-[#fffdf9] font-bold text-sm shadow-sm transition">Отправить сообщение в клуб</button>
-        </div>
-      </form>
-    </section>
-  </main>
-
-  <!-- ========================================================= -->
-  <!-- ВКЛАДКА 2: СТРАТИГРАФИЯ (ТОЧНАЯ СЕТКА ОСШ-2024 + МОБИЛЬНЫЙ РЕЖИМ) -->
-  <!-- ========================================================= -->
-  <section id="tabContent-stratigraphy" class="hidden max-w-6xl mx-auto px-2 sm:px-4 mt-4 sm:mt-6 space-y-4 sm:space-y-6">
-    <div class="pastel-card rounded-2xl p-4 sm:p-6 md:p-8 space-y-5">
-      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#e6dccf] pb-4">
-        <div class="space-y-1">
-          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage">
-            Общая стратиграфическая (геохронологическая) шкала (2024 г.)
-          </span>
-          <h2 class="text-xl sm:text-2xl md:text-3xl font-bold text-[#2e2620]">Интерактивная стратиграфическая шкала</h2>
-          <p class="text-xs sm:text-sm text-[#5c5044]">
-            Выберите <strong>«Режим изучения»</strong> для просмотра полной шкалы или <strong>«Режим практики»</strong> для проверки памяти по уровням сложности.
-          </p>
-        </div>
-
-        <div id="stratStatsBox" class="hidden flex-wrap items-center gap-2 shrink-0">
-          <div class="px-3.5 py-2 rounded-xl badge-sage font-bold text-xs sm:text-sm">
-            Отгадано: <span id="stratSolvedCount">0</span> / <span id="stratTotalCount">0</span>
-          </div>
-          <button type="button" onclick="giveStratHint()" class="px-3 py-2 rounded-xl badge-sand text-xs font-bold hover:bg-[#e5dac9] transition">
-            💡 Подсказка
-          </button>
-          <button type="button" onclick="resetStratTraining()" class="px-3 py-2 rounded-xl badge-terracotta text-xs font-bold hover:opacity-90 transition">
-            🔄 Сбросить
-          </button>
-        </div>
-      </div>
-
-      <!-- Пошаговый выбор режима -->
-      <div class="space-y-3.5 bg-[#f5efe6]/90 p-3.5 sm:p-5 rounded-2xl border border-[#e2d6c5]">
-        <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-          <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">1. Режим:</span>
-          <button type="button" id="stratMainBtn-study" onclick="selectStratMainMode('study')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            📖 Режим изучения
-          </button>
-          <button type="button" id="stratMainBtn-practice" onclick="selectStratMainMode('practice')"
-            class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            🎯 Режим практики
-          </button>
-        </div>
-
-        <div id="stratLevelBar" class="hidden slide-fade flex-wrap items-center gap-2 pt-3 border-t border-[#dfd3c3]">
-          <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">2. Сложность:</span>
-          <button type="button" id="stratLvlBtn-easy" onclick="selectStratLevel('easy')"
-            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            🟢 Лёгкий (Акрон, Эон, Эра, Период)
-          </button>
-          <button type="button" id="stratLvlBtn-medium" onclick="selectStratLevel('medium')"
-            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            🟡 Средний (+ Отделы и подотделы)
-          </button>
-          <button type="button" id="stratLvlBtn-hard" onclick="selectStratLevel('hard')"
-            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            🔴 Продвинутый (Вся шкала + Ярусы и Возраст)
-          </button>
-        </div>
-
-        <div id="stratInputBar" class="hidden slide-fade flex-wrap items-center gap-2 pt-3 border-t border-[#dfd3c3]">
-          <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">3. Способ ввода:</span>
-          <button type="button" id="stratInpBtn-chips" onclick="selectStratInputMode('chips')"
-            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            🧩 Плашки (Шторка)
-          </button>
-          <button type="button" id="stratInpBtn-keyboard" onclick="selectStratInputMode('keyboard')"
-            class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-            ⌨️ Клавиатура (Вручную)
-          </button>
-        </div>
-
-        <!-- Панель мобильного удобства: Фильтр по Эрам и Компактный вид -->
-        <div id="stratMobileToolbar" class="hidden slide-fade flex-wrap items-center justify-between gap-2.5 pt-3 border-t border-[#dfd3c3]">
-          <div class="flex flex-wrap items-center gap-1.5">
-            <span class="text-[11px] font-bold uppercase text-[#6e5a44] mr-1">Раздел шкалы:</span>
-            <button type="button" id="eraFilter-ALL" onclick="setEraFilter('ALL')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green">Все (53)</button>
-            <button type="button" id="eraFilter-KZ" onclick="setEraFilter('KZ')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Кайнозой KZ</button>
-            <button type="button" id="eraFilter-MZ" onclick="setEraFilter('MZ')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Мезозой MZ</button>
-            <button type="button" id="eraFilter-PZ" onclick="setEraFilter('PZ')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Палеозой PZ</button>
-            <button type="button" id="eraFilter-DOCM" onclick="setEraFilter('DOCM')" class="px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light">Докембрий PR–AR</button>
-          </div>
-
-          <button type="button" id="compactColsBtn" onclick="toggleCompactCols()"
-            class="px-3 py-1.5 rounded-xl text-xs font-bold transition btn-light flex items-center gap-1.5">
-            <span>📱 Скрыть неигровые столбцы</span>
-          </button>
-        </div>
-      </div>
-
-      <div id="stratEmptyPrompt" class="py-10 text-center text-xs sm:text-sm text-[#7a6b5d] bg-[#faf5ed]/60 rounded-2xl border border-dashed border-[#d8cbb8] px-4">
-        👆 Нажмите <strong>«📖 Режим изучения»</strong> или выберите параметры в <strong>«🎯 Режиме практики»</strong>, чтобы открыть стратиграфическую шкалу.
-      </div>
-
-      <div id="stratTableContainer" class="hidden slide-fade overflow-x-auto rounded-xl border-2 border-[#594c3f] shadow-md bg-white">
-        <table class="strat-table w-full text-left border-collapse">
-          <thead id="stratTableHead"></thead>
-          <tbody id="stratTableBody" class="text-[11px] sm:text-xs"></tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Выдвижная шторка с плашками -->
-  <div id="stratDrawer" class="fixed bottom-0 inset-x-0 z-40 hidden pastel-header border-t-2 border-[#b59e85] shadow-2xl p-2.5 sm:p-4 slide-fade">
-    <div class="max-w-5xl mx-auto space-y-2">
-      <div class="flex items-center justify-between gap-2">
-        <div class="flex items-center gap-2 min-w-0">
-          <span class="px-2.5 py-0.5 rounded-lg badge-sage text-[11px] sm:text-xs font-bold shrink-0" id="drawerColTitle">Раздел</span>
-          <span class="text-[11px] sm:text-xs text-[#5c5044] truncate">Выберите плашку для выделенной ячейки:</span>
-        </div>
-        <div class="flex items-center gap-1.5 shrink-0">
-          <button type="button" onclick="giveStratHint()" class="px-2.5 py-1 rounded-lg badge-sand text-[11px] sm:text-xs font-semibold hover:bg-[#e5dac9]">💡 Открыть</button>
-          <button type="button" onclick="closeStratDrawer()" class="w-7 h-7 rounded-lg bg-[#e6dccf] text-[#2e2620] font-bold text-xs flex items-center justify-center">✕</button>
-        </div>
-      </div>
-      <div id="drawerChipsContainer" class="flex flex-wrap gap-1.5 sm:gap-2 max-h-32 sm:max-h-44 overflow-y-auto py-1"></div>
-    </div>
-  </div>
-
-  <!-- Модальное окно 1: Подтверждение отправки формы -->
-  <div id="formSuccessModal" class="fixed inset-0 z-50 hidden bg-black/45 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="pastel-card slide-fade rounded-2xl max-w-md w-full p-6 text-center space-y-4">
-      <div class="w-14 h-14 rounded-full badge-sage mx-auto flex items-center justify-center text-2xl">✅</div>
-      <h3 class="text-xl font-bold text-[#2e2620]">Сообщение отправлено в Клуб любителей минералов</h3>
-      <p id="formModalPreview" class="text-xs text-[#5c5044] bg-[#f5efe6] p-3 rounded-xl border border-[#e2d6c5] text-left"></p>
-      <button type="button" onclick="closeFormModal()" class="w-full py-2.5 rounded-xl bg-[#3b5e49] text-white font-semibold text-sm">Закрыть</button>
-    </div>
-  </div>
-
-  <!-- Модальное окно 2: Проверка правил сообщества перед переходом в ВК -->
-  <div id="vkGateModal" class="fixed inset-0 z-50 hidden bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
-    <div class="pastel-card slide-fade rounded-2xl max-w-lg w-full p-6 space-y-5 my-8">
-      <div class="flex items-start justify-between gap-4 border-b border-[#e6dccf] pb-3">
-        <div>
-          <span class="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold badge-terracotta mb-1">Проверка правил сообщества</span>
-          <h3 id="vkGateTitle" class="text-lg font-bold text-[#2e2620]">Переход в группу ВКонтакте</h3>
-          <p class="text-xs text-[#6e5f51] mt-0.5">Ответьте правильно на 3 вопроса по правилам нашего клуба:</p>
-        </div>
-        <button type="button" onclick="closeVkGate()" class="text-[#7a6b5d] hover:text-[#2e2620] text-lg font-bold px-2">✕</button>
-      </div>
-      <div class="space-y-3.5 text-xs sm:text-sm">
-        <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
-          <p class="font-bold text-[#2e2620]">1. Какой стиль общения принят в «Клубе любителей минералов»?</p>
-          <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="ruleQ1" value="correct" onchange="checkRulesGate()" class="mt-1"><span>Грамотный русский язык, взаимоуважение, отсутствие нецензурной лексики и КАПСА</span></label>
-          <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="ruleQ1" value="wrong" onchange="checkRulesGate()" class="mt-1"><span>Дробление фраз на десятки сообщений, грубый сленг и переход на личности</span></label>
-        </div>
-        <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
-          <p class="font-bold text-[#2e2620]">2. Какого подхода мы придерживаемся при обсуждении минералов и пород?</p>
-          <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="ruleQ2" value="wrong" onchange="checkRulesGate()" class="mt-1"><span>Обсуждаем гороскопы, астрологию и «магические свойства» камней</span></label>
-          <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="ruleQ2" value="correct" onchange="checkRulesGate()" class="mt-1"><span>Научного подхода: опираемся на геологию, минералогию, петрографию, состав и структуру</span></label>
-        </div>
-        <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5] space-y-1.5">
-          <p class="font-bold text-[#2e2620]">3. Как правильно попросить помощи в рубрике #что_за_камень?</p>
-          <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="ruleQ3" value="correct" onchange="checkRulesGate()" class="mt-1"><span>Прикрепить чёткое фото при дневном свете и указать известные свойства образца</span></label>
-          <label class="flex items-start gap-2 cursor-pointer"><input type="radio" name="ruleQ3" value="wrong" onchange="checkRulesGate()" class="mt-1"><span>Отправлять однотипные стикеры и рекламные ссылки без согласования</span></label>
-        </div>
-      </div>
-      <p id="vkGateStatus" class="text-xs font-semibold text-[#8c4a32] text-center">Отметьте правильные ответы во всех 3 пунктах.</p>
-      <div class="flex gap-3 pt-1">
-        <button type="button" onclick="closeVkGate()" class="px-4 py-2.5 rounded-xl bg-[#f3ece1] text-[#594c3f] font-semibold text-xs sm:text-sm">Отмена</button>
-        <a id="vkGateProceedBtn" href="#" target="_blank" rel="noopener noreferrer" onclick="handleVkProceed(event)"
-           class="flex-1 py-2.5 px-4 rounded-xl text-center font-bold text-xs sm:text-sm bg-gray-300 text-gray-500 cursor-not-allowed transition">🔒 Перейти ВКонтакте</a>
-      </div>
-    </div>
-  </div>
-
   <script>
     // =========================================================================
     // 1. БАЗОВЫЕ ФУНКЦИИ ИНТЕРФЕЙСА И МОДАЛЬНЫХ ОКОН
@@ -658,6 +317,7 @@
       if (tab === "stratigraphy") {
         geoMain.classList.add("hidden");
         stratMain.classList.remove("hidden");
+        if (typeof closeFormulaDrawer === "function") closeFormulaDrawer();
         btnStrat.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green";
         btnGeo.className = "flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
       } else {
@@ -1084,7 +744,7 @@
       },
 
       // ПРОТЕРОЗОЙСКАЯ (PR) И АРХЕЙСКАЯ (AR) АКРОТЕМЫ (DOCM) — 11 строк
-      {
+{
         id: "V_2", eraGroup: "DOCM", color: "#fad4d4",
         cells: [
           { cat: "akron", val: "Протерозойская (протерозойский) PR", rs: 7, cs: 1, bg: "#f4bab8", vert: true },
@@ -1627,9 +1287,8 @@
         }
       }
       renderStratTable();
-    }
-    // === КОНЕЦ ЧАСТИ 1 (ВСТАВЬТЕ ЧАСТЬ 2 СРАЗУ ПОСЛЕ ЭТОЙ СТРОКИ) ===
-// =========================================================================
+  <script>
+    // =========================================================================
     // 3. БАЗА 29 МИНЕРАЛОВ (МИНЕРАЛОГИЯ)
     // =========================================================================
     const minerals = [
@@ -1654,123 +1313,614 @@
       { num: "19", name: "Ангидрит", wiki: "Ангидрит", wikiEn: "Anhydrite", group: "Сульфаты и фосфаты", formula: "CaSO₄", hardness: "3", density: "3 г/см³ (средняя)", cleavage: "Совершенная прямоугольная (по 3 направлениям)", color: "Светлая окраска (голубовато-серая)", extra: "Безводный сульфат кальция", fact: "В переводе — «безводный». Присоединяя воду, переходит в гипс и увеличивается в объёме на 30%." },
       { num: "20", name: "Апатит", wiki: "Апатит", wikiEn: "Apatite", group: "Сульфаты и фосфаты", formula: "Ca₅(PO₄)₃", hardness: "5 (эталон твёрдости 5)", density: "Средняя плотность (5)", cleavage: "Отсутствует (несовершенная; излом неровный)", color: "Зеленовато-голубоватая (бесцветная)", extra: "Часто образует крупные кристаллы в форме призмы", fact: "Главный источник фосфорных удобрений и минеральная основа костной ткани и зубной эмали." },
       { num: "21", name: "Фосфорит", wiki: "Фосфориты", wikiEn: "Phosphorite", group: "Сульфаты и фосфаты", formula: "Ca₅(PO₄)₃OH", hardness: "5", density: "3 г/см³", cleavage: "Отсутствует (скрытокристаллический агрегат)", color: "Чёрно-тёмно-зелёная", extra: "Конкреционное строение (шар); запах жжёной кости при трении", fact: "Образует шаровидные конкреции на дне древних морей. При ударе и трении издаёт запах жжёной кости." },
-      { num: "22", name: "Оливин", wiki: "Оливин", wikiEn: "Olivine", group: "Силикаты", formula: "MgFeSiO₄", hardness: "6,5–7 (высокая)", density: "~4 г/см³", cleavage: "Отсутствует (раковистый стеклянный излом)", color: "Тёмно-зелёная, чёрная", extra: "Островной мотив структуры; изометричная форма кристалла", fact: "Главный минерал верхней мантии Земли. Прозрачная ювелирная разновидность — хризолит.", high: true },
-      { num: "23", name: "Роговая обманка", wiki: "Роговая_обманка", wikiEn: "Hornblende", group: "Силикаты", formula: "Силикат (амфибол)", hardness: "6", density: "3 г/см³", cleavage: "Совершенная (по призме под углом 124°)", color: "Тёмно-зелёная (чёрная)", extra: "Ленточный (поясной) мотив структуры; дощатая форма кристаллов; высокая сила кристаллизации", fact: "На изломе напоминает рог животного, но при плавке не давала рудокопам металла.", high: true },
-      { num: "27", name: "Биотит (чёрная слюда)", wiki: "Биотит", wikiEn: "Biotite", group: "Силикаты", formula: "Слоистый силикат", hardness: "2,5", density: "~3 г/см³", cleavage: "Совершенная по пластинкам", color: "Чёрная (тёмно-коричневая)", extra: "Слоистый мотив структуры; блеск до алмазного", fact: "Выветрелые чешуйки биотита ярко сверкают в речном песке, напоминая крупинки золота." },
-      { num: "28", name: "Мусковит (светлая слюда)", wiki: "Мусковит", wikiEn: "Muscovite", group: "Силикаты", formula: "Слоистый силикат", hardness: "2,5", density: "~3 г/см³", cleavage: "Совершенная по пластинкам (прозрачные листы)", color: "Светлая", extra: "Слоистый мотив структуры; блеск до алмазного", fact: "«Мусковское стекло» — экспортировалось из Московской Руси в Европу для окон и фонарей." },
-      { num: "29", name: "Тальк", wiki: "Тальк", wikiEn: "Talc", group: "Силикаты", formula: "Слоистый силикат", hardness: "1 (самая низкая в шкале Мооса)", density: "~3 г/см³ (средняя)", cleavage: "Совершенная чешуйчатая", color: "Светлая окраска (яблочно-зелёная)", extra: "Слоистый силикат; открывает шкалу твёрдости Мооса (эталон № 1)", fact: "Самый мягкий минерал на планете, применяется в присыпках, косметике и бумажной промышленности." },
-      { num: "30", name: "Каолин", wiki: "Каолинит", wikiEn: "Kaolinite", group: "Силикаты", formula: "Слоистый силикат", hardness: "1–2 (низкая твёрдость, мажет руки)", density: "~2,6 г/см³", cleavage: "Совершенная (в микрокристаллах 0,01 мм)", color: "Серовато-белая (светлая)", extra: "Глинистый (пластинчатый, 0,01 мм); набухает в воде (пластичный)", fact: "При смачивании водой образует пластичную массу, из которой создают тончайший фарфор." },
-      { num: "31", name: "Ортоклаз (калиевый полевой шпат)", wiki: "Ортоклаз", wikiEn: "Orthoclase", group: "Силикаты", formula: "K[AlSi₃O₈]", hardness: "6 (эталон твёрдости 6)", density: "~2,65 г/см³", cleavage: "Совершенная (в двух направлениях под углом 90°)", color: "Светлая окраска (розоватая, кремовая, белая)", extra: "Каркасный мотив структуры; изометричная структура", fact: "«Прямо раскалывающийся» (угол спайности 90°). Главный минерал гранитов.", high: true },
-      { num: "32", name: "Лабрадор (плагиоклаз)", wiki: "Лабрадор_(минерал)", wikiEn: "Labradorite", group: "Силикаты", formula: "Плагиоклаз", hardness: "6", density: "~2,7 г/см³", cleavage: "Совершенная (в двух направлениях)", color: "Тёмная (чёрная) окраска", extra: "Изометричная форма кристаллов; яркий синеватый отлив", fact: "При повороте к свету вспыхивает ярким синеватым отливом. Ценный облицовочный камень.", high: true }
+      // Силикаты (мотивы структуры вместо формул в интерактиве)
+      { num: "22", name: "Оливин", wiki: "Оливин", wikiEn: "Olivine", group: "Силикаты", formula: "MgFeSiO₄", silicateMotif: "Островной", hardness: "6,5–7 (высокая)", density: "~4 г/см³", cleavage: "Отсутствует (раковистый стеклянный излом)", color: "Тёмно-зелёная, чёрная", extra: "Островной мотив структуры; изометричная форма кристалла", fact: "Главный минерал верхней мантии Земли. Прозрачная ювелирная разновидность — хризолит.", high: true },
+      { num: "23", name: "Роговая обманка", wiki: "Роговая_обманка", wikiEn: "Hornblende", group: "Силикаты", formula: "Силикат (амфибол)", silicateMotif: "Ленточный (поясной)", hardness: "6", density: "3 г/см³", cleavage: "Совершенная (по призме под углом 124°)", color: "Тёмно-зелёная (чёрная)", extra: "Ленточный мотив структуры; дощатая форма кристаллов; высокая сила кристаллизации", fact: "На изломе напоминает рог животного, но при плавке не давала рудокопам металла.", high: true },
+      { num: "27", name: "Биотит (чёрная слюда)", wiki: "Биотит", wikiEn: "Biotite", group: "Силикаты", formula: "Слоистый силикат", silicateMotif: "Слоистый", hardness: "2,5", density: "~3 г/см³", cleavage: "Совершенная по пластинкам", color: "Чёрная (тёмно-коричневая)", extra: "Слоистый мотив структуры; блеск до алмазного", fact: "Выветрелые чешуйки биотита ярко сверкают в речном песке, напоминая крупинки золота." },
+      { num: "28", name: "Мусковит (светлая слюда)", wiki: "Мусковит", wikiEn: "Muscovite", group: "Силикаты", formula: "Слоистый силикат", silicateMotif: "Слоистый", hardness: "2,5", density: "~3 г/см³", cleavage: "Совершенная по пластинкам (прозрачные листы)", color: "Светлая", extra: "Слоистый мотив структуры; блеск до алмазного", fact: "«Мусковское стекло» — экспортировалось из Московской Руси в Европу для окон и фонарей." },
+      { num: "29", name: "Тальк", wiki: "Тальк", wikiEn: "Talc", group: "Силикаты", formula: "Слоистый силикат", silicateMotif: "Слоистый", hardness: "1 (самая низкая в шкале Мооса)", density: "~3 г/см³ (средняя)", cleavage: "Совершенная чешуйчатая", color: "Светлая окраска (яблочно-зелёная)", extra: "Слоистый силикат; открывает шкалу твёрдости Мооса (эталон № 1)", fact: "Самый мягкий минерал на планете, применяется в присыпках, косметике и бумажной промышленности." },
+      { num: "30", name: "Каолин", wiki: "Каолинит", wikiEn: "Kaolinite", group: "Силикаты", formula: "Слоистый силикат", silicateMotif: "Слоистый", hardness: "1–2 (низкая твёрдость, мажет руки)", density: "~2,6 г/см³", cleavage: "Совершенная (в микрокристаллах 0,01 мм)", color: "Серовато-белая (светлая)", extra: "Глинистый (пластинчатый, 0,01 мм); набухает в воде (пластичный)", fact: "При смачивании водой образует пластичную массу, из которой создают тончайший фарфор." },
+      { num: "31", name: "Ортоклаз (калиевый полевой шпат)", wiki: "Ортоклаз", wikiEn: "Orthoclase", group: "Силикаты", formula: "K[AlSi₃O₈]", silicateMotif: "Каркасный", hardness: "6 (эталон твёрдости 6)", density: "~2,65 г/см³", cleavage: "Совершенная (в двух направлениях под углом 90°)", color: "Светлая окраска (розоватая, кремовая, белая)", extra: "Каркасный мотив структуры; изометричная структура", fact: "«Прямо раскалывающийся» (угол спайности 90°). Главный минерал гранитов.", high: true },
+      { num: "32", name: "Лабрадор (плагиоклаз)", wiki: "Лабрадор_(минерал)", wikiEn: "Labradorite", group: "Силикаты", formula: "Плагиоклаз", silicateMotif: "Каркасный", hardness: "6", density: "~2,7 г/см³", cleavage: "Совершенная (в двух направлениях)", color: "Тёмная (чёрная) окраска", extra: "Изометричная форма кристаллов; яркий синеватый отлив", fact: "При повороте к свету вспыхивает ярким синеватым отливом. Ценный облицовочный камень.", high: true }
     ];
 
     // =========================================================================
-    // 4. БАЗА ГОРНЫХ ПОРОД ИЗ КОНСПЕКТА (МАГМАТИЧЕСКИЕ, ОСАДОЧНЫЕ, МЕТАМОРФИЧЕСКИЕ)
+    // 4. БАЗА 39 ГОРНЫХ ПОРОД ИЗ КОНСПЕКТА (ПЕТРОГРАФИЯ)
     // =========================================================================
     const rocks = [
-      // I. Магматические горные породы (10)
-      { id: "r1", num: "М-1", name: "Дунит (Оливинит)", wiki: "Дунит", wikiEn: "Dunite", group: "Магматические", subType: "Ультраосновная интрузивная магматическая порода (SiO₂ < 40%)", composition: "Оливин > 90%, пироксен < 10% (акцессорный хромит, магнетит)", structure: "Кристаллическая зернистая (тонко- и мелкозернистая)", texture: "Массивная плотная", diagnosis: "Диагностируется по преобладанию зёрен оливина со стеклянным блеском и тёмно-зелёной до чёрной окраске", fact: "Назван в честь горы Дун в Новой Зеландии. Слагает нижние части земной коры и верхнюю мантию Земли, часто является коренным источником месторождений платины и хромовых руд." },
-      { id: "r2", num: "М-2", name: "Пироксенит", wiki: "Пироксенит", wikiEn: "Pyroxenite", group: "Магматические", subType: "Ультраосновная интрузивная магматическая порода", composition: "Пироксен > 90%, оливин < 10%", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По чёрно-зелёной окраске; от дунита отличается более крупнозернистой структурой и совершенной спайностью кристаллов пироксена", fact: "Образуется при глубинной кристаллизации ультраосновной магмы. С пироксенитами связаны богатые месторождения титаномагнетитовых, никелевых и платиновых руд (например, на Урале)." },
-      { id: "r3", num: "М-3", name: "Габбро", wiki: "Габбро", wikiEn: "Gabbro", group: "Магматические", subType: "Основная интрузивная магматическая порода (SiO₂ 40–52%)", composition: "Кальциевый (основной) плагиоклаз (лабрадор), пироксен, роговая обманка", structure: "Кристаллическая равномерно-зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По средне-крупнозернистой структуре, тёмно-серой/чёрной окраске, зёрнам роговой обманки и плагиоклаза-лабрадора", fact: "Глубинный аналог базальта и главная порода третьего слоя океанической коры. Очень прочный строительный и облицовочный камень с красивым тёмным полированным срезом." },
-      { id: "r4", num: "М-4", name: "Базальт", wiki: "Базальт", wikiEn: "Basalt", group: "Магматические", subType: "Основная эффузивная (излившаяся) магматическая порода", composition: "Кальциевый плагиоклаз, пироксен, роговая обманка, вулканическое стекло", structure: "Мелко- и тонкозернистая (афанитовая), порфировая, скрытокристаллическая/аморфная", texture: "Массивная плотная или пористая (миндалекаменная)", diagnosis: "По тёмно-серой/чёрной матовой массе, тонкозернистой структуре и часто пористой текстуре", fact: "Самая распространённая излившаяся порода на Земле, Луне и Марсе — из базальтов состоит дно всех мировых океанов. Из расплавленного базальта производят сверхпрочное каменное волокно и теплоизоляцию." },
-      { id: "r5", num: "М-5", name: "Диорит", wiki: "Диорит", wikiEn: "Diorite", group: "Магматические", subType: "Средняя интрузивная магматическая порода (SiO₂ 52–65%)", composition: "Плагиоклаз (средний/натриевый), калиевый полевой шпат, роговая обманка, биотит (слюда); кварц почти отсутствует", structure: "Кристаллическая зернистая (среднезернистая)", texture: "Массивная плотная", diagnosis: "По характерной пёстрой чёрно-белой окраске («соль с перцем»), отсутствию видимого кварца и обилию роговой обманки", fact: "Из-за равномерного чередования белых зёрен плагиоклаза и чёрных призм роговой обманки геологи называют диорит «соль с перцем». Из чёрного диорита высечен знаменитый свод законов царя Хаммурапи." },
-      { id: "r6", num: "М-6", name: "Порфирит (Андезитовый порфирит)", wiki: "Порфирит", wikiEn: "Porphyrite", group: "Магматические", subType: "Средняя эффузивная магматическая порода", composition: "Плагиоклаз, калиевый полевой шпат, роговая обманка, слюда", structure: "Порфировая (крупные кристаллы-вкрапленники в тонкозернистой основной массе)", texture: "Массивная плотная", diagnosis: "Безошибочно узнаётся по характерной порфировой структуре: светлые таблички полевого шпата на тёмно-сером или зеленовато-буром фоне", fact: "Порфировая структура возникает в два этапа: сначала крупные кристаллы плагиоклаза спокойно растут на глубине, а затем магма резко изливается на поверхность, и остаток расплава мгновенно застывает вокруг них." },
-      { id: "r7", num: "М-7", name: "Нефелиновый сиенит", wiki: "Нефелиновый_сиенит", wikiEn: "Nepheline_syenite", group: "Магматические", subType: "Средняя интрузивная щелочная магматическая порода", composition: "Щелочные полевые шпаты, нефелин, натриевый плагиоклаз, щелочные ленточные силикаты (эгирин, арфведсонит)", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная (иногда трахитоидная)", diagnosis: "По присутствию серовато-зеленоватого нефелина с характерным жирным блеском и полному отсутствию кварца", fact: "Богатейшими массивами нефелиновых сиенитов являются Хибинские тундры на Кольском полуострове. Служит комплексной рудой для получения алюминия, соды и сырья для стекольной промышленности." },
-      { id: "r8", num: "М-8", name: "Гранит", wiki: "Гранит", wikiEn: "Granite", group: "Магматические", subType: "Кислая интрузивная магматическая порода (SiO₂ > 65%)", composition: "Кварц (25–35%), калиевый полевой шпат (ортоклаз/микроклин), кислый натриевый плагиоклаз, слюда (биотит/мусковит), роговая обманка", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По полнокристаллической структуре и отчётливо различимым глазом зёрнам дымчатого кварца, розового/белого полевого шпата и чешуйкам слюды", fact: "От латинского «гранум» — зерно. Граниты образуют фундамент всех материков, поэтому геологи говорят: «Гранит — это визитная карточка Земли» (на Луне и Марсе гранитов почти нет).", high: true },
-      { id: "r9", num: "М-9", name: "Пегматит", wiki: "Пегматит", wikiEn: "Pegmatite", group: "Магматические", subType: "Полуглубинная (жильная) кислая магматическая порода", composition: "Калиевый полевой шпат, кварц, слюда (мусковит, биотит), редкие минералы", structure: "Пегматитовая (письменная/графическая: закономерное прорастание кварца в полевом шпате), крупно- и гигантокристаллическая", texture: "Массивная плотная", diagnosis: "По уникальной пегматитовой структуре — вростки кварца в полевом шпате напоминают древнюю клинопись («письменный гранит»)", fact: "Академик А. Е. Ферсман называл пегматиты «природными музеями минералов»: здесь находят кристаллы полевого шпата и слюды весом в несколько тонн, а также изумруды, топазы, турмалины и бериллы." },
-      { id: "r10", num: "М-10", name: "Обсидиан", wiki: "Обсидиан", wikiEn: "Obsidian", group: "Магматические", subType: "Эффузивная кислая магматическая порода", composition: "Вулканическое стекло кислого состава (SiO₂ > 65%)", structure: "Аморфная (стекловатая)", texture: "Массивная плотная", diagnosis: "По аморфной стекловатой структуре, крупному раковистому излому с бритвенно-острыми краями и яркому стеклянному блеску", fact: "Образуется при мгновенном остывании вязкой кислой лавы, когда атомы не успевают выстроиться в кристаллическую решётку. Сколы обсидиана имеют толщину в несколько нанометров — острее стального скальпеля.", high: true },
+      { id: "r1", num: "М-1", name: "Дунит (Оливинит)", wiki: "Дунит", wikiEn: "Dunite", group: "Магматические", subType: "Ультраосновная интрузивная магматическая порода (SiO₂ < 40%)", composition: "Оливин > 90%, пироксен < 10%", structure: "Кристаллическая зернистая (тонко- и мелкозернистая)", texture: "Массивная плотная", diagnosis: "По преобладанию зёрен оливина со стеклянным блеском и тёмно-зелёной до чёрной окраске", fact: "Слагает нижние части земной коры и верхнюю мантию Земли, коренной источник платины и хромовых руд." },
+      { id: "r2", num: "М-2", name: "Пироксенит", wiki: "Пироксенит", wikiEn: "Pyroxenite", group: "Магматические", subType: "Ультраосновная интрузивная магматическая порода", composition: "Пироксен > 90%, оливин < 10%", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По чёрно-зелёной окраске и более крупнозернистой структуре пироксена", fact: "Связана с месторождениями титаномагнетитовых, никелевых и платиновых руд (на Урале)." },
+      { id: "r3", num: "М-3", name: "Габбро", wiki: "Габбро", wikiEn: "Gabbro", group: "Магматические", subType: "Основная интрузивная магматическая порода (SiO₂ 40–52%)", composition: "Кальциевый плагиоклаз (лабрадор), пироксен, роговая обманка", structure: "Кристаллическая равномерно-зернистая", texture: "Массивная плотная", diagnosis: "По средне-крупнозернистой структуре, тёмно-серой окраске и зёрнам лабрадора", fact: "Главная порода третьего слоя океанической коры. Прочный строительный камень." },
+      { id: "r4", num: "М-4", name: "Базальт", wiki: "Базальт", wikiEn: "Basalt", group: "Магматические", subType: "Основная эффузивная (излившаяся) магматическая порода", composition: "Кальциевый плагиоклаз, пироксен, вулканическое стекло", structure: "Мелко- и тонкозернистая, порфировая, скрытокристаллическая", texture: "Массивная плотная или пористая", diagnosis: "По тёмно-серой матовой массе и часто пористой текстуре", fact: "Самая распространённая излившаяся порода на Земле, Луне и Марсе — из базальтов состоит дно океанов." },
+      { id: "r5", num: "М-5", name: "Диорит", wiki: "Диорит", wikiEn: "Diorite", group: "Магматические", subType: "Средняя интрузивная магматическая порода (SiO₂ 52–65%)", composition: "Плагиоклаз, калиевый полевой шпат, роговая обманка, биотит", structure: "Кристаллическая зернистая (среднезернистая)", texture: "Массивная плотная", diagnosis: "По характерной пёстрой чёрно-белой окраске («соль с перцем»)", fact: "Из чёрного диорита высечен знаменитый свод законов царя Хаммурапи." },
+      { id: "r6", num: "М-6", name: "Порфирит (Андезитовый порфирит)", wiki: "Порфирит", wikiEn: "Porphyrite", group: "Магматические", subType: "Средняя эффузивная магматическая порода", composition: "Плагиоклаз, полевой шпат, роговая обманка", structure: "Порфировая (вкрапленники в основной массе)", texture: "Массивная плотная", diagnosis: "По светлым вкрапленникам полевого шпата на тёмном фоне", fact: "Кристаллы росли на глубине, а при излиянии лавы масса мгновенно застыла." },
+      { id: "r7", num: "М-7", name: "Нефелиновый сиенит", wiki: "Нефелиновый_сиенит", wikiEn: "Nepheline_syenite", group: "Магматические", subType: "Средняя интрузивная щелочная магматическая порода", composition: "Щелочные полевые шпаты, нефелин, натриевый плагиоклаз", structure: "Кристаллическая зернистая", texture: "Массивная плотная", diagnosis: "По серовато-зеленоватому нефелину с жирным блеском и отсутствию кварца", fact: "Хибинские тундры (Кольский полуостров) — руда для алюминия и соды." },
+      { id: "r8", num: "М-8", name: "Гранит", wiki: "Графит", wikiEn: "Granite", group: "Магматические", subType: "Кислая интрузивная магматическая порода (SiO₂ > 65%)", composition: "Кварц, калиевый полевой шпат, плагиоклаз, слюда, роговая обманка", structure: "Кристаллическая зернистая", texture: "Массивная плотная", diagnosis: "По зёрнам дымчатого кварца, розового шпата и чешуйкам слюды", fact: "Визитная карточка Земли — слагает фундамент всех материков.", high: true },
+      { id: "r9", num: "М-9", name: "Пегматит", wiki: "Пегматит", wikiEn: "Pegmatite", group: "Магматические", subType: "Полуглубинная (жильная) кислая магматическая порода", composition: "Калиевый полевой шпат, кварц, слюда", structure: "Пегматитовая (письменная структура: прорастание кварца в шпате)", texture: "Массивная плотная", diagnosis: "По вросткам кварца в полевом шпате, напоминающим древнюю клинопись", fact: "Природный музей минералов: здесь находят гигантские кристаллы, изумруды и топазы." },
+      { id: "r10", num: "М-10", name: "Обсидиан", wiki: "Обсидиан", wikiEn: "Obsidian", group: "Магматические", subType: "Эффузивная кислая магматическая порода", composition: "Вулканическое стекло кислого состава", structure: "Аморфная (стекловатая)", texture: "Массивная плотная", diagnosis: "По раковистому излому с бритвенно-острыми краями и стеклянному блеску", fact: "Вулканическое стекло застыло мгновенно — сколы острее стального скальпеля.", high: true },
 
-      // II. Осадочные горные породы: вулканогенные, обломочные и глинистые (10)
-      { id: "r11", num: "О-1", name: "Туф (вулканический)", wiki: "Вулканический_туф", wikiEn: "Tuff", group: "Осадочные (обломочные и глинистые)", subType: "Пирокластическая вулканогенно-осадочная порода", composition: "Литокластический материал (обломки лавы и пород), кристаллокласты, витрокласты (спекшийся вулканический пепел и стекло)", structure: "Обломочная (пирокластическая), аморфная", texture: "Массивная пористая", diagnosis: "По лёгкости, шероховатой пористой текстуре и угловатым включениям вулканического пепла, пемзы и стекла", fact: "Идеальный природный строительный камень: легко пилится обычной пилой, отлично держит тепло и поглощает звук. Из розового и артикского туфа построен весь центр Еревана («Розовый город»)." },
-      { id: "r12", num: "О-2", name: "Щебень", wiki: "Щебень", wikiEn: "Crushed_stone", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная (псефитовая) рыхлая порода (обломки > 10 мм)", composition: "Неокатанные остроугольные обломки различных горных пород", structure: "Щебёночная (псефитовая)", texture: "Массивная пористая (рыхлая беспорядочная)", diagnosis: "По рыхлому состоянию и неокатанным остроугольным обломкам горных пород", fact: "В природе образуется у подножия крутых склонов и скал в результате физического (морозного и температурного) выветривания горных пород, формируя осыпи и курумы." },
-      { id: "r13", num: "О-3", name: "Брекчия", wiki: "Брекчия", wikiEn: "Breccia", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная сцементированная щебёночная порода", composition: "Угловатый щебень различных пород + природный цемент (кремнистый, известковый, железистый, глинистый)", structure: "Щебёночная (псефитовая)", texture: "Слоистая или массивная, пористая или плотная (в зависимости от цемента)", diagnosis: "По сцементированным неокатанным (остроугольным) обломкам пород и связующему цементу", fact: "От итальянского «брекчия» — взлом, пролом. Угловатая форма обломков говорит геологу о том, что материал не переносился водой на большие расстояния, а был сцементирован рядом с местом разрушения." },
-      { id: "r14", num: "О-4", name: "Галечник", wiki: "Галечник", wikiEn: "Shingle_beach", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная галечная рыхлая порода (обломки 10–100 мм)", composition: "Окатанная галька различных горных пород", structure: "Галечная (псефитовая)", texture: "Слоистая или массивная рыхлая, пористая", diagnosis: "По рыхлому состоянию и гладко окатанным водой обломкам (гальке)", fact: "По форме гальки в галечнике геологи безошибочно отличают древние русла рек от морских пляжей: речная галька более выпуклая и удлинённая, а морская — плоская («блинчики»)." },
-      { id: "r15", num: "О-5", name: "Конгломерат", wiki: "Конгломерат_(порода)", wikiEn: "Conglomerate_(geology)", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная галечная сцементированная порода", composition: "Окатанная галька различных пород + природный минеральный цемент", structure: "Галечная (псефитовая)", texture: "Массивная, пористая или плотная", diagnosis: "По сцементированной окатанной гальке и цементу (в отличие от брекчии обломки сглаженные, без острых углов)", fact: "Древние конгломераты часто указывают на наступление моря (трансгрессию) или бурные горные потоки. В древних кварцевых конгломератах Витватерсранда (ЮАР) сосредоточена почти половина мировых запасов золота." },
-      { id: "r16", num: "О-6", name: "Песчаник", wiki: "Песчаник", wikiEn: "Sandstone", group: "Осадочные (обломочные и глинистые)", subType: "Среднеобломочная сцементированная порода (зёрна 0,1–1 мм)", composition: "Зёрна кварца, полевых шпатов, обломки пород + природный цемент", structure: "Псаммитовая (песчаная)", texture: "Слоистая или массивная, пористая или плотная", diagnosis: "По хорошо различимым песчинкам (псаммитовой структуре) и высокой твёрдости — уверенно царапает стекло из-за обилия кварца", fact: "Благодаря системе сообщающихся пор между песчинками песчаники служат главными природными коллекторами (вместилищами) для месторождений нефти, природного газа и артезианских вод.", high: true },
-      { id: "r17", num: "О-7", name: "Алевролит", wiki: "Алевролит", wikiEn: "Siltstone", group: "Осадочные (обломочные и глинистые)", subType: "Мелкообломочная сцементированная порода (частицы 0,01–0,1 мм)", composition: "Алевритовый материал (кварц, полевые шпаты, слюда — аналог песчаника) + цемент", structure: "Алевритовая", texture: "Слоистая или массивная", diagnosis: "По тонкозернистой структуре (зёрна мельче песка, но поверхность слегка шероховатая) и способности царапать стекло", fact: "Занимает промежуточное положение между песчаниками и глинами (от греч. «алеврон» — мука). Часто образует переслаивающиеся толщи с песчаниками и аргиллитами в нефтегазоносных бассейнах.", high: true },
-      { id: "r18", num: "О-8", name: "Глина", wiki: "Глина", wikiEn: "Clay", group: "Осадочные (обломочные и глинистые)", subType: "Глинистая (пелитовая) осадочная порода (частицы < 0,01 мм)", composition: "Глинистые минералы (каолинит, монтмориллонит, гидрослюды)", structure: "Пелитовая (тонкодисперсная)", texture: "Слоистая или массивная пористая", diagnosis: "Не царапает стекло, прилипает к влажному пальцу, при смачивании водой разбухает и становится пластичной", fact: "Сухая глина жадно впитывает воду, но, набухнув, становится абсолютно водонепроницаемой. Поэтому пласты глин в недрах служат надёжными водоупорами и флюидоупорами (покрышками) над залежами нефти и газа." },
-      { id: "r19", num: "О-9", name: "Аргиллит", wiki: "Аргиллит", wikiEn: "Argillite", group: "Осадочные (обломочные и глинистые)", subType: "Уплотнённая камнеподобная глинистая порода", composition: "Глинистые минералы, обезвоженные и сцементированные при уплотнении (диагенезе и катагенезе)", structure: "Пелитовая", texture: "Слоистая, массивная плотная", diagnosis: "По плотной камнеподобной структуре: не царапает стекло, но (в отличие от глины) совершенно не размокает и не разбухает в воде", fact: "Образуется из обычной глины на больших глубинах под давлением вышележащих толщ и повышенной температуры, теряя связанную воду и превращаясь в твёрдый камень." },
-      { id: "r20", num: "О-10", name: "Мергель", wiki: "Мергель", wikiEn: "Marl", group: "Осадочные (обломочные и глинистые)", subType: "Смешанная глинисто-карбонатная осадочная порода", composition: "Глинистые минералы (25–75%) + карбонаты кальцит/доломит (25–75%)", structure: "Пелитовая, кристаллическая зернистая (скрытокристаллическая)", texture: "Слоистая или массивная, плотная или пористая", diagnosis: "Бурно реагирует с соляной кислотой (HCl), но после высыхания капли оставляет на поверхности характерное грязное глинистое пятно", fact: "Идеальное природное сырьё для производства портландцемента: в мергеле самой природой уже смешаны в нужной пропорции карбонат кальция и глина (основа цементного клинкера)." },
+      // Осадочные обломочные и глинистые (10)
+      { id: "r11", num: "О-1", name: "Туф (вулканический)", wiki: "Вулканический_туф", wikiEn: "Tuff", group: "Осадочные (обломочные и глинистые)", subType: "Пирокластическая вулканогенно-осадочная порода", composition: "Литокластический материал, кристаллокласты, витрокласты", structure: "Обломочная (пирокластическая)", texture: "Массивная пористая", diagnosis: "По лёгкости, шероховатой пористой текстуре и обломкам пепла", fact: "Из розового туфа построен весь центр Еревана." },
+      { id: "r12", num: "О-2", name: "Щебень", wiki: "Щебень", wikiEn: "Crushed_stone", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная (псефитовая) рыхлая порода", composition: "Неокатанные остроугольные обломки пород", structure: "Щебёночная", texture: "Массивная пористая (рыхлая)", diagnosis: "По рыхлому состоянию и неокатанным остроугольным обломкам", fact: "Образуется при морозном и температурном выветривании у подножия скал." },
+      { id: "r13", num: "О-3", name: "Брекчия", wiki: "Брекчия", wikiEn: "Breccia", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная сцементированная щебёночная порода", composition: "Угловатый щебень различных пород + природный цемент", structure: "Щебёночная", texture: "Слоистая или массивная, пористая/плотная", diagnosis: "По сцементированным неокатанным (остроугольным) обломкам", fact: "Угловатая форма обломков говорит о том, что материал не переносился водой." },
+      { id: "r14", num: "О-4", name: "Галечник", wiki: "Галечник", wikiEn: "Shingle_beach", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная галечная рыхлая порода", composition: "Окатанная галька различных пород", structure: "Галечная", texture: "Слоистая или массивная рыхлая", diagnosis: "По гладко окатанным водой обломкам (гальке)", fact: "По форме гальки геологи отличают древние русла рек от морских пляжей." },
+      { id: "r15", num: "О-5", name: "Конгломерат", wiki: "Конгломерат_(порода)", wikiEn: "Conglomerate_(geology)", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная галечная сцементированная порода", composition: "Окатанная галька + природный цемент", structure: "Галечная", texture: "Массивная, пористая/плотная", diagnosis: "По сцементированной окатанной гальке (в отличие от брекчии обломки сглаженные)", fact: "В древних конгломератах Витватерсранда (ЮАР) сосредоточено золото мира." },
+      { id: "r16", num: "О-6", name: "Песчаник", wiki: "Песчаник", wikiEn: "Sandstone", group: "Осадочные (обломочные и глинистые)", subType: "Среднеобломочная сцементированная порода", composition: "Зёрна кварца, полевых шпатов + цемент", structure: "Псаммитовая (песчаная)", texture: "Слоистая или массивная, пористая/плотная", diagnosis: "По зёрнам песчанок и высокой твёрдости — уверенно царапает стекло", fact: "Главные природные коллекторы (вместилища) для нефти, газа и артезианских вод.", high: true },
+      { id: "r17", num: "О-7", name: "Алевролит", wiki: "Алевролит", wikiEn: "Siltstone", group: "Осадочные (обломочные и глинистые)", subType: "Мелкообломочная сцементированная порода", composition: "Алевритовый материал + цемент", structure: "Алевритовая", texture: "Слоистая или массивная", diagnosis: "Зёрна мельче песка, шероховатая поверхность, царапает стекло", fact: "Промежуточное звено между песчаниками и глинами (от греч. «мука»).", high: true },
+      { id: "r18", num: "О-8", name: "Глина", wiki: "Глина", wikiEn: "Clay", group: "Осадочные (обломочные и глинистые)", subType: "Глинистая (пелитовая) осадочная порода", composition: "Глинистые минералы (каолинит и др.)", structure: "Пелитовая", texture: "Слоистая или массивная пористая", diagnosis: "Не царапает стекло, прилипает к языку, в воде набухает и становится пластичной", fact: "Служит надёжным водоупором и флюидоупором над залежами нефти и газа." },
+      { id: "r19", num: "О-9", name: "Аргиллит", wiki: "Аргиллит", wikiEn: "Argillite", group: "Осадочные (обломочные и глинистые)", subType: "Уплотнённая камнеподобная глинистая порода", composition: "Глинистые минералы, обезвоженные при уплотнении", structure: "Пелитовая", texture: "Слоистая, массивная плотная", diagnosis: "Не царапает стекло, но (в отличие от глины) совершенно не размокает в воде", fact: "Образуется из глины на глубине под давлением вышележащих толщ." },
+      { id: "r20", num: "О-10", name: "Мергель", wiki: "Мергель", wikiEn: "Marl", group: "Осадочные (обломочные и глинистые)", subType: "Смешанная глинисто-карбонатная осадочная порода", composition: "Глинистые минералы (25–75%) + карбонаты (25–75%)", structure: "Пелитовая, кристаллическая зернистая", texture: "Слоистая или массивная", diagnosis: "Вскипает с HCl, оставляя после реакции грязное глинистое пятно", fact: "Идеальное природное сырье для производства цемента." },
 
-      // III. Осадочные горные породы: хемогенные и биогенные (10)
-      { id: "r21", num: "О-11", name: "Известняк", wiki: "Известняк", wikiEn: "Limestone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Кальцит > 75% (примесь доломита < 25%)", structure: "Биоморфная (органогенная), кристаллическая зернистая, оолитовая, обломочная", texture: "Слоистая, массивная, пористая или плотная", diagnosis: "Мягкая порода (твёрдость ~3, легко царапается ножом), бурно вскипает от капли соляной кислоты (HCl) прямо в куске без остатка", fact: "Хранитель летописи жизни на Земле: большинство известняков сложено раковинами древних морских организмов, кораллами и фораминиферами. Из белого мячковского известняка построена белокаменная Москва." },
-      { id: "r22", num: "О-12", name: "Доломит (порода)", wiki: "Доломит_(порода)", wikiEn: "Dolostone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Минерал доломит CaMg(CO₃)₂ > 75%, кальцит < 25%", structure: "Биоморфная, скрытокристаллическая и кристаллическая зернистая, обломочная", texture: "Слоистая, массивная, пористая (кавернозная), плотная", diagnosis: "Похож на известняк, но чуть твёрже (3,5–4) и с холодной соляной кислотой (HCl) реагирует только в порошке (на свежей царапине)", fact: "При замещении известняка доломитом (доломитизации) объём породы уменьшается на 12%, из-за чего в пластах возникают поры и каверны, превращающие доломиты в отличные коллекторы нефти и газа." },
-      { id: "r23", num: "О-13", name: "Яшма", wiki: "Яшма", wikiEn: "Jasper", group: "Осадочные (хемогенные и биогенные)", subType: "Силицитовая (кремнистая) хемогенно-биогенная порода", composition: "Халцедон, скрытокристаллический кварц (SiO₂) + примеси окислов железа и марганца", structure: "Кристаллическая тонко- и микрозернистая (криптокристаллическая)", texture: "Слоистая (ленточная/полосчатая), пятнистая, массивная плотная", diagnosis: "По очень высокой твёрдости (~7, легко царапает стекло и сталь), плотному сложению, отсутствию спайности и пёстрой окраске", fact: "Образуется из кремнистых илов (радиоляриевых) и подводных вулканических эксгаляций. Знаменитая уральская и алтайская яшма прославилась в шедеврах Эрмитажа (гигантская Колыванская «Царица ваз»).", high: true },
-      { id: "r24", num: "О-14", name: "Ангидрит (порода)", wiki: "Ангидрит", wikiEn: "Anhydrite", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная хемогенная эвапоритовая порода", composition: "Минерал ангидрит (CaSO₄) > 75%", structure: "Кристаллическая зернистая (разнозернистая)", texture: "Слоистая, массивная плотная", diagnosis: "По минералу ангидриту: голубовато-серая или белая порода, не вскипает с HCl и (в отличие от гипса) не царапается ногтем (твёрдость 3–3,5)", fact: "Формируется в жарком климате при усыхании солёных морских лагун (эвапорит). В недрах Пермского края мощные пласты ангидритов служат непроницаемыми покрышками для нефтяных месторождений." },
-      { id: "r25", num: "О-15", name: "Гипс (порода)", wiki: "Гипс_(порода)", wikiEn: "Gypsum", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная хемогенная эвапоритовая порода", composition: "Минерал гипс (CaSO₄·2H₂O) > 75%", structure: "Кристаллическая зернистая, волокнистая (селенит)", texture: "Слоистая, массивная плотная", diagnosis: "По минералу гипсу: светлая порода, очень мягкая (твёрдость 2 — легко царапается ногтем), не реагирует с HCl", fact: "В толщах пермских гипсов и ангидритов Урала подземные воды вымывают грандиозные карстовые пещеры — именно в таких породах образовалась знаменитая Кунгурская ледяная пещера." },
-      { id: "r26", num: "О-16", name: "Каменная соль, Сильвинит, Карналлитит", wiki: "Сильвинит", wikiEn: "Sylvinite", group: "Осадочные (хемогенные и биогенные)", subType: "Галоидные хемогенные эвапоритовые породы", composition: "Каменная соль (галит > 75%); Сильвинит (сильвин + галит > 75%); Карналлитит (карналлит > 75%)", structure: "Кристаллическая зернистая", texture: "Слоистая (полосчатая) или массивная плотная", diagnosis: "По минералам: легко растворяются в воде, совершенная спайность по кубу (у галита и сильвина), чистый солёный или горько-солёный вкус", fact: "Визитная карточка Пермского края! Верхнекамское месторождение калийно-магниевых солей (Соликамск и Березники), возникшее при высыхании древнего Пермского моря — одно из крупнейших в мире." },
-      { id: "r27", num: "О-17", name: "Бурый железняк", wiki: "Бурый_железняк", wikiEn: "Limonite", group: "Осадочные (хемогенные и биогенные)", subType: "Железистая хемогенно-биогенная осадочная порода", composition: "Гидроокислы железа (лимонит, гетит) и гематит", structure: "Кристаллическая, бобовая, оолитовая, землистая", texture: "Слоистая или массивная, пористая (шлаковидная) либо плотная", diagnosis: "По бурой/ржаво-коричневой окраске, оолитовому или бобовому строению, ощутимой тяжести и жёлто-бурой черте", fact: "Накапливается на дне озёр, болот и мелководных морских заливов при участии железобактерий («болотная и озёрная руда»). Именно с бурых железняков начиналась уральская и тульская металлургия." },
-      { id: "r28", num: "О-18", name: "Боксит", wiki: "Бокситы", wikiEn: "Bauxite", group: "Осадочные (хемогенные и биогенные)", subType: "Аллитовая (алюминийсодержащая) осадочная порода", composition: "Гидроокислы алюминия (гиббсит, диаспор, бёмит) + гидроокислы железа и глинистые минералы", structure: "Бобовая, оолитовая, пизолитовая, пелитовая", texture: "Слоистая, массивная, пористая или плотная", diagnosis: "По кирпично-красной или бурой окраске, матовой поверхности и характерным округлым стяжениям — «бобовинам»", fact: "Назван по местности Ле-Бо на юге Франции. Главная алюминиевая руда планеты (наполовину состоит из глинозёма Al₂O₃), образующаяся при глубоком выветривании пород во влажных тропиках." },
-      { id: "r29", num: "О-19", name: "Фосфорит (порода)", wiki: "Фосфориты", wikiEn: "Phosphorite", group: "Осадочные (хемогенные и биогенные)", subType: "Фосфорсодержащая хемогенно-биогенная порода", composition: "Минералы группы апатита (скрытокристаллический курскит, франколит) > 50% + кварц, кальцит, глауконит", structure: "Кристаллическая зернистая, микрозернистая, конкреционная, оолитовая", texture: "Слоистая или массивная плотная", diagnosis: "По тёмно-серой/чёрной или бурой окраске, шаровидным конкрециям, высокому весу и запаху жжёной кости при трении двух кусков", fact: "Образуется на шельфах морей в зонах подъёма глубинных холодных вод (апвеллинга), богатых фосфором и органикой. Незаменимое сырьё для производства минеральных удобрений." },
-      { id: "r30", num: "О-20", name: "Каменный уголь", wiki: "Каменный_уголь", wikiEn: "Bituminous_coal", group: "Осадочные (хемогенные и биогенные)", subType: "Каустобиолитовая (органогенная горючая) осадочная порода", composition: "Метаморфизованные растительные остатки (органический углерод 75–92%, летучие вещества, минеральные примеси)", structure: "Аморфная, однородная или полосчатая", texture: "Слоистая, массивная, плотная или пористая (трещиноватая)", diagnosis: "По глубокому чёрному цвету, смоляному или стеклянному блеску, очень малой плотности (лёгкий в руке) и горючести", fact: "В переводе с греческого «каустобиолит» — «горючий органический камень». Сформировался из гигантских древовидных плаунов, хвощей и папоротников каменноугольного и пермского периодов." },
+      // Осадочные хемогенные и биогенные (10)
+      { id: "r21", num: "О-11", name: "Известняк", wiki: "Известняк", wikiEn: "Limestone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Кальцит > 75%", structure: "Биоморфная, кристаллическая зернистая, оолитовая", texture: "Слоистая, массивная, пористая/плотная", diagnosis: "Бурно вскипает от капли HCl сразу в куске без остатка", fact: "Сложен раковинами древних морских организмов. Из него построена Москва." },
+      { id: "r22", num: "О-12", name: "Доломит (порода)", wiki: "Доломит_(порода)", wikiEn: "Dolostone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Минерал доломит > 75%", structure: "Биоморфная, скрытокристаллическая зернистая", texture: "Слоистая, массивная, пористая", diagnosis: "Реагирует с HCl только в порошке", fact: "Поры и каверны делают доломиты отличными коллекторами нефти." },
+      { id: "r23", num: "О-13", name: "Яшма", wiki: "Яшма", wikiEn: "Jasper", group: "Осадочные (хемогенные и биогенные)", subType: "Силицитовая (кремнистая) порода", composition: "Халцедон, скрытокристаллический кварц + окислы железа", structure: "Кристаллическая тонко- и микрозернистая", texture: "Слоистая (ленточная), массивная плотная", diagnosis: "Высокая твёрдость (царапает стекло), пёстрая окраска", fact: "Шедевры Эрмитажа из уральской яшмы (Колыванская «Царица ваз»).", high: true },
+      { id: "r24", num: "О-14", name: "Ангидрит (порода)", wiki: "Ангидрит", wikiEn: "Anhydrite", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная эвапоритовая порода", composition: "Минерал ангидрит (CaSO₄) > 75%", structure: "Кристаллическая зернистая", texture: "Слоистая, массивная плотная", diagnosis: "Голубовато-серая, не вскипает с HCl, не царапается ногтем (тв. 3)", fact: "Служит непроницаемой покрышкой для нефтяных месторождений Прикамья." },
+      { id: "r25", num: "О-15", name: "Гипс (порода)", wiki: "Гипс_(порода)", wikiEn: "Gypsum", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная эвапоритовая порода", composition: "Минерал гипс (CaSO₄·2H₂O) > 75%", structure: "Кристаллическая зернистая, волокнистая", texture: "Слоистая, массивная плотная", diagnosis: "Очень мягкий (тв. 2 — легко царапается ногтем)", fact: "В пермских гипсах Урала вымыта Кунгурская ледяная пещера." },
+      { id: "r26", num: "О-16", name: "Каменная соль, Сильвинит, Карналлитит", wiki: "Сильвинит", wikiEn: "Sylvinite", group: "Осадочные (хемогенные и биогенные)", subType: "Галоидные хемогенные эвапоритовые породы", composition: "Галит, сильвин, карналлит > 75%", structure: "Кристаллическая зернистая", texture: "Слоистая или массивная", diagnosis: "Растворимость в воде, солёный / горько-солёный вкус", fact: "Верхнекамское месторождение калийных солей (Соликамск/Березники)." },
+      { id: "r27", num: "О-17", name: "Бурый железняк", wiki: "Бурый_железняк", wikiEn: "Limonite", group: "Осадочные (хемогенные и биогенные)", subType: "Железистая хемогенно-биогенная порода", composition: "Гидроокислы железа (лимонит, гетит), гематит", structure: "Кристаллическая, бобовая, оолитовая", texture: "Слоистая, пористая (шлаковидная)", diagnosis: "Ржаво-бурая окраска и черта, большой вес", fact: "Озёрная и болотная руда — с неё начиналась уральская металлургия." },
+      { id: "r28", num: "О-18", name: "Боксит", wiki: "Бокситы", wikiEn: "Bauxite", group: "Осадочные (хемогенные и биогенные)", subType: "Аллитовая (алюминийсодержащая) осадочная порода", composition: "Гидроокислы алюминия (гиббсит, диаспор, бёмит)", structure: "Бобовая, оолитовая, пелитовая", texture: "Слоистая, массивная", diagnosis: "Кирпично-красная окраска, характерные шарики-бобовины", fact: "Главная алюминиевая руда планеты (источник глинозёма Al₂O₃)." },
+      { id: "r29", num: "О-19", name: "Фосфорит (порода)", wiki: "Фосфориты", wikiEn: "Phosphorite", group: "Осадочные (хемогенные и биогенные)", subType: "Фосфорсодержащая осадочная порода", composition: "Минералы группы апатита > 50%", structure: "Микрозернистая, конкреционная (шар)", texture: "Слоистая или массивная", diagnosis: "Шаровидные конкреции, запах жжёной кости при трении", fact: "Сырье для производства фосфорных минеральных удобрений." },
+      { id: "r30", num: "О-20", name: "Каменный уголь", wiki: "Каменный_уголь", wikiEn: "Bituminous_coal", group: "Осадочные (хемогенные и биогенные)", subType: "Каустобиолитовая (органогенная горючая) порода", composition: "Метаморфизованные растительные остатки (углерод)", structure: "Аморфная, полосчатая", texture: "Слоистая, массивная", diagnosis: "Глубокий чёрный цвет, малый вес, горючесть", fact: "Образовался из древних древовидных папоротников и плаунов." },
 
-      // IV. Метаморфические горные породы (9)
-      { id: "r31", num: "МТ-21", name: "Мрамор", wiki: "Мрамор", wikiEn: "Marble", group: "Метаморфические", subType: "Порода контактового или регионального метаморфизма (по известнякам и доломитам)", composition: "Кальцит (CaCO₃), реже доломит", structure: "Полнокристаллическая средне- и крупнозернистая (гранобластовая)", texture: "Массивная плотная (иногда пятнистая или полосчатая)", diagnosis: "По искристому сахаровидному зернистому излому, невысокой твёрдости (3 — царапается ножом, не царапает стекло) и бурному вскипанию с HCl", fact: "В переводе с древнегреческого — «блестящий камень». При перекристаллизации известняка под давлением и температурой все раковины исчезают, превращаясь в сросшиеся сверкающие кристаллы кальцита." },
-      { id: "r32", num: "МТ-22", name: "Кварцит", wiki: "Кварцит", wikiEn: "Quartzite", group: "Метаморфические", subType: "Порода контактового или регионального метаморфизма (по кварцевым песчаникам)", composition: "Кварц (SiO₂ > 90–95%)", structure: "Кристаллическая зернистая (гранобластовая сливная)", texture: "Массивная плотная", diagnosis: "По исключительно высокой твёрдости (7 — легко режет стекло), занозистому сколу с жирным/стеклянным блеском и отсутствию реакции с HCl", fact: "При метаморфизме зёрна кварцевого песка и кремнистый цемент перекристаллизуются в единый монолит. Из малинового шокшинского кварцита выполнен саркофаг Наполеона и отделка Могилы Неизвестного Солдата.", high: true },
-      { id: "r33", num: "МТ-23", name: "Глинистый сланец", wiki: "Глинистый_сланец", wikiEn: "Slate", group: "Метаморфические", subType: "Порода начальной стадии регионального метаморфизма (по глинам и аргиллитам)", composition: "Глинистые минералы, серицит, хлорит, углистое вещество", structure: "Пелитовая (микрочешуйчатая)", texture: "Сланцеватая плотная (тонкоплитчатая)", diagnosis: "По тёмно-серому/чёрному матовому цвету, пелитовой структуре, отсутствию размокания в воде и способности раскалываться на тонкие звонкие плитки", fact: "Благодаря идеальной сланцеватости и водонепроницаемости с Средних веков использовался как вечная кровельная черепица для замков и соборов Европы, а также для изготовления школьных грифельных досок." },
-      { id: "r34", num: "МТ-24", name: "Слюдяной сланец", wiki: "Кристаллический_сланец", wikiEn: "Schist", group: "Метаморфические", subType: "Порода регионального метаморфизма средней ступени", composition: "Слюда (мусковит, биотит) и кварц (часто с вкрапленниками граната, ставролита)", structure: "Чешуйчатая и кристаллическая зернистая (лепидогранобластовая)", texture: "Сланцеватая плотная", diagnosis: "По сплошному серебристому или золотисто-чёрному сверканию чешуек слюды на плоскостях сланцеватости и прослоям кварца", fact: "Образуется при дальнейшем погружении и нагреве глинистых сланцев, когда микроскопические глинистые частицы полностью перекристаллизуются в крупные блестящие листы мусковита и биотита." },
-      { id: "r35", num: "МТ-25", name: "Хлоритовый сланец", wiki: "Хлоритовый_сланец", wikiEn: "Greenschist", group: "Метаморфические", subType: "Порода регионального метаморфизма (зеленосланцевая фация)", composition: "Хлорит (с примесью актинолита, талька, кварца, магнетита)", structure: "Чешуйчатая (лепидобластовая)", texture: "Сланцеватая плотная", diagnosis: "По характерному травяно- или тёмно-зелёному цвету минерала хлорита, чешуйчатому строению и невысокой твёрдости (легко царапается ножом)", fact: "Формируется при региональном метаморфизме основных магматических пород (базальтов и габбро). В хлоритовых сланцах часто встречаются идеальные чёрные кристаллы-октаэдры магнетита." },
-      { id: "r36", num: "МТ-26", name: "Тальковый сланец", wiki: "Тальковый_сланец", wikiEn: "Talc_carbonate", group: "Метаморфические", subType: "Порода регионального и динамометаморфизма (по ультраосновным породам)", composition: "Тальк (иногда с примесью магнезита и хлорита — талькомагнезит)", structure: "Чешуйчатая", texture: "Сланцеватая плотная", diagnosis: "По светло-зелёной/серовато-белой окраске, минимальной твёрдости (1 — легко царапается ногтем) и характерной мыльной жирности на ощупь", fact: "Обладает рекордной теплоёмкостью и огнеупорностью («печной/горшечный камень»): нагретый камень держит тепло до суток, поэтому издревле используется для облицовки печей и каминов." },
-      { id: "r37", num: "МТ-27", name: "Серпентинит (Змеевик)", wiki: "Серпентинит", wikiEn: "Serpentinite", group: "Метаморфические", subType: "Метаморфическая порода (гидротермальный метасоматоз дунитов и перидотитов)", composition: "Минералы группы серпентина (антигорит, хризотил) + остатки оливина, пироксена и магнетита", structure: "Кристаллическая зернистая (тонко- и скрытокристаллическая)", texture: "Массивная плотная (иногда сетчатая или пятнистая)", diagnosis: "По пятнистой тёмно-зелёной и жёлто-зелёной «змеиной» окраске, гладкой восковой поверхности и средней твёрдости (3–4)", fact: "Своё русское название «змеевик» и латинское «серпентинит» (от «серпенс» — змея) получил за пятнистый узор, напоминающий кожу змеи. Традиционный поделочный камень Урала (шкатулки, вазы, столешницы)." },
-      { id: "r38", num: "МТ-28", name: "Гнейс", wiki: "Гнейс", wikiEn: "Gneiss", group: "Метаморфические", subType: "Порода глубокого регионального метаморфизма (самая распространённая)", composition: "Калиевый полевой шпат, кварц, плагиоклаз, слюда (биотит, мусковит), роговая обманка", structure: "Кристаллическая зернистая (гранобластовая)", texture: "Полосчатая (гнейсовидная)", diagnosis: "Минеральный состав полностью аналогичен граниту (кварц, полевой шпат, слюда), но отличается чёткой параллельно-полосчатой текстурой", fact: "Самая распространённая метаморфическая порода континентальной коры. Именно среди древних гнейсов Канады (комплекс Акаста) обнаружены самые древние породы Земли возрастом более 4 миллиардов лет.", high: true },
-      { id: "r39", num: "МТ-29", name: "Тектоническая брекчия", wiki: "Тектоническая_брекчия", wikiEn: "Fault_breccia", group: "Метаморфические", subType: "Порода динамометаморфизма (тектонического дробления)", composition: "Остроугольный щебень раздробленных пород + цемент из тонкоперетёртой каменной муки (милонита) и гидротермальных минералов", structure: "Щебёночная (катакластическая)", texture: "Массивная плотная", diagnosis: "По остроугольным раздробленным обломкам, притёртым друг к другу, следам скольжения и плотному перетёртому цементу", fact: "Живой отпечаток древних землетрясений! Образуется прямо в плоскостях тектонических разломов, где гигантские блоки земной коры смещаются и дробят друг друга в крошку." }
+      // Метаморфические горные породы (9)
+      { id: "r31", num: "МТ-21", name: "Мрамор", wiki: "Мрамор", wikiEn: "Marble", group: "Метаморфические", subType: "Порода метаморфизма (по известнякам и доломитам)", composition: "Кальцит (CaCO₃), реже доломит", structure: "Полнокристаллическая зернистая (гранобластовая)", texture: "Массивная плотная", diagnosis: "Сахаровидный искристый излом, твёрдость 3 (царапается ножом), бурно вскипает с HCl", fact: "При перекристаллизации известняка все раковины исчезают в сверкающие кристаллы." },
+      { id: "r32", num: "МТ-22", name: "Кварцит", wiki: "Кварцит", wikiEn: "Quartzite", group: "Метаморфические", subType: "Порода метаморфизма (по кварцевым песчаникам)", composition: "Кварц (SiO₂ > 90%)", structure: "Кристаллическая зернистая (сливная)", texture: "Массивная плотная", diagnosis: "Исключительная твёрдость (7 — режет стекло), занозистый скол, не реагирует с HCl", fact: "Из шокшинского кварцита выполнен саркофаг Наполеона.", high: true },
+      { id: "r33", num: "МТ-23", name: "Глинистый сланец", wiki: "Глинистый_сланец", wikiEn: "Slate", group: "Метаморфические", subType: "Порода начальной стадии метаморфизма", composition: "Глинистые минералы, серицит, хлорит", structure: "Пелитовая (микрочешуйчатая)", texture: "Сланцеватая плотная (тонкоплитчатая)", diagnosis: "Тёмно-серый матовый, не размокает в воде, раскалывается на тонкие плитки", fact: "Использовался как вечная кровельная черепица в замках Европы." },
+      { id: "r34", num: "МТ-24", name: "Слюдяной сланец", wiki: "Кристаллический_сланец", wikiEn: "Schist", group: "Метаморфические", subType: "Порода регионального метаморфизма средней ступени", composition: "Слюда (мусковит, биотит), кварц", structure: "Чешуйчатая и зернистая", texture: "Сланцеватая плотная", diagnosis: "Сплошное серебристое или чёрное сверкание чешуек слюды", fact: "Глинистые частицы полностью перекристаллизовались в крупные листы слюды." },
+      { id: "r35", num: "МТ-25", name: "Хлоритовый сланец", wiki: "Хлоритовый_сланец", wikiEn: "Greenschist", group: "Метаморфические", subType: "Порода регионального метаморфизма", composition: "Хлорит, актинолит, тальк", structure: "Чешуйчатая", texture: "Сланцеватая плотная", diagnosis: "Характерный травяно-зелёный цвет минерала хлорита, мягкий", fact: "Образуется при метаморфизме основных лав и базальтов." },
+      { id: "r36", num: "МТ-26", name: "Тальковый сланец", wiki: "Тальковый_сланец", wikiEn: "Talc_carbonate", group: "Метаморфические", subType: "Порода метаморфизма (по ультраосновным породам)", composition: "Тальк, магнезит", structure: "Чешуйчатая", texture: "Сланцеватая плотная", diagnosis: "Светло-зелёный, минимальная твёрдость (1 — царапается ногтем), жирный на ощупь", fact: "Обладает рекордной теплоёмкостью — «горшечный камень» для каминов." },
+      { id: "r37", num: "МТ-27", name: "Серпентинит (Змеевик)", wiki: "Серпентинит", wikiEn: "Serpentinite", group: "Метаморфические", subType: "Метаморфическая порода (метасоматоз дунитов)", composition: "Серпентин, остатки оливина и магнетита", structure: "Кристаллическая зернистая (скрытокристаллическая)", texture: "Массивная плотная", diagnosis: "Пятнистая тёмно-зелёная «змеиная» окраска, восковой блеск", fact: "Популярный поделочный камень для шкатулок и столешниц." },
+      { id: "r38", num: "МТ-28", name: "Гнейс", wiki: "Гнейс", wikiEn: "Gneiss", group: "Метаморфические", subType: "Порода глубокого регионального метаморфизма", composition: "Калиевый полевой шпат, кварц, слюда, роговая обманка", structure: "Кристаллическая зернистая", texture: "Полосчатая (гнейсовидная)", diagnosis: "Состав как у гранита, но чёткая параллельно-полосчатая текстура", fact: "Древнейшие породы Земли возрастом более 4 млрд лет (Канада).", high: true },
+      { id: "r39", num: "МТ-29", name: "Тектоническая брекчия", wiki: "Тектоническая_брекчия", wikiEn: "Fault_breccia", group: "Метаморфические", subType: "Порода динамометаморфизма (тектонического дробления)", composition: "Остроугольный щебень + цемент из милонита", structure: "Щебёночная (катакластическая)", texture: "Массивная плотная", diagnosis: "Остроугольные раздробленные обломки и следы скольжения в разломах", fact: "Живой отпечаток древних землетрясений в недрах планеты." }
     ];
 
     // =========================================================================
-    // 5. ВОПРОСЫ ТРЕНАЖЁРА: МИНЕРАЛЫ (20) И ГОРНЫЕ ПОРОДЫ (15)
+    // 5. ИНТЕРАКТИВ «ФОРМУЛЫ И СТРУКТУРЫ МИНЕРАЛОВ» (ПЛАШКИ)
     // =========================================================================
-    const mineralExamQuestions = [
-      { id: 1, title: "Как отличить пирит от халькопирита по 3 признакам?", prompt: "Перед тобой два золотисто-латунных сульфида с металлическим блеском и без спайности. Инструментов и стекла нет! Назови 3 признака, по которым ты отличишь пирит от халькопирита прямо в руках.", options: ["У пирита совершенная спайность по кубу, серебристо-серая окраска и солёный вкус, а у халькопирита спайность отсутствует и поверхность матовая", "У пирита высокая сила кристаллизации (крупные кристаллы), устойчивая к окислению поверхность и больший вес в руке, а у халькопирита низкая сила кристаллизации и он подвержен окислению", "Пирит обладает дощатой формой кристаллов и синеватым отливом, а халькопирит образует шаровидные конкреции и пахнет жжёной костью", "Пирит легко расщепляется на тонкие чешуйки и пачкает руки, а халькопирит образует бочонковидные кристаллы и сильно магнитит"], correct: 1, oralAnswer: "1) Сила кристаллизации: у пирита она высокая (крупные кристаллы), у халькопирита низкая. 2) Окисление: поверхность пирита устойчива к окислению, а халькопирит сильно подвержен окислению. 3) Плотность и твёрдость: пирит тяжелее (5 г/см³ против 4 г/см³) и твёрже (6–6,5 против 3,5–4)." },
-      { id: 2, title: "Покажи самый твёрдый минерал в коллекции", prompt: "Покажи мне в лотке самый твёрдый минерал из всех 29! По какой уникальной форме кристалла и окраске ты его сразу нашёл глазами?", options: ["Кварц — крупные шестигранные призмы, молочно-белая или бесцветная окраска", "Оливин — изометричная зернистая форма кристаллов, тёмно-зелёная окраска", "Корунд — бочонковидная форма минерала, сапфировая (синеватая) или рубиновая окраска", "Пирит — правильные кубические кристаллы со штриховкой, золотисто-латунная окраска"], correct: 2, oralAnswer: "Самый твёрдый минерал — окисел алюминия КОРУНД (Al₂O₃). Твёрдость равна 9, плотность — 4, спайность отсутствует. Узнаётся по бочонковидной форме кристалла и сапфировой (синеватой) либо рубиновой окраске." },
-      { id: 3, title: "Покажи самый мягкий минерал в коллекции", prompt: "Покажи минерал с самой минимальной твёрдостью в нашем списке. По каким внешним признакам ты его узнаешь?", options: ["Гипс — светлая белая окраска, совершенная прямоугольная спайность, растворяется в воде", "Галит — прозрачная или синяя окраска, совершенная спайность по кубу, солёный вкус", "Мусковит — светлая полупрозрачная окраска, совершенная спайность по тонким пластинкам", "Тальк — светлая яблочно-зелёная окраска, совершенная чешуйчатая спайность"], correct: 3, oralAnswer: "Самый мягкий минерал — ТАЛЬК (слоистый силикат). Твёрдость 1 по шкале Мооса, средняя плотность около 3, светлая яблочно-зелёная окраска и совершенная чешуйчатая спайность." },
-      { id: 4, title: "Найди самый тяжёлый минерал (проверка на вес в руке)", prompt: "Взвесь образцы на ладони и покажи самый тяжёлый минерал во всей коллекции. Какие две внешние приметы выдают его с первого взгляда?", options: ["Галенит (свинцовый блеск) — серебристо-серая окраска с металлическим блеском и совершенная спайность по кубу", "Магнетит — железно-чёрная окраска с металлическим блеском и полное отсутствие спайности", "Гематит — тёмно-стальная окраска со следами ржавчины и отсутствие спайности", "Пирит — золотисто-латунная окраска с металлическим блеском и крупные кристаллы без спайности"], correct: 0, oralAnswer: "Рекордсмен по плотности — сульфид свинца ГАЛЕНИТ (PbS), плотность 7,5 г/см³. Определяется по серебристо-серой окраске с металлическим блеском и совершенной спайности по кубу." },
-      { id: 5, title: "Оливин против Роговой обманки (два тёмно-зелёных силиката)", prompt: "Рядом лежат два тёмно-зелёных (до чёрного) силиката. Как ты безошибочно отличишь оливин от роговой обманки только глазами?", options: ["У оливина дощатая форма кристаллов и совершенная спайность, а у роговой обманки кристаллы изометричные и спайности нет", "Оливин расщепляется на тонкие чешуйки с перламутровым блеском, а роговая обманка образует шаровидные конкреции", "У оливина изометричная форма кристаллов и отсутствие спайности, а у роговой обманки — дощатая форма кристаллов и совершенная спайность", "У оливина бочонковидная форма и синеватый отлив, а у роговой обманки спайность по кубу и металлический блеск"], correct: 2, oralAnswer: "Оливин (островной силикат, твёрдость 6,5–7, плотность ~4) имеет изометричные кристаллы и не имеет спайности. Роговая обманка (ленточный силикат, твёрдость 6, плотность 3) имеет дощатую форму кристаллов и совершенную спайность." },
-      { id: 6, title: "Апатит против Фосфорита (два фосфата)", prompt: "Покажи два фосфата из нашего списка. У обоих одинаковая твёрдость и отсутствует спайность. Как их мгновенно различить по форме и окраске?", options: ["Апатит чёрный и образует шаровидные конкреции, а фосфорит голубоватый и образует шестигранные призмы", "Апатит зеленовато-голубоватый и образует крупные кристаллы (призмы), а фосфорит чёрно-тёмно-зелёный и имеет конкреционное строение (шар)", "Апатит жёлтый с раковистым изломом, а фосфорит серебристо-серый с кубической спайностью", "Апатит образует бочонковидные рубиновые кристаллы, а фосфорит — дощатые чёрные агрегаты"], correct: 1, oralAnswer: "У обоих фосфатов твёрдость 5 и нет спайности. Апатит (Ca₅(PO₄)₃) зеленовато-голубоватый и образует призматические кристаллы. Фосфорит (Ca₅(PO₄)₃OH) чёрно-тёмно-зелёный, имеет конкреционное строение (шар) и запах жжёной кости." },
-      { id: 7, title: "Ортоклаз против Лабрадора (два полевых шпата)", prompt: "Вот два силиката с изометричной формой кристаллов, совершенной спайностью и одинаковой твёрдостью. Как за секунду отличить ортоклаз от лабрадора?", options: ["У ортоклаза тёмная окраска и синеватый отлив, а у лабрадора светлая розоватая окраска без отлива", "У ортоклаза яблочно-зелёная окраска и чешуйчатое строение, а у лабрадора золотисто-латунный цвет", "У ортоклаза голубовато-фиолетовая окраска, а у лабрадора ржаво-коричневый цвет и землистый излом", "У ортоклаза светлая окраска, а у лабрадора — тёмная (чёрная) окраска и характерный синеватый отлив"], correct: 3, oralAnswer: "Оба имеют твёрдость 6, изометричную форму и совершенную спайность. У ортоклаза светлая окраска, а у лабрадора — тёмная (чёрная) окраска и синеватый отлив." },
-      { id: 8, title: "Три галоида: Галит, Сильвин и Карналлит", prompt: "Перед тобой три растворимых галоида. Как на глаз и на ощупь сразу отделить карналлит, а затем различить галит и сильвин?", options: ["Карналлит без спайности, желтовато-коричневый и жирный на ощупь; галит и сильвин колются по кубу, но галит чисто солёный, а сильвин горько-солёный", "Карналлит колется по кубу и синего цвета; галит жирный на ощупь и без спайности, а сильвин образует чёрные пластинки", "Карналлит и галит не имеют спайности и горькие на вкус, а сильвин отличается спайностью по октаэдру и фиолетовым цветом", "Все три минерала колются по ромбоэдру, но карналлит белый, галит жёлтый, а сильвин тёмно-зелёный"], correct: 0, oralAnswer: "Карналлит (KCl·MgCl₂(H₂O)₆, тв. ~2) выдают отсутствие спайности, желтовато-коричневая окраска, жирность на ощупь и гигроскопичность. Галит (NaCl) и сильвин (KCl) колются по кубу, но галит чисто солёный, а сильвин горько-солёный." },
-      { id: 9, title: "Биотит против Мусковита (две слюды)", prompt: "Покажи два слоистых силиката с блеском до алмазного и совершенной спайностью по пластинкам. Как они называются и чем отличаются?", options: ["Тальк и каолин: тальк тёмно-коричневый и твёрдый, а каолин прозрачный и колющийся по кубу", "Гипс и ангидрит: гипс чёрный и непрозрачный, а ангидрит светлый с перламутровым отливом", "Биотит и мусковит: биотит — это чёрная (тёмно-коричневая) слюда, а мусковит — светлая слюда", "Ортоклаз и лабрадор: ортоклаз расслаивается на чёрные чешуйки, а лабрадор — на белые листы"], correct: 2, oralAnswer: "Оба — слюды (слоистые силикаты, твёрдость 2,5, плотность ~3, совершенная спайность по пластинкам). Биотит — чёрная (тёмно-коричневая) слюда, мусковит — светлая слюда." },
-      { id: 10, title: "Графит против Серы (два самородных элемента)", prompt: "Найди на столе два самородных элемента. Назови их и скажи, чем они противоположны внешне.", options: ["Галенит и пирит: галенит серебристо-серый со спайностью по кубу, а пирит латунно-жёлтый без спайности", "Графит и сера: графит серебристо-чёрный с совершенной спайностью, а сера жёлтая и спайность у неё отсутствует", "Магнетит и лимонит: магнетит чёрный с металлическим блеском, а лимонит ржаво-жёлтый и матовый", "Биотит и флюорит: биотит чёрный и пластинчатый, а флюорит жёлтый со спайностью по октаэдру"], correct: 1, oralAnswer: "1) Графит (C) — серебристо-чёрный, чёрная черта, совершенная спайность, твёрдость 2, плотность 2. 2) Сера (S) — жёлтая, спайность отсутствует, твёрдость 1–2, плотность 2,5, легкоплавкая." },
-      { id: 11, title: "Три окисла железа: Магнетит, Гематит и Лимонит", prompt: "Укажи на три окисла железа без спайности. Как они различаются по окраске, цвету черты и магнитным свойствам?", options: ["Магнетит даёт бурую черту и не магнитит; гематит даёт чёрную черту и сильно магнитит; лимонит даёт белую черту", "Магнетит ржаво-жёлтый; гематит серебристо-серый со спайностью по кубу; лимонит чисто чёрный и магнитит", "У всех трёх минералов чёрная черта и сильная магнитность, а различаются они только формой кристаллов", "Магнетит чёрный с чёрной чертой и магнитит; гематит с красновато-бурой чертой (магнитит при нагревании); лимонит ржавый с ржавой чертой"], correct: 3, oralAnswer: "1) Магнетит (Fe₃O₄): плотность 5–5,2, твёрдость 6, чёрная окраска и черта, ферромагнетик. 2) Гематит (Fe₂O₃): плотность 5, твёрдость ~6, красновато-бурая черта, магнитит при нагревании. 3) Лимонит (Fe₂O₃ + (H₂O)n): плотность 3,5–4, твёрдость <5, ржавая окраска и черта." },
-      { id: 12, title: "Кварц среди светлых минералов (без царапанья!)", prompt: "В лотке лежат светлые образцы: кварц, кальцит, гипс и ортоклаз. Как только по характеру скола (спайности) сразу выбрать кварц?", options: ["У кварца спайность полностью отсутствует (неровный раковистый излом), а у остальных трёх видна совершенная спайность с ровными гранями", "Кварц раскалывается на идеальные ромбоэдры, а кальцит, гипс и ортоклаз не имеют спайности", "Кварц расщепляется на тонкие гибкие пластинки, тогда как остальные три минерала колются по кубу", "У кварца матовый землистый излом и он пачкает руки, а остальные три имеют металлический блеск"], correct: 0, oralAnswer: "У кальцита, гипса и ортоклаза спайность совершенная, а у окисла кварца (SiO₂, твёрдость 7, плотность ~2,65–3) спайность полностью отсутствует." },
-      { id: 13, title: "Гипс против Ангидрита (два сульфата кальция)", prompt: "Перед тобой два светлых сульфата с совершенной прямоугольной спайностью. Как отличить гипс от ангидрита по весу в руке, оттенку и составу?", options: ["Гипс безводный, более тяжёлый и голубовато-серый, а ангидрит содержит воду и заметно легче на ладони", "Гипс содержит воду, он легче в руке и мягче, а безводный ангидрит ощутимо тяжелее, твёрже и имеет голубовато-серый оттенок", "Гипс отличается горько-солёным вкусом и жирностью на ощупь, а ангидрит бурно вскипает от воды", "Гипс образует тёмно-зелёные призмы, а ангидрит встречается только в виде чёрных шаровидных конкреций"], correct: 1, oralAnswer: "Гипс (CaSO₄·2H₂O) легче (плотность 2), мягче (твёрдость 2) и растворяется в воде. Безводный ангидрит (CaSO₄) тяжелее (плотность 3), твёрже (твёрдость 3) и имеет голубовато-серую окраску." },
-      { id: 14, title: "Три карбоната: Кальцит, Доломит и Магнезит", prompt: "Покажи три светлых карбоната с ромбоэдрической спайностью. В каком порядке возрастает их твёрдость и как каждый ведёт себя с кислотой (HCl)?", options: ["Магнезит (в куске) → Доломит (в порошке) → Кальцит (только при нагревании)", "Доломит (в куске) → Кальцит (при нагревании) → Магнезит (в порошке)", "Кальцит (сразу в куске) → Доломит (в порошке) → Магнезит (только при нагревании)", "Кальцит (в порошке) → Магнезит (сразу в куске) → Доломит (только при нагревании)"], correct: 2, oralAnswer: "1) Кальцит (CaCO₃) — твёрдость 3, реагирует с кислотой сразу в куске. 2) Доломит (CaMg(CO₃)₂) — твёрдость 3,5, реагирует в порошке. 3) Магнезит (MgCO₃) — твёрдость 4, реагирует с HCl при нагревании." },
-      { id: 15, title: "Загадка про глинистые пластинки в 0,01 мм", prompt: "Покажи серовато-белый слоистый силикат с низкой твёрдостью и совершенной спайностью, который состоит из пластинок размером 0,01 мм.", options: ["Тальк — в воде полностью растворяется и придаёт ей горько-солёный вкус", "Мусковит — в воде распадается на крупные прозрачные шестигранные призмы", "Ангидрит — в воде мгновенно чернеет и приобретает металлический блеск", "Каолин — глинистый силикат, который в воде набухает и становится пластичным"], correct: 3, oralAnswer: "Это КАОЛИН (слоистый силикат, пластинки 0,01 мм, серовато-белая окраска, низкая твёрдость). В воде он набухает и становится пластичным." },
-      { id: 16, title: "Разноцветный галоид со спайностью по октаэдру", prompt: "Какой галоид в нашей коллекции имеет голубовато-фиолетовую окраску и совершенную спайность по кубу и октаэдру?", options: ["Флюорит", "Карналлит", "Апатит", "Корунд"], correct: 0, oralAnswer: "Это ФЛЮОРИТ (твёрдость 4, плотность 3, голубовато-фиолетовая окраска, совершенная спайность по октаэдру/кубу, термолюминесценция)." },
-      { id: 17, title: "Четыре мотива структуры силикатов на столе", prompt: "Назови по одному образцу для каждого из 4 мотивов структуры силикатов: островного, ленточного (поясного), слоистого и каркасного.", options: ["Островной — ортоклаз; Ленточный — биотит; Слоистый — оливин; Каркасный — роговая обманка", "Островной — оливин; Ленточный — роговая обманка; Слоистый — биотит (или мусковит/тальк/каолин); Каркасный — ортоклаз", "Островной — роговая обманка; Ленточный — тальк; Слоистый — лабрадор; Каркасный — оливин", "Островной — кварц; Ленточный — апатит; Слоистый — гипс; Каркасный — кальцит"], correct: 1, oralAnswer: "1) Островной — оливин. 2) Ленточный (поясной) — роговая обманка. 3) Слоистый — биотит, мусковит, тальк, каолин. 4) Каркасный — ортоклаз и лабрадор." },
-      { id: 18, title: "Пятёрка минералов с металлическим блеском", prompt: "Отбери из лотка все 5 минералов с металлическим блеском. У кого из этих пяти есть совершенная спайность?", options: ["Пирит, халькопирит, галенит, магнетит, гематит — спайность есть у всех пяти минералов", "Графит, сера, пирит, биотит, лабрадор — спайность отсутствует только у серы и пирита", "Пирит, халькопирит, галенит, магнетит, гематит — совершенная спайность (по кубу) есть только у галенита, у остальных четырёх спайности нет", "Галенит, магнетит, гематит, лимонит, оливин — совершенная спайность есть только у магнетита и гематита"], correct: 2, oralAnswer: "Металлический блеск имеют пирит, халькопирит, галенит, магнетит и гематит. Совершенная спайность по кубу есть только у галенита (PbS)." },
-      { id: 19, title: "Тёмная тройка: Графит, Магнетит и Галенит", prompt: "Расположи их строго в порядке возрастания веса в руке (от самого лёгкого к самому тяжёлому) и укажи их спайность!", options: ["Магнетит (по кубу) → Графит (нет спайности) → Галенит (по пластинкам)", "Галенит (по кубу) → Магнетит (нет спайности) → Графит (совершенная)", "Графит (нет спайности) → Галенит (нет спайности) → Магнетит (по кубу)", "Графит (совершенная спайность) → Магнетит (спайность отсутствует) → Галенит (совершенная спайность по кубу)"], correct: 3, oralAnswer: "1) Графит (плотность 2, совершенная спайность). 2) Магнетит (плотность 5–5,2, спайность отсутствует). 3) Галенит (плотность 7,5 г/см³, совершенная спайность по кубу)." },
-      { id: 20, title: "Блиц по геометрии: Бочонок, Шар и Дощечка", prompt: "Быстро покажи в лотке три минерала по их характерной форме: 1) бочонковидный, 2) шаровидный (конкреционный), 3) дощатый.", options: ["1) Бочонковидный — корунд; 2) Шаровидный — фосфорит; 3) Дощатый — роговая обманка", "1) Бочонковидный — апатит; 2) Шаровидный — оливин; 3) Дощатый — биотит", "1) Бочонковидный — кварц; 2) Шаровидный — карналлит; 3) Дощатый — ангидрит", "1) Бочонковидный — флюорит; 2) Шаровидный — гематит; 3) Дощатый — ортоклаз"], correct: 0, oralAnswer: "1) Бочонковидная форма — КОРУНД (Al₂O₃, тв. 9). 2) Конкреционное строение (шар) — ФОСФОРИТ (тв. 5). 3) Дощатая форма — РОГОВАЯ ОБМАНКА (тв. 6)." }
+    const formulaRows = minerals.map(m => {
+      const isSilicate = m.group === "Силикаты";
+      const targetVal = isSilicate ? m.silicateMotif : m.formula;
+      return {
+        id: `f_${m.num}`,
+        name: m.name,
+        group: m.group,
+        target: targetVal,
+        type: isSilicate ? "Мотив структуры" : "Химическая формула",
+        color: "#fffdf9"
+      };
+    });
+
+    let formulaMode = "study"; // 'study' | 'chips' | 'keyboard'
+    let formulaFilter = "ALL"; // 'ALL' | 'FORMULA' | 'SILICATE'
+    let formulaSolved = {};
+    let formulaLastSolved = null;
+    let formulaActiveTarget = null;
+
+    function selectFormulaMode(mode) {
+      formulaMode = mode;
+      formulaSolved = {};
+      formulaLastSolved = null;
+      formulaActiveTarget = null;
+      closeFormulaDrawer();
+
+      ["study", "chips", "keyboard"].forEach(m => {
+        const b = document.getElementById(`fModeBtn-${m}`);
+        if (b) {
+          b.className = m === mode
+            ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
+            : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        }
+      });
+
+      const statsBox = document.getElementById("formulaStatsBox");
+      if (mode === "study") {
+        statsBox.classList.add("hidden"); statsBox.classList.remove("flex");
+      } else {
+        statsBox.classList.remove("hidden"); statsBox.classList.add("flex");
+      }
+      renderFormulaTrainer();
+    }
+
+    function setFormulaFilter(f) {
+      formulaFilter = f;
+      formulaActiveTarget = null;
+      closeFormulaDrawer();
+      ["ALL", "FORMULA", "SILICATE"].forEach(k => {
+        const b = document.getElementById(`fFilter-${k}`);
+        if (b) {
+          b.className = k === f
+            ? "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green"
+            : "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light";
+        }
+      });
+      renderFormulaTrainer();
+    }
+
+    function getFilteredFormulaRows() {
+      if (formulaFilter === "FORMULA") return formulaRows.filter(r => r.type === "Химическая формула");
+      if (formulaFilter === "SILICATE") return formulaRows.filter(r => r.type === "Мотив структуры");
+      return formulaRows;
+    }
+
+    function renderFormulaTrainer() {
+      const rows = getFilteredFormulaRows();
+      const total = rows.length;
+      const solved = rows.filter(r => formulaSolved[r.id]).length;
+
+      document.getElementById("formulaSolvedCount").textContent = solved;
+      document.getElementById("formulaTotalCount").textContent = total;
+
+      const grid = document.getElementById("formulaGrid");
+      if (!grid) return;
+
+      grid.innerHTML = rows.map(r => {
+        const isHidden = formulaMode !== "study" && !formulaSolved[r.id];
+        const isJustSolved = (r.id === formulaLastSolved);
+        const popCls = isJustSolved ? "pop-ok font-bold text-[#14532d]" : (formulaSolved[r.id] ? "font-bold text-[#1e4620]" : "");
+
+        let valHtml = "";
+        if (!isHidden) {
+          valHtml = `<span class="${popCls}">${r.target}</span>`;
+        } else {
+          if (formulaMode === "keyboard") {
+            valHtml = `<input type="text" placeholder="Введите..."
+              onkeydown="if(event.key==='Enter') checkKeyboardFormula('${r.id}', this)"
+              onblur="checkKeyboardFormula('${r.id}', this)"
+              class="w-full px-2 py-1 rounded bg-[#fffdf9] border border-[#8c7b6b] text-xs text-[#2e2620] focus:outline-none focus:border-[#3b5e49]">`;
+          } else {
+            const isActive = formulaActiveTarget && formulaActiveTarget === r.id;
+            valHtml = `<button type="button" id="fBtn-${r.id}" onclick="selectFormulaCell('${r.id}')"
+              class="strat-cell-btn ${isActive ? 'active-target' : ''}">
+              ? Выбрать (${r.type === "Мотив структуры" ? "мотив" : "формулу"})
+            </button>`;
+          }
+        }
+
+        return `
+          <div class="pastel-card p-3.5 rounded-xl border border-[#e2d6c5] flex items-center justify-between gap-3 bg-[#fffdf9]/90">
+            <div class="min-w-0">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#7a6b5d] block">${r.type}</span>
+              <h4 class="font-bold text-sm text-[#2e2620] truncate">${r.name}</h4>
+            </div>
+            <div class="shrink-0 w-36 sm:w-44 text-right">
+              ${valHtml}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      formulaLastSolved = null;
+      if (formulaActiveTarget && formulaMode === "chips") {
+        renderFormulaDrawerChips();
+      }
+    }
+
+    function selectFormulaCell(id) {
+      formulaLastSolved = null;
+      formulaActiveTarget = id;
+      renderFormulaTrainer();
+      document.getElementById("formulaDrawer").classList.remove("hidden");
+      renderFormulaDrawerChips();
+
+      setTimeout(() => {
+        const btn = document.getElementById(`fBtn-${id}`);
+        if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
+    }
+
+    function closeFormulaDrawer() {
+      formulaActiveTarget = null;
+      const dr = document.getElementById("formulaDrawer");
+      if (dr) dr.classList.add("hidden");
+    }
+
+    function renderFormulaDrawerChips() {
+      const container = document.getElementById("formulaChipsContainer");
+      if (!container) return;
+      const rows = getFilteredFormulaRows();
+      const remaining = rows.filter(r => !formulaSolved[r.id]);
+
+      remaining.sort((a, b) => a.target.localeCompare(b.target, 'ru'));
+
+      if (remaining.length === 0) {
+        container.innerHTML = `<span class="text-xs font-bold text-[#3b5e49]">🎉 Все формулы и структуры в этом разделе успешно открыты!</span>`;
+        return;
+      }
+
+      container.innerHTML = remaining.map(item => `
+        <button type="button" onclick="pickFormulaChip('${item.id}', this)"
+          class="px-3.5 py-2 rounded-xl border border-[#b59e85] bg-[#fffdf9] hover:bg-[#efe7dc] text-xs font-bold text-[#2e2620] shadow-sm transition text-left">
+          ${item.target} <span class="text-[10px] font-normal text-[#7a6b5d] block">(${item.name})</span>
+        </button>
+      `).join("");
+    }
+
+    function pickFormulaChip(pickedId, btnEl) {
+      if (!formulaActiveTarget) return;
+      if (formulaActiveTarget === pickedId) {
+        formulaSolved[formulaActiveTarget] = true;
+        formulaLastSolved = formulaActiveTarget;
+
+        const rows = getFilteredFormulaRows();
+        const nextItem = rows.find(r => !formulaSolved[r.id]);
+        formulaActiveTarget = nextItem ? nextItem.id : null;
+        renderFormulaTrainer();
+
+        if (formulaActiveTarget) {
+          setTimeout(() => {
+            const nextBtn = document.getElementById(`fBtn-${formulaActiveTarget}`);
+            if (nextBtn) nextBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 80);
+        } else {
+          closeFormulaDrawer();
+        }
+      } else {
+        btnEl.classList.remove("shake");
+        void btnEl.offsetWidth;
+        btnEl.classList.add("shake");
+        btnEl.style.borderColor = "#b85c38";
+        btnEl.style.backgroundColor = "#f9ebe4";
+      }
+    }
+
+    function checkKeyboardFormula(id, inputEl) {
+      const userVal = inputEl.value.trim().toLowerCase().replace(/\s+/g, "");
+      if (!userVal) return;
+      const r = formulaRows.find(item => item.id === id);
+      if (!r) return;
+      const target = r.target.toLowerCase().replace(/\s+/g, "");
+
+      if (target.includes(userVal) && (userVal.length >= 2 || userVal === target)) {
+        formulaSolved[id] = true;
+        formulaLastSolved = id;
+        renderFormulaTrainer();
+      } else {
+        inputEl.classList.add("shake", "border-red-500");
+        setTimeout(() => inputEl.classList.remove("shake"), 400);
+      }
+    }
+
+    function giveFormulaHint() {
+      const rows = getFilteredFormulaRows();
+      if (formulaActiveTarget && !formulaSolved[formulaActiveTarget]) {
+        formulaSolved[formulaActiveTarget] = true;
+        formulaLastSolved = formulaActiveTarget;
+      } else {
+        const next = rows.find(r => !formulaSolved[r.id]);
+        if (next) {
+          formulaSolved[next.id] = true;
+          formulaLastSolved = next.id;
+        }
+      }
+      renderFormulaTrainer();
+    }
+
+    function resetFormulaTrainer() {
+      formulaSolved = {};
+      formulaLastSolved = null;
+      formulaActiveTarget = null;
+      closeFormulaDrawer();
+      renderFormulaTrainer();
+    }
+  <script>
+    // =========================================================================
+    // 6. БАЗА 39 ГОРНЫХ ПОРОД ДЛЯ КАТАЛОГА (ПЕТРОГРАФИЯ)
+    // =========================================================================
+    const rocks = [
+      { id: "r1", num: "М-1", name: "Дунит (Оливинит)", wiki: "Дунит", wikiEn: "Dunite", group: "Магматические", subType: "Ультраосновная интрузивная магматическая порода (SiO₂ < 40%)", composition: "Оливин > 90%, пироксен < 10%", structure: "Кристаллическая зернистая (тонко- и мелкозернистая)", texture: "Массивная плотная", diagnosis: "По преобладанию зёрен оливина со стеклянным блеском и тёмно-зелёной до чёрной окраске", fact: "Слагает нижние части земной коры и верхнюю мантию Земли, коренной источник платины и хромовых руд." },
+      { id: "r2", num: "М-2", name: "Пироксенит", wiki: "Пироксенит", wikiEn: "Pyroxenite", group: "Магматические", subType: "Ультраосновная интрузивная магматическая порода", composition: "Пироксен > 90%, оливин < 10%", structure: "Кристаллическая зернистая (средне- и крупнозернистая)", texture: "Массивная плотная", diagnosis: "По чёрно-зелёной окраске и более крупнозернистой структуре пироксена", fact: "Связана с месторождениями титаномагнетитовых, никелевых и платиновых руд (на Урале)." },
+      { id: "r3", num: "М-3", name: "Габбро", wiki: "Габбро", wikiEn: "Gabbro", group: "Магматические", subType: "Основная интрузивная магматическая порода (SiO₂ 40–52%)", composition: "Кальциевый плагиоклаз (лабрадор), пироксен, роговая обманка", structure: "Кристаллическая равномерно-зернистая", texture: "Массивная плотная", diagnosis: "По средне-крупнозернистой структуре, тёмно-серой окраске и зёрнам лабрадора", fact: "Главная порода третьего слоя океанической коры. Прочный строительный камень." },
+      { id: "r4", num: "М-4", name: "Базальт", wiki: "Базальт", wikiEn: "Basalt", group: "Магматические", subType: "Основная эффузивная (излившаяся) магматическая порода", composition: "Кальциевый плагиоклаз, пироксен, вулканическое стекло", structure: "Мелко- и тонкозернистая, порфировая, скрытокристаллическая", texture: "Массивная плотная или пористая", diagnosis: "По тёмно-серой матовой массе и часто пористой текстуре", fact: "Самая распространённая излившаяся порода на Земле, Луне и Марсе — из базальтов состоит дно океанов." },
+      { id: "r5", num: "М-5", name: "Диорит", wiki: "Диорит", wikiEn: "Diorite", group: "Магматические", subType: "Средняя интрузивная магматическая порода (SiO₂ 52–65%)", composition: "Плагиоклаз, калиевый полевой шпат, роговая обманка, биотит", structure: "Кристаллическая зернистая (среднезернистая)", texture: "Массивная плотная", diagnosis: "По характерной пёстрой чёрно-белой окраске («соль с перцем»)", fact: "Из чёрного диорита высечен знаменитый свод законов царя Хаммурапи." },
+      { id: "r6", num: "М-6", name: "Порфирит (Андезитовый порфирит)", wiki: "Порфирит", wikiEn: "Porphyrite", group: "Магматические", subType: "Средняя эффузивная магматическая порода", composition: "Плагиоклаз, полевой шпат, роговая обманка", structure: "Порфировая (вкрапленники в основной массе)", texture: "Массивная плотная", diagnosis: "По светлым вкрапленникам полевого шпата на тёмном фоне", fact: "Кристаллы росли на глубине, а при излиянии лавы масса мгновенно застыла." },
+      { id: "r7", num: "М-7", name: "Нефелиновый сиенит", wiki: "Нефелиновый_сиенит", wikiEn: "Nepheline_syenite", group: "Магматические", subType: "Средняя интрузивная щелочная магматическая порода", composition: "Щелочные полевые шпаты, нефелин, натриевый плагиоклаз", structure: "Кристаллическая зернистая", texture: "Массивная плотная", diagnosis: "По серовато-зеленоватому нефелину с жирным блеском и отсутствию кварца", fact: "Хибинские тундры (Кольский полуостров) — руда для алюминия и соды." },
+      { id: "r8", num: "М-8", name: "Гранит", wiki: "Графит", wikiEn: "Granite", group: "Магматические", subType: "Кислая интрузивная магматическая порода (SiO₂ > 65%)", composition: "Кварц, калиевый полевой шпат, плагиоклаз, слюда, роговая обманка", structure: "Кристаллическая зернистая", texture: "Массивная плотная", diagnosis: "По зёрнам дымчатого кварца, розового шпата и чешуйкам слюды", fact: "Визитная карточка Земли — слагает фундамент всех материков.", high: true },
+      { id: "r9", num: "М-9", name: "Пегматит", wiki: "Пегматит", wikiEn: "Pegmatite", group: "Магматические", subType: "Полуглубинная (жильная) кислая магматическая порода", composition: "Калиевый полевой шпат, кварц, слюда", structure: "Пегматитовая (письменная структура: прорастание кварца в шпате)", texture: "Массивная плотная", diagnosis: "По вросткам кварца в полевом шпате, напоминающим древнюю клинопись", fact: "Природный музей минералов: здесь находят гигантские кристаллы, изумруды и топазы." },
+      { id: "r10", num: "М-10", name: "Обсидиан", wiki: "Обсидиан", wikiEn: "Obsidian", group: "Магматические", subType: "Эффузивная кислая магматическая порода", composition: "Вулканическое стекло кислого состава", structure: "Аморфная (стекловатая)", texture: "Массивная плотная", diagnosis: "По раковистому излому с бритвенно-острыми краями и стеклянному блеску", fact: "Вулканическое стекло застыло мгновенно — сколы острее стального скальпеля.", high: true },
+
+      // Осадочные обломочные и глинистые (10)
+      { id: "r11", num: "О-1", name: "Туф (вулканический)", wiki: "Вулканический_туф", wikiEn: "Tuff", group: "Осадочные (обломочные и глинистые)", subType: "Пирокластическая вулканогенно-осадочная порода", composition: "Литокластический материал, кристаллокласты, витрокласты", structure: "Обломочная (пирокластическая)", texture: "Массивная пористая", diagnosis: "По лёгкости, шероховатой пористой текстуре и обломкам пепла", fact: "Из розового туфа построен весь центр Еревана." },
+      { id: "r12", num: "О-2", name: "Щебень", wiki: "Щебень", wikiEn: "Crushed_stone", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная (псефитовая) рыхлая порода", composition: "Неокатанные остроугольные обломки пород", structure: "Щебёночная", texture: "Массивная пористая (рыхлая)", diagnosis: "По рыхлому состоянию и неокатанным остроугольным обломкам", fact: "Образуется при морозном и температурном выветривании у подножия скал." },
+      { id: "r13", num: "О-3", name: "Брекчия", wiki: "Брекчия", wikiEn: "Breccia", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная сцементированная щебёночная порода", composition: "Угловатый щебень различных пород + природный цемент", structure: "Щебёночная", texture: "Слоистая или массивная, пористая/плотная", diagnosis: "По сцементированным неокатанным (остроугольным) обломкам", fact: "Угловатая форма обломков говорит о том, что материал не переносился водой." },
+      { id: "r14", num: "О-4", name: "Галечник", wiki: "Галечник", wikiEn: "Shingle_beach", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная галечная рыхлая порода", composition: "Окатанная галька различных пород", structure: "Галечная", texture: "Слоистая или массивная рыхлая", diagnosis: "По гладко окатанным водой обломкам (гальке)", fact: "По форме гальки геологи отличают древние русла рек от морских пляжей." },
+      { id: "r15", num: "О-5", name: "Конгломерат", wiki: "Конгломерат_(порода)", wikiEn: "Conglomerate_(geology)", group: "Осадочные (обломочные и глинистые)", subType: "Грубообломочная галечная сцементированная порода", composition: "Окатанная галька + природный цемент", structure: "Галечная", texture: "Массивная, пористая/плотная", diagnosis: "По сцементированной окатанной гальке (в отличие от брекчии обломки сглаженные)", fact: "В древних конгломератах Витватерсранда (ЮАР) сосредоточено золото мира." },
+      { id: "r16", num: "О-6", name: "Песчаник", wiki: "Песчаник", wikiEn: "Sandstone", group: "Осадочные (обломочные и глинистые)", subType: "Среднеобломочная сцементированная порода", composition: "Зёрна кварца, полевых шпатов + цемент", structure: "Псаммитовая (песчаная)", texture: "Слоистая или массивная, пористая/плотная", diagnosis: "По зёрнам песчанок и высокой твёрдости — уверенно царапает стекло", fact: "Главные природные коллекторы (вместилища) для нефти, газа и артезианских вод.", high: true },
+      { id: "r17", num: "О-7", name: "Алевролит", wiki: "Алевролит", wikiEn: "Siltstone", group: "Осадочные (обломочные и глинистые)", subType: "Мелкообломочная сцементированная порода", composition: "Алевритовый материал + цемент", structure: "Алевритовая", texture: "Слоистая или массивная", diagnosis: "Зёрна мельче песка, шероховатая поверхность, царапает стекло", fact: "Промежуточное звено между песчаниками и глинами (от греч. «мука»).", high: true },
+      { id: "r18", num: "О-8", name: "Глина", wiki: "Глина", wikiEn: "Clay", group: "Осадочные (обломочные и глинистые)", subType: "Глинистая (пелитовая) осадочная порода", composition: "Глинистые минералы (каолинит и др.)", structure: "Пелитовая", texture: "Слоистая или массивная пористая", diagnosis: "Не царапает стекло, прилипает к языку, в воде набухает и становится пластичной", fact: "Служит надёжным водоупором и флюидоупором над залежами нефти и газа." },
+      { id: "r19", num: "О-9", name: "Аргиллит", wiki: "Аргиллит", wikiEn: "Argillite", group: "Осадочные (обломочные и глинистые)", subType: "Уплотнённая камнеподобная глинистая порода", composition: "Глинистые минералы, обезвоженные при уплотнении", structure: "Пелитовая", texture: "Слоистая, массивная плотная", diagnosis: "Не царапает стекло, но (в отличие от глины) совершенно не размокает в воде", fact: "Образуется из глины на глубине под давлением вышележащих толщ." },
+      { id: "r20", num: "О-10", name: "Мергель", wiki: "Мергель", wikiEn: "Marl", group: "Осадочные (обломочные и глинистые)", subType: "Смешанная глинисто-карбонатная осадочная порода", composition: "Глинистые минералы (25–75%) + карбонаты (25–75%)", structure: "Пелитовая, кристаллическая зернистая", texture: "Слоистая или массивная", diagnosis: "Вскипает с HCl, оставляя после реакции грязное глинистое пятно", fact: "Идеальное природное сырье для производства цемента." },
+
+      // Осадочные хемогенные и биогенные (10)
+      { id: "r21", num: "О-11", name: "Известняк", wiki: "Известняк", wikiEn: "Limestone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Кальцит > 75%", structure: "Биоморфная, кристаллическая зернистая, оолитовая", texture: "Слоистая, массивная, пористая/плотная", diagnosis: "Бурно вскипает от капли HCl сразу в куске без остатка", fact: "Сложен раковинами древних морских организмов. Из него построена Москва." },
+      { id: "r22", num: "О-12", name: "Доломит (порода)", wiki: "Доломит_(порода)", wikiEn: "Dolostone", group: "Осадочные (хемогенные и биогенные)", subType: "Карбонатная хемогенно-биогенная порода", composition: "Минерал доломит > 75%", structure: "Биоморфная, скрытокристаллическая зернистая", texture: "Слоистая, массивная, пористая", diagnosis: "Реагирует с HCl только в порошке", fact: "Поры и каверны делают доломиты отличными коллекторами нефти." },
+      { id: "r23", num: "О-13", name: "Яшма", wiki: "Яшма", wikiEn: "Jasper", group: "Осадочные (хемогенные и биогенные)", subType: "Силицитовая (кремнистая) порода", composition: "Халцедон, скрытокристаллический кварц + окислы железа", structure: "Кристаллическая тонко- и микрозернистая", texture: "Слоистая (ленточная), массивная плотная", diagnosis: "Высокая твёрдость (царапает стекло), пёстрая окраска", fact: "Шедевры Эрмитажа из уральской яшмы (Колыванская «Царица ваз»).", high: true },
+      { id: "r24", num: "О-14", name: "Ангидрит (порода)", wiki: "Ангидрит", wikiEn: "Anhydrite", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная эвапоритовая порода", composition: "Минерал ангидрит (CaSO₄) > 75%", structure: "Кристаллическая зернистая", texture: "Слоистая, массивная плотная", diagnosis: "Голубовато-серая, не вскипает с HCl, не царапается ногтем (тв. 3)", fact: "Служит непроницаемой покрышкой для нефтяных месторождений Прикамья." },
+      { id: "r25", num: "О-15", name: "Гипс (порода)", wiki: "Гипс_(порода)", wikiEn: "Gypsum", group: "Осадочные (хемогенные и биогенные)", subType: "Сульфатная эвапоритовая порода", composition: "Минерал гипс (CaSO₄·2H₂O) > 75%", structure: "Кристаллическая зернистая, волокнистая", texture: "Слоистая, массивная плотная", diagnosis: "Очень мягкий (тв. 2 — легко царапается ногтем)", fact: "В пермских гипсах Урала вымыта Кунгурская ледяная пещера." },
+      { id: "r26", num: "О-16", name: "Каменная соль, Сильвинит, Карналлитит", wiki: "Сильвинит", wikiEn: "Sylvinite", group: "Осадочные (хемогенные и биогенные)", subType: "Галоидные хемогенные эвапоритовые породы", composition: "Галит, сильвин, карналлит > 75%", structure: "Кристаллическая зернистая", texture: "Слоистая или массивная", diagnosis: "Растворимость в воде, солёный / горько-солёный вкус", fact: "Верхнекамское месторождение калийных солей (Соликамск/Березники)." },
+      { id: "r27", num: "О-17", name: "Бурый железняк", wiki: "Бурый_железняк", wikiEn: "Limonite", group: "Осадочные (хемогенные и биогенные)", subType: "Железистая хемогенно-биогенная порода", composition: "Гидроокислы железа (лимонит, гетит), гематит", structure: "Кристаллическая, бобовая, оолитовая", texture: "Слоистая, пористая (шлаковидная)", diagnosis: "Ржаво-бурая окраска и черта, большой вес", fact: "Озёрная и болотная руда — с неё начиналась уральская металлургия." },
+      { id: "r28", num: "О-18", name: "Боксит", wiki: "Бокситы", wikiEn: "Bauxite", group: "Осадочные (хемогенные и биогенные)", subType: "Аллитовая (алюминийсодержащая) осадочная порода", composition: "Гидроокислы алюминия (гиббсит, диаспор, бёмит)", structure: "Бобовая, оолитовая, пелитовая", texture: "Слоистая, массивная", diagnosis: "Кирпично-красная окраска, характерные шарики-бобовины", fact: "Главная алюминиевая руда планеты (источник глинозёма Al₂O₃)." },
+      { id: "r29", num: "О-19", name: "Фосфорит (порода)", wiki: "Фосфориты", wikiEn: "Phosphorite", group: "Осадочные (хемогенные и биогенные)", subType: "Фосфорсодержащая осадочная порода", composition: "Минералы группы апатита > 50%", structure: "Микрозернистая, конкреционная (шар)", texture: "Слоистая или массивная", diagnosis: "Шаровидные конкреции, запах жжёной кости при трении", fact: "Сырье для производства фосфорных минеральных удобрений." },
+      { id: "r30", num: "О-20", name: "Каменный уголь", wiki: "Каменный_уголь", wikiEn: "Bituminous_coal", group: "Осадочные (хемогенные и биогенные)", subType: "Каустобиолитовая (органогенная горючая) порода", composition: "Метаморфизованные растительные остатки (углерод)", structure: "Аморфная, полосчатая", texture: "Слоистая, массивная", diagnosis: "Глубокий чёрный цвет, малый вес, горючесть", fact: "Образовался из древних древовидных папоротников и плаунов." },
+
+      // Метаморфические горные породы (9)
+      { id: "r31", num: "МТ-21", name: "Мрамор", wiki: "Мрамор", wikiEn: "Marble", group: "Метаморфические", subType: "Порода метаморфизма (по известнякам и доломитам)", composition: "Кальцит (CaCO₃), реже доломит", structure: "Полнокристаллическая зернистая (гранобластовая)", texture: "Массивная плотная", diagnosis: "Сахаровидный искристый излом, твёрдость 3 (царапается ножом), бурно вскипает с HCl", fact: "При перекристаллизации известняка все раковины исчезают в сверкающие кристаллы." },
+      { id: "r32", num: "МТ-22", name: "Кварцит", wiki: "Кварцит", wikiEn: "Quartzite", group: "Метаморфические", subType: "Порода метаморфизма (по кварцевым песчаникам)", composition: "Кварц (SiO₂ > 90%)", structure: "Кристаллическая зернистая (сливная)", texture: "Массивная плотная", diagnosis: "Исключительная твёрдость (7 — режет стекло), занозистый скол, не реагирует с HCl", fact: "Из шокшинского кварцита выполнен саркофаг Наполеона.", high: true },
+      { id: "r33", num: "МТ-23", name: "Глинистый сланец", wiki: "Глинистый_сланец", wikiEn: "Slate", group: "Метаморфические", subType: "Порода начальной стадии метаморфизма", composition: "Глинистые минералы, серицит, хлорит", structure: "Пелитовая (микрочешуйчатая)", texture: "Сланцеватая плотная (тонкоплитчатая)", diagnosis: "Тёмно-серый матовый, не размокает в воде, раскалывается на тонкие плитки", fact: "Использовался как вечная кровельная черепица в замках Европы." },
+      { id: "r34", num: "МТ-24", name: "Слюдяной сланец", wiki: "Кристаллический_сланец", wikiEn: "Schist", group: "Метаморфические", subType: "Порода регионального метаморфизма средней ступени", composition: "Слюда (мусковит, биотит), кварц", structure: "Чешуйчатая и зернистая", texture: "Сланцеватая плотная", diagnosis: "Сплошное серебристое или чёрное сверкание чешуек слюды", fact: "Глинистые частицы полностью перекристаллизовались в крупные листы слюды." },
+      { id: "r35", num: "МТ-25", name: "Хлоритовый сланец", wiki: "Хлоритовый_сланец", wikiEn: "Greenschist", group: "Метаморфические", subType: "Порода регионального метаморфизма", composition: "Хлорит, актинолит, тальк", structure: "Чешуйчатая", texture: "Сланцеватая плотная", diagnosis: "Характерный травяно-зелёный цвет минерала хлорита, мягкий", fact: "Образуется при метаморфизме основных лав и базальтов." },
+      { id: "r36", num: "МТ-26", name: "Тальковый сланец", wiki: "Тальковый_сланец", wikiEn: "Talc_carbonate", group: "Метаморфические", subType: "Порода метаморфизма (по ультраосновным породам)", composition: "Тальк, магнезит", structure: "Чешуйчатая", texture: "Сланцеватая плотная", diagnosis: "Светло-зелёный, минимальная твёрдость (1 — царапается ногтем), жирный на ощупь", fact: "Обладает рекордной теплоёмкостью — «горшечный камень» для каминов." },
+      { id: "r37", num: "МТ-27", name: "Серпентинит (Змеевик)", wiki: "Серпентинит", wikiEn: "Serpentinite", group: "Метаморфические", subType: "Метаморфическая порода (метасоматоз дунитов)", composition: "Серпентин, остатки оливина и магнетита", structure: "Кристаллическая зернистая (скрытокристаллическая)", texture: "Массивная плотная", diagnosis: "Пятнистая тёмно-зелёная «змеиная» окраска, восковой блеск", fact: "Популярный поделочный камень для шкатулок и столешниц." },
+      { id: "r38", num: "МТ-28", name: "Гнейс", wiki: "Гнейс", wikiEn: "Gneiss", group: "Метаморфические", subType: "Порода глубокого регионального метаморфизма", composition: "Калиевый полевой шпат, кварц, слюда, роговая обманка", structure: "Кристаллическая зернистая", texture: "Полосчатая (гнейсовидная)", diagnosis: "Состав как у гранита, но чёткая параллельно-полосчатая текстура", fact: "Древнейшие породы Земли возрастом более 4 млрд лет (Канада).", high: true },
+      { id: "r39", num: "МТ-29", name: "Тектоническая брекчия", wiki: "Тектоническая_брекчия", wikiEn: "Fault_breccia", group: "Метаморфические", subType: "Порода динамометаморфизма (тектонического дробления)", composition: "Остроугольный щебень + цемент из милонита", structure: "Щебёночная (катакластическая)", texture: "Массивная плотная", diagnosis: "Остроугольные раздробленные обломки и следы скольжения в разломах", fact: "Живой отпечаток древних землетрясений в недрах планеты." }
     ];
 
-    const rockExamQuestions = [
-      { id: 101, title: "Дунит против Пироксенита (две ультраосновные породы)", prompt: "Перед тобой две тёмные интрузивные ультраосновные породы. Как по минеральному составу и структуре отличить дунит от пироксенита?", options: ["В дуните >90% кварца, а в пироксените >90% полевого шпата", "В дуните >90% оливина и тонко-мелкозернистая структура, а в пироксените >90% пироксена и средне-крупнозернистая структура", "Дунит — это пористая вулканическая порода, а пироксенит — слоистая осадочная порода", "Дунит бурно вскипает от соляной кислоты, а пироксенит размокает в воде"], correct: 1, oralAnswer: "Обе породы — ультраосновные интрузивные. В дуните (оливините) более 90% составляет оливин (пироксена <10%) и структура тонко-мелкозернистая. В пироксените более 90% составляет пироксен (оливина <10%), окраска чёрно-зелёная, а структура средне-крупнозернистая." },
-      { id: 102, title: "Габбро против Базальта (основные магматические породы)", prompt: "У этих двух основных пород одинаковый минеральный состав (кальциевый плагиоклаз, пироксен, роговая обманка). Почему они выглядят совершенно по-разному?", options: ["Габбро — интрузивная (глубинная) средне-крупнозернистая порода, а базальт — эффузивная (излившаяся) тонкозернистая/аморфная, часто пористая", "Габбро состоит из вулканического стекла, а базальт — из крупных кристаллов кварца", "Габбро имеет сланцеватую текстуру, а базальт состоит из окатанной гальки", "Базальт образовался на большой глубине, а габбро излилось на поверхность"], correct: 0, oralAnswer: "Габбро — основная интрузивная порода (медленно остывала на глубине, поэтому имеет кристаллическую средне-крупнозернистую структуру и массивную плотную текстуру). Базальт — её эффузивный аналог (быстро застыл на поверхности, поэтому структура тонкозернистая или аморфная, а текстура часто пористая)." },
-      { id: 103, title: "Диорит против Порфирита (средние магматические породы)", prompt: "Как отличить интрузивный диорит от эффузивного порфирита, если обе породы относятся к средним и содержат плагиоклаз, роговую обманку и слюду?", options: ["По солёному вкусу и растворимости в воде", "Диорит аморфный и стеклянный, а порфирит состоит из чистого талька", "У диорита равномерная кристаллическая зернистая структура, а у порфирита — порфировая структура (светлые вкрапленники в тонкозернистой массе)", "Диорит слоистый и мягкий, а порфирит раскалывается на тонкие сланцевые плитки"], correct: 2, oralAnswer: "Диорит — глубинная интрузивная порода с равномерной кристаллической зернистой структурой. Порфирит — эффузивная средняя порода, которая диагностируется по характерной порфировой структуре (крупные вкрапленники полевого шпата погружены в плотную тёмную массу)." },
-      { id: 104, title: "Гранит против Пегматита и Обсидиана (три кислые породы)", prompt: "Перед тобой три кислые магматические породы: гранит, пегматит и обсидиан. Как различить их по условиям образования и структуре?", options: ["Все три породы аморфные и состоят из вулканического стекла", "Гранит — эффузивный стекловатый; пегматит — осадочный обломочный; обсидиан — глубинный крупнозернистый", "Гранит — интрузивный равномерно-зернистый; пегматит — полуглубинный с графической структурой прорастания кварца в полевом шпате; обсидиан — эффузивный аморфный (вулканическое стекло)", "Гранит и пегматит не содержат кварца, а обсидиан состоит из кальцита"], correct: 2, oralAnswer: "1) Гранит — кислая интрузивная порода (средне-крупнозернистая структура: кварц, калиевый полевой шпат, плагиоклаз, слюда). 2) Пегматит — полуглубинная кислая порода с пегматитовой структурой (закономерное прорастание кварца в полевом шпате). 3) Обсидиан — эффузивная кислая порода с аморфной структурой (вулканическое стекло)." },
-      { id: 105, title: "Как отличить Нефелиновый сиенит от Гранита?", prompt: "Обе породы светлые, полнокристаллические, средне-крупнозернистые. Какой главный признак минерального состава отличает щелочной нефелиновый сиенит от кислого гранита?", options: ["В нефелиновом сиените нет кварца, зато много нефелина с характерным жирным блеском и щелочных полевых шпатов", "В нефелиновом сиените 90% оливина и чёрная окраска", "Нефелиновый сиенит состоит из окатанной гальки и цемента", "Нефелиновый сиенит бурно вскипает от соляной кислоты"], correct: 0, oralAnswer: "В граните обязательно присутствует 25–35% кварца (зёрна со стеклянным блеском на изломе). А в нефелиновом сиените кварца нет, порода состоит из щелочных полевых шпатов, ленточных силикатов и нефелина (узнаётся по жирному блеску на изломе)." },
-      { id: 106, title: "Щебень, Брекчия, Галечник и Конгломерат (4 грубообломочные породы)", prompt: "Разложи 4 грубообломочные осадочные породы по двум критериям: 1) угловатые или окатанные обломки; 2) рыхлая или сцементированная порода.", options: ["Угловатые: галечник (рыхлый) и конгломерат (сцементированный); Окатанные: щебень (рыхлый) и брекчия (сцементированная)", "Угловатые: щебень (рыхлый) и брекчия (сцементированная); Окатанные: галечник (рыхлый) и конгломерат (сцементированный)", "Все четыре породы состоят из вулканического пепла и стекла", "Щебень и галечник — сцементированные породы, а брекчия и конгломерат — рыхлые"], correct: 1, oralAnswer: "1) Неокатанные остроугольные обломки: щебень (рыхлая порода) и брекчия (сцементированная цементом). 2) Окатанные водой обломки (галька): галечник (рыхлая порода) и конгломерат (сцементированная цементом)." },
-      { id: 107, title: "Песчаник, Алевролит, Глина и Аргиллит", prompt: "Как различить эти 4 обломочно-глинистые породы по размеру частиц, отношению к воде и способности царапать стекло?", options: ["Глина и аргиллит царапают стекло, а песчаник и алевролит разбухают в воде", "Песчаник (псаммитовая структура) и алевролит (алевритовая, более мелкая) содержат кварц и царапают стекло; глина и аргиллит имеют пелитовую структуру и стекло не царапают, но глина разбухает в воде, а плотный аргиллит — нет", "Все четыре породы состоят из кальцита и бурно вскипают от кислоты", "Аргиллит — это рыхлый песок, а алевролит — это вулканическое стекло"], correct: 1, oralAnswer: "Песчаник (среднеобломочный, псаммитовая структура) и алевролит (мелкообломочный, алевритовая структура) состоят преимущественно из зёрен кварца, поэтому уверенно царапают стекло. Глина и аргиллит состоят из глинистых минералов (пелитовая структура) и стекло не царапают, при этом глина в воде разбухает и становится пластичной, а камнеподобный аргиллит в воде не размокает." },
-      { id: 108, title: "Известняк, Доломит и Мергель (проверка соляной кислотой HCl)", prompt: "Перед тобой три карбонатсодержащие осадочные породы. Как отличить известняк, доломит и мергель с помощью капли HCl?", options: ["Известняк бурно вскипает сразу в куске (без остатка); доломит реагирует только в порошке; мергель вскипает и оставляет на месте капли грязное глинистое пятно", "Доломит бурно вскипает в куске, а известняк и мергель вообще не реагируют с кислотой", "Мергель царапает стекло и не реагирует с кислотой, а известняк пахнет жжёной костью", "Все три породы растворяются в обычной воде и имеют солёный вкус"], correct: 0, oralAnswer: "1) Известняк (кальцит >75%) — бурно вскипает от HCl сразу в куске. 2) Доломит (доломит >75%) — в куске почти не реагирует, вскипает только в порошке. 3) Мергель (смешанная порода: 25–75% глины и 25–75% карбонатов) — вскипает от HCl, но после реакции оставляет грязное глинистое пятно." },
-      { id: 109, title: "Гипс против Ангидрита (две сульфатные породы)", prompt: "Обе породы светлые, сульфатные, эвапоритовые, не реагируют с HCl. Как за секунду отличить породу гипс от породы ангидрит без приборов?", options: ["По вкусу: гипс солёный, а ангидрит горький", "Гипс царапает стекло (твёрдость 7), а ангидрит мягкий", "По твёрдости: гипс (тв. 2) легко царапается ногтем, а более плотный безводный ангидрит (тв. 3–3,5) ногтем не царапается", "Гипс чёрного цвета и горит в огне, а ангидрит состоит из раковин"], correct: 2, oralAnswer: "Порода гипс состоит из водного сульфата кальция (CaSO₄·2H₂O), имеет твёрдость 2 и легко царапается ногтем. Порода ангидрит состоит из безводного сульфата кальция (CaSO₄), имеет голубовато-серый оттенок, выше плотность и твёрдость 3 — ногтем не царапается." },
-      { id: 110, title: "Бурый железняк и Боксит (две бобовые/оолитовые руды)", prompt: "В лотке лежат две красновато-бурые осадочные породы с характерной бобовой (оолитовой) структурой. Что это за породы и каков их состав?", options: ["Бурый железняк (гидроокислы железа: лимонит, гематит) и Боксит (гидроокислы алюминия: гиббсит, диаспор, бёмит)", "Яшма и Кварцит (состоят из чистого кремнезёма SiO₂)", "Каменная соль и Карналлит (состоят из хлоридов натрия и магния)", "Туф и Пемза (состоят из вулканического пепла)"], correct: 0, oralAnswer: "1) Бурый железняк — железистая осадочная порода (состоит из лимонита и гематита, тяжёлая, даёт ржаво-бурую черту). 2) Боксит — аллитовая (алюминийсодержащая) осадочная порода, состоящая из гидроокислов алюминия (гиббсит, диаспор, бёмит) с примесью окислов железа." },
-      { id: 111, title: "Гранит против Гнейса (магматическая vs метаморфическая)", prompt: "У гранита и гнейса абсолютно одинаковый минеральный состав (калиевый полевой шпат, кварц, плагиоклаз, слюда, роговая обманка) и кристаллическая зернистая структура. Как их отличить?", options: ["Гнейс мягкий и царапается ногтем, а гранит твёрдый", "По текстуре: у магматического гранита текстура массивная однородная, а у метаморфического гнейса — отчётливая полосчатая (гнейсовидная) текстура", "Гранит бурно вскипает с кислотой, а гнейс размокает в воде", "У гнейса аморфная стекловатая структура, как у обсидиана"], correct: 1, oralAnswer: "Главное отличие — текстура! Гранит кристаллизовался из магмы в спокойных условиях и имеет массивную однородную текстуру. Гнейс образовался при региональном метаморфизме под направленным давлением, поэтому его минералы вытянуты в чередующиеся полосы (полосчатая текстура)." },
-      { id: 112, title: "Известняк → Мрамор и Песчаник → Кварцит", prompt: "При метаморфизме известняк превращается в мрамор, а кварцевый песчаник — в кварцит. Как отличить белый мрамор от белого кварцита?", options: ["Мрамор царапает стекло и не реагирует с кислотой, а кварцит мягкий и вскипает с HCl", "Мрамор состоит из кальцита/доломита (твёрдость 3, царапается ножом, бурно вскипает с HCl), а кварцит состоит из кварца (твёрдость 7, режет стекло, с HCl не реагирует)", "Мрамор имеет сланцеватую текстуру, а кварцит размокает в воде", "Обе породы имеют твёрдость 1 и жирные на ощупь"], correct: 1, oralAnswer: "Мрамор состоит из перекристаллизованного кальцита (крупно-среднезернистая структура): он легко царапается стальным ножом и бурно вскипает от капли соляной кислоты. Кварцит состоит из сросшихся зёрен кварца: он не реагирует с кислотой и легко царапает стекло и сталь." },
-      { id: 113, title: "Четыре метаморфических сланца: Глинистый, Слюдяной, Хлоритовый, Тальковый", prompt: "У всех четырёх пород сланцеватая плотная текстура. Как безошибочно определить каждый сланец по минеральному составу и свойствам?", options: ["Глинистый — тёмно-серый матовый (пелитовый); Слюдяной — ярко блестит чешуйками слюды с кварцем; Хлоритовый — тёмно-зелёный чешуйчатый; Тальковый — светло-зеленоватый, твёрдость 1, жирный на ощупь", "Все четыре сланца состоят из чистого кварца и имеют твёрдость 7", "Глинистый сланец жирный на ощупь, а тальковый сланец чёрный и царапает стекло", "Хлоритовый сланец состоит из кальцита, а слюдяной — из вулканического стекла"], correct: 0, oralAnswer: "1) Глинистый сланец — начальная ступень метаморфизма глин, пелитовая структура, матовый тёмно-серый плиточный раскол. 2) Слюдяной сланец — чешуйки слюды и зёрна кварца, яркий блеск. 3) Хлоритовый сланец — состоит из зелёного чешуйчатого хлорита. 4) Тальковый сланец — состоит из талька, светлый, очень мягкий (тв. 1) и жирный на ощупь." },
-      { id: 114, title: "Серпентинит (Змеевик) — порода метасоматоза", prompt: "Какая массивная плотная метаморфическая порода образуется при изменении ультраосновных пород (дунитов и пироксенитов) и узнаётся по пятнистой «змеиной» окраске?", options: ["Кварцит", "Серпентинит (Змеевик)", "Мергель", "Алевролит"], correct: 1, oralAnswer: "Это СЕРПЕНТИНИТ (Змеевик). Он состоит из минерала серпентина с остатками оливина и пироксена, имеет кристаллическую тонкозернистую структуру, массивную плотную текстуру и характерную пятнистую тёмно-зелёную окраску." },
-      { id: 115, title: "Яшма против Фосфорита и Каменного угля", prompt: "Как мгновенно диагностировать три особые осадочные породы из конспекта: яшму, фосфорит и каменный уголь?", options: ["Яшма — кремнистая (халцедон/кварц, царапает стекло, пёстрая окраска); Фосфорит — апатит >50% (конкреции, запах жжёной кости при трении); Каменный уголь — каустобиолит (аморфный, чёрный, очень лёгкий, горючий)", "Яшма мягкая и горит в огне; фосфорит прозрачный и солёный; уголь царапает стекло", "Все три породы состоят из вулканического пепла и имеют пористую текстуру", "Яшма и уголь бурно вскипают от соляной кислоты, а фосфорит разбухает в воде"], correct: 0, oralAnswer: "1) Яшма — силицитовая кремнистая порода (халцедон и кварц), плотная, пёстрая, твёрдость 7 (царапает стекло). 2) Фосфорит — содержит >50% апатита, образует плотные конкреции и издаёт запах жжёной кости при ударе/трении. 3) Каменный уголь — каустобиолитовая порода из растительных остатков, чёрная, аморфная и очень лёгкая." }
+    // =========================================================================
+    // 7. ОБНОВЛЁННЫЙ ТЕСТОВЫЙ ТРЕНАЖЁР: 20 ВОПРОСОВ ПО МИНЕРАЛАМ (ПЕРЕМЕШАНЫ)
+    // =========================================================================
+    const examQuestions = [
+      { id: 1, title: "Как отличить пирит от халькопирита по 3 признакам?", prompt: "Перед тобой два золотисто-латунных сульфида с металлическим блеском и без спайности. Инструментов и стекла нет! Назови 3 признака, по которым ты отличишь пирит от халькопирита прямо в руках.", options: ["У пирита совершенная спайность по кубу, серебристо-серая окраска и солёный вкус, а у халькопирита спайность отсутствует и поверхность матовая", "У пирита высокая сила кристаллизации (крупные кристаллы), устойчивая к окислению поверхность и больший вес в руке, а у халькопирита низкая сила кристаллизации и он подвержен окислению", "Пирит обладает дощатой формой кристаллов и синеватым отливом, а халькопирит образует шаровидные конкреции и пахнет жжёной костью", "Пирит легко расщепляется на тонкие чешуйки и пачкает руки, а халькопирит образует бочонковидные кристаллы и сильно магнитит"], correct: 1, oralAnswer: "1) Сила кристаллизации: у пирита высокая (крупные кристаллы), у халькопирита низкая. 2) Окисление: пирит устойчив к окислению, халькопирит сильно подвержен окислению. 3) Плотность и твёрдость: пирит тяжелее (5 г/см³ против 4 г/см³) и твёрже (6–6,5 против 3,5–4)." },
+      { id: 2, title: "Гигроскопичный минерал, жирный на ощупь", prompt: "Какой галоид желтовато-коричневой или красноватой окраски не имеет спайности, обладает горько-солёный вкусом, жирный на ощупь и гигроскопичен (впитывает влагу из воздуха)?", options: ["Карналлит (KCl·MgCl₂(H₂O)₆)", "Галит (NaCl)", "Ангидрит (CaSO₄)", "Тальк"], correct: 0, oralAnswer: "Это карналлит (KCl·MgCl₂(H₂O)₆, твёрдость ~2, плотность ~2 г/см³, спайность отсутствует). Главные приметы: горько-солёный вкус, жирный на ощупь и сильная гигроскопичность." },
+      { id: 3, title: "Реакция карбонатов с соляной кислотой (HCl)", prompt: "У какого карбоната есть реакция с соляной кислотой (HCl) при обычных условиях (сразу в куске), у какого — только в порошке, а у какого — только при нагревании?", options: ["При обычных условиях — магнезит; в порошке — кальцит; при нагревании — доломит", "При обычных условиях — доломит; в порошке — магнезит; при нагревании — кальцит", "При обычных условиях (в куске) — кальцит; в порошке — доломит; при нагревании — магнезит", "При обычных условиях — кальцит; в порошке — ангидрит; при нагревании — гипс"], correct: 2, oralAnswer: "1) При обычных условиях (сразу в куске) бурно реагирует кальцит (CaCO₃, тв. 3). 2) Только в порошке реагирует доломит (CaMg(CO₃)₂, тв. 3,5). 3) Только при нагревании реагирует магнезит (MgCO₃, тв. 4)." },
+      { id: 4, title: "Покажи самый твёрдый минерал в коллекции", prompt: "Покажи в лотке самый твёрдый минерал из всех 29! По какой уникальной форме кристалла и окраске ты его сразу нашёл глазами?", options: ["Кварц — крупные шестигранные призмы, молочно-белая или бесцветная окраска", "Оливин — изометричная зернистая форма кристаллов, тёмно-зелёная окраска", "Корунд — бочонковидная форма минерала, сапфировая (синеватая) или рубиновая окраска", "Пирит — правильные кубические кристаллы со штриховкой, золотисто-латунная окраска"], correct: 2, oralAnswer: "Самый твёрдый минерал — окисел алюминия корунд (Al₂O₃). Твёрдость 9, плотность 4, спайность отсутствует. Узнаётся по бочонковидной форме кристалла и сапфировой (синеватой) либо рубиновой окраске." },
+      { id: 5, title: "Микропластинки 0,01 мм и пластичность в воде", prompt: "Какой серовато-белый слоистый силикат с твёрдостью 1–2 состоит из мельчайших пластинок размером 0,01 мм, а при смачивании водой набухает и становится пластичным?", options: ["Мусковит", "Гипс", "Каолин", "Доломит"], correct: 2, oralAnswer: "Это каолин (глинистый слоистый силикат, пластинки 0,01 мм, твёрдость 1–2, плотность ~2,6 г/см³). В воде набухает и становится пластичным." },
+      { id: 6, title: "Оливин против Роговой обманки (два тёмно-зелёных силиката)", prompt: "Рядом лежат два тёмно-зелёных (до чёрного) силиката. Как ты безошибочно отличишь оливин от роговой обманки только глазами?", options: ["У оливина дощатая форма кристаллов и совершенная спайность, а у роговой обманки кристаллы изометричные и спайности нет", "Оливин расщепляется на тонкие чешуйки с перламутровым блеском, а роговая обманка образует шаровидные конкреции", "У оливина изометричная форма кристаллов и отсутствие спайности, а у роговой обманки — дощатая форма кристаллов и совершенная спайность", "У оливина бочонковидная форма и синеватый отлив, а у роговой обманки спайность по кубу и металлический блеск"], correct: 2, oralAnswer: "Оливин (островной силикат, твёрдость 6,5–7, плотность ~4) имеет изометричные кристаллы и не имеет спайности. Роговая обманка (ленточный силикат, твёрдость 6, плотность 3) имеет дощатую форму кристаллов и совершенную спайность." },
+      { id: 7, title: "Магнитные свойства окислов железа", prompt: "Какой минерал имеет магнитные свойства при обычной среде, какой — при нагревании, и какой вообще не имеет магнитных свойств?", options: ["При обычной среде — гематит; при нагревании — лимонит; не имеет — магнетит", "При обычной среде — магнетит; при нагревании — гематит; не имеет — лимонит", "При обычной среде — лимонит; при нагревании — магнетит; не имеет — гематит", "При обычной среде — гематит; при нагревании — магнетит; не имеет — лимонит"], correct: 1, oralAnswer: "1) При обычной среде магнитными свойствами обладает магнетит (Fe₃O₄, чёрная окраска и черта). 2) При нагревании начинает магнитить гематит (Fe₂O₃, красновато-бурая черта). 3) Не имеет магнитных свойств лимонит (Fe₂O₃ + (H₂O)n, ржавая окраска и черта)." },
+      { id: 8, title: "Шаровидная конкреция с запахом жжёной кости", prompt: "Какой минерал из группы фосфатов с твёрдостью 5 имеет чёрно-тёмно-зелёную окраску, конкреционное строение (форму шара) и издаёт запах жжёной кости при трении?", options: ["Апатит", "Оливин", "Фосфорит (Ca₅(PO₄)₃OH)", "Магнетит"], correct: 2, oralAnswer: "Это фосфорит (Ca₅(PO₄)₃OH, твёрдость 5, плотность 3 г/см³, спайность отсутствует). Узнаётся по шаровидному конкреционному строению и запаху жжёной кости при трении." },
+      { id: 9, title: "Найди самый тяжёлый минерал (проверка на вес в руке)", prompt: "Взвесь образцы на ладони и покажи самый тяжёлый минерал во всей коллекции. Какие две внешние приметы выдают его с первого взгляда?", options: ["Галенит (свинцовый блеск) — серебристо-серая окраска с металлическим блеском и совершенная спайность по кубу", "Магнетит — железно-чёрная окраска с металлическим блеском и полное отсутствие спайности", "Гематит — тёмно-стальная окраска со следами ржавчины и отсутствие спайности", "Пирит — золотисто-латунная окраска с металлическим блеском и крупные кристаллы без спайности"], correct: 0, oralAnswer: "Рекордсмен по плотности — сульфид свинца галенит (PbS), плотность 7,5 г/см³ (твёрдость 2,5). Определяется по серебристо-серой окраске с металлическим блеском и совершенной спайности по кубу." },
+      { id: 10, title: "Свечение в темноте при нагревании (Термолюминесценция)", prompt: "Какой разноцветный (часто голубовато-фиолетовый) минерал из группы галоидов с твёрдостью 4 и спайностью по октаэдру светится в темноте при нагревании?", options: ["Сильвин (KCl)", "Флюорит (CaF₂)", "Апатит (Ca₅(PO₄)₃)", "Галит (NaCl)"], correct: 1, oralAnswer: "Это флюорит (CaF₂), твёрдость 4, плотность 3. Имеет совершенную спайность по кубу/октаэдру и обладает свойством термолюминесценции." },
+      { id: 11, title: "Ортоклаз против Лабрадора (два полевых шпата)", prompt: "Вот два силиката с изометричной формой кристаллов, совершенной спайностью и одинаковой твёрдостью 6. Как за секунду отличить ортоклаз от лабрадора?", options: ["У ортоклаза тёмная окраска и синеватый отлив, а у лабрадора светлая розоватая окраска без отлива", "У ортоклаза яблочно-зелёная окраска и чешуйчатое строение, а у лабрадора золотисто-латунный цвет", "У ортоклаза голубовато-фиолетовая окраска, а у лабрадора ржаво-коричневый цвет и землистый излом", "У ортоклаза светлая окраска, а у лабрадора — тёмная (чёрная) окраска и характерный синеватый отлив"], correct: 3, oralAnswer: "Оба имеют твёрдость 6, изометричную форму и совершенную спайность. У ортоклаза светлая окраска, а у лабрадора — тёмная (чёрная) окраска и синеватый отлив." },
+      { id: 12, title: "Химический двойник алмаза", prompt: "Какой мягкий минерал из нашей коллекции (твёрдость 1–2, плотность 2 г/см³) с весьма совершенной спайностью и серебристо-чёрной окраской состоит из того же самого элемента (C), что и алмаз?", options: ["Галенит", "Магнетит", "Графит (C)", "Биотит"], correct: 2, oralAnswer: "Это самородный элемент графит (C). Он состоит из углерода, как и алмаз, но имеет слоистую решётку, весьма совершенную спайность, низкую твёрдость (1–2) и оставляет чёрную черту." },
+      { id: 13, title: "Покажи самый мягкий минерал в коллекции", prompt: "Покажи минерал с самой минимальной твёрдостью в нашем списке. По каким внешним признакам ты его узнаешь?", options: ["Гипс — светлая белая окраска, совершенная прямоугольная спайность, растворяется в воде", "Галит — прозрачная или синяя окраска, совершенная спайность по кубу, солёный вкус", "Мусковит — светлая полупрозрачная окраска, совершенная спайность по тонким пластинкам", "Тальк — светлая яблочно-зелёная окраска, совершенная чешуйчатая спайность"], correct: 3, oralAnswer: "Самый мягкий минерал — тальк (слоистый силикат). Твёрдость 1 по шкале Мооса, средняя плотность около 3, светлая яблочно-зелёная окраска и совершенная чешуйчатая спайность." },
+      { id: 14, title: "Водный и безводный сульфат кальция", prompt: "Как называются два сульфата кальция с формулами CaSO₄·2H₂O и CaSO₄, и у какого из них твёрдость и плотность равны 2, а у какого — 3?", options: ["Кальцит (твёрдость 2) и Доломит (твёрдость 3)", "Гипс (CaSO₄·2H₂O — твёрдость 2, плотность 2) и Ангидрит (CaSO₄ — твёрдость 3, плотность 3)", "Сильвин (твёрдость 2) и Галит (твёрдость 3)", "Апатит (твёрдость 2) и Фосфорит (твёрдость 3)"], correct: 1, oralAnswer: "Водный сульфат кальция — гипс (CaSO₄·2H₂O), у него твёрдость 2 и плотность 2 г/см³. Безводный сульфат кальция — ангидрит (CaSO₄), он голубовато-серый, его твёрдость 3 и плотность 3 г/см³." },
+      { id: 15, title: "Четыре мотива структуры силикатов", prompt: "В нашей коллекции силикаты делятся на 4 мотива кристаллической структуры: островной, ленточный (поясной), слоистый и каркасный. Укажи верное соответствие минерала его структурному мотиву!", options: ["Островной — ортоклаз; Ленточный — биотит; Слоистый — оливин; Каркасный — роговая обманка", "Островной — оливин; Ленточный (поясной) — роговая обманка; Слоистый — биотит, мусковит, тальк, каолин; Каркасный — ортоклаз и лабрадор", "Островной — кварц; Ленточный — гипс; Слоистый — кальцит; Каркасный — тальк", "Островной — роговая обманка; Ленточный — оливин; Слоистый — лабрадор; Каркасный — мусковит"], correct: 1, oralAnswer: "1) Островной — оливин. 2) Ленточный (поясной) — роговая обманка. 3) Слоистый — биотит, мусковит, тальк и каолин. 4) Каркасный — ортоклаз и лабрадор." },
+      { id: 16, title: "Зеленовато-голубоватые кристаллы-призмы (эталон твёрдости 5)", prompt: "Какой минерал с формулой Ca₅(PO₄)₃ служит эталоном твёрдости 5 по шкале Мооса, не имеет спайности и часто образует крупные зеленовато-голубоватые кристаллы в форме призмы?", options: ["Апатит", "Флюорит", "Корунд", "Оливин"], correct: 0, oralAnswer: "Это апатит (Ca₅(PO₄)₃). Твёрдость 5, спайность отсутствует, характерна зеленовато-голубоватая окраска и призматическая форма кристаллов." },
+      { id: 17, title: "Биотит против Мусковита (две слюды)", prompt: "Покажи два слоистых силиката с блеском до алмазного и совершенной спайностью по пластинкам. Как они называются и чем отличаются?", options: ["Тальк и каолин: тальк тёмно-коричневый и твёрдый, а каолин прозрачный и колющийся по кубу", "Гипс и ангидрит: гипс чёрный и непрозрачный, а ангидрит светлый с перламутровым отливом", "Биотит и мусковит: биотит — это чёрная (тёмно-коричневая) слюда, а мусковит — светлая слюда", "Ортоклаз и лабрадор: ортоклаз расслаивается на чёрные чешуйки, а лабрадор — на белые листы"], correct: 2, oralAnswer: "Оба — слюды (слоистые силикаты, твёрдость 2,5, плотность ~3, совершенная спайность по пластинкам, блеск до алмазного). Биотит — чёрная (тёмно-коричневая) слюда, мусковит — светлая слюда." },
+      { id: 18, title: "Легкоплавкий жёлтый самородный элемент", prompt: "Какой самородный элемент из нашей коллекции имеет ярко-жёлтую окраску, низкую твёрдость (1–2), плотность 2,5 г/см³, полное отсутствие спайности и легко плавится?", options: ["Халькопирит (CuFeS₂)", "Пирит (FeS₂)", "Сера (S)", "Лимонит (Fe₂O₃ + (H₂O)n)"], correct: 2, oralAnswer: "Это самородная сера (S). У неё ярко-жёлтая окраска, твёрдость 1–2, плотность 2,5 г/см³, отсутствие спайности и она легкоплавкая." },
+      { id: 19, title: "Светлый минерал без спайности, царапающий стекло", prompt: "Перед тобой четыре светлых минерала: кальцит, гипс, ортоклаз и кварц. Только у одного из них полностью отсутствует спайность (раковистый излом), а твёрдость равна 7. Что это за минерал?", options: ["Ортоклаз (K[AlSi₃O₈])", "Кальцит (CaCO₃)", "Кварц (SiO₂)", "Ангидрит (CaSO₄)"], correct: 2, oralAnswer: "Это окисел кремния кварц (SiO₂). У него твёрдость 7 (царапает стекло), средняя плотность (~2,65–3 г/см³) и полностью отсутствует спайность." },
+      { id: 20, title: "Вопрос с подвохом: у какого из оксидов совершенная спайность?", prompt: "В нашей коллекции 5 минералов из класса окислов (оксидов): кварц, корунд, магнетит, гематит и лимонит. Какой из этих оксидов имеет совершенную спайность?", options: ["Кварц и корунд (совершенная спайность по призме и бочонку)", "Магнетит и гематит (совершенная спайность по кубу и октаэдру)", "Только корунд (совершенная спайность в двух направлениях под углом 90°)", "Никакой! Это вопрос с подвохом — у всех окислов в нашей коллекции спайность полностью отсутствует"], correct: 3, oralAnswer: "Ни у одного! У всех пяти окислов в нашей коллекции (кварца, корунда, магнетита, гематита и лимонита) спайность полностью отсутствует (у них неровный или раковистый излом)." }
     ];
 
-    const groups = ["Все", "Самородные элементы", "Сульфиды", "Галоиды", "Окислы", "Карбонаты", "Сульфаты и фосфаты", "Силикаты"];
-    const rockGroups = ["Все", "Магматические", "Осадочные (обломочные и глинистые)", "Осадочные (хемогенные и биогенные)", "Метаморфические"];
+    // =========================================================================
+    // 8. СКРИПТЫ ИНТЕРАКТИВА ФОРМУЛ И СТРУКТУР МИНЕРАЛОВ
+    // =========================================================================
+    let formulaMode = "study"; // 'study' | 'chips' | 'keyboard'
+    let formulaFilter = "ALL"; // 'ALL' | 'FORMULA' | 'SILICATE'
+    let formulaSolved = {};
+    let formulaLastSolved = null;
+    let formulaActiveTarget = null;
+
+    const formulaRows = minerals.map(m => {
+      const isSilicate = m.group === "Силикаты";
+      const targetVal = isSilicate ? m.silicateMotif : m.formula;
+      return {
+        id: `f_${m.num}`,
+        name: m.name,
+        group: m.group,
+        target: targetVal,
+        type: isSilicate ? "Мотив структуры" : "Химическая формула",
+        color: "#fffdf9"
+      };
+    });
+
+    function selectFormulaMode(mode) {
+      formulaMode = mode;
+      formulaSolved = {};
+      formulaLastSolved = null;
+      formulaActiveTarget = null;
+      closeFormulaDrawer();
+
+      ["study", "chips", "keyboard"].forEach(m => {
+        const b = document.getElementById(`fModeBtn-${m}`);
+        if (b) {
+          b.className = m === mode
+            ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
+            : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        }
+      });
+
+      const statsBox = document.getElementById("formulaStatsBox");
+      if (mode === "study") {
+        statsBox.classList.add("hidden"); statsBox.classList.remove("flex");
+      } else {
+        statsBox.classList.remove("hidden"); statsBox.classList.add("flex");
+      }
+      renderFormulaTrainer();
+    }
+
+    function setFormulaFilter(f) {
+      formulaFilter = f;
+      formulaActiveTarget = null;
+      closeFormulaDrawer();
+      ["ALL", "FORMULA", "SILICATE"].forEach(k => {
+        const b = document.getElementById(`fFilter-${k}`);
+        if (b) {
+          b.className = k === f
+            ? "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-green"
+            : "px-2.5 py-1 rounded-lg text-xs font-bold transition btn-light";
+        }
+      });
+      renderFormulaTrainer();
+    }
+
+    function getFilteredFormulaRows() {
+      if (formulaFilter === "FORMULA") return formulaRows.filter(r => r.type === "Химическая формула");
+      if (formulaFilter === "SILICATE") return formulaRows.filter(r => r.type === "Мотив структуры");
+      return formulaRows;
+    }
+
+    function renderFormulaTrainer() {
+      const rows = getFilteredFormulaRows();
+      const total = rows.length;
+      const solved = rows.filter(r => formulaSolved[r.id]).length;
+
+      document.getElementById("formulaSolvedCount").textContent = solved;
+      document.getElementById("formulaTotalCount").textContent = total;
+
+      const grid = document.getElementById("formulaGrid");
+      if (!grid) return;
+
+      grid.innerHTML = rows.map(r => {
+        const isHidden = formulaMode !== "study" && !formulaSolved[r.id];
+        const isJustSolved = (r.id === formulaLastSolved);
+        const popCls = isJustSolved ? "pop-ok font-bold text-[#14532d]" : (formulaSolved[r.id] ? "font-bold text-[#1e4620]" : "");
+
+        let valHtml = "";
+        if (!isHidden) {
+          valHtml = `<span class="${popCls}">${r.target}</span>`;
+        } else {
+          if (formulaMode === "keyboard") {
+            valHtml = `<input type="text" placeholder="Введите..."
+              onkeydown="if(event.key==='Enter') checkKeyboardFormula('${r.id}', this)"
+              onblur="checkKeyboardFormula('${r.id}', this)"
+              class="w-full px-2 py-1 rounded bg-[#fffdf9] border border-[#8c7b6b] text-xs text-[#2e2620] focus:outline-none focus:border-[#3b5e49]">`;
+          } else {
+            const isActive = formulaActiveTarget && formulaActiveTarget === r.id;
+            valHtml = `<button type="button" id="fBtn-${r.id}" onclick="selectFormulaCell('${r.id}')"
+              class="strat-cell-btn ${isActive ? 'active-target' : ''}">
+              ? Выбрать (${r.type === "Мотив структуры" ? "мотив" : "формулу"})
+            </button>`;
+          }
+        }
+
+        return `
+          <div class="pastel-card p-3.5 rounded-xl border border-[#e2d6c5] flex items-center justify-between gap-3 bg-[#fffdf9]/90">
+            <div class="min-w-0">
+              <span class="text-[10px] font-bold uppercase tracking-wider text-[#7a6b5d] block">${r.type}</span>
+              <h4 class="font-bold text-sm text-[#2e2620] truncate">${r.name}</h4>
+            </div>
+            <div class="shrink-0 w-36 sm:w-44 text-right">
+              ${valHtml}
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      formulaLastSolved = null;
+      if (formulaActiveTarget && formulaMode === "chips") {
+        renderFormulaDrawerChips();
+      }
+    }
+
+    function selectFormulaCell(id) {
+      formulaLastSolved = null;
+      formulaActiveTarget = id;
+      renderFormulaTrainer();
+      document.getElementById("formulaDrawer").classList.remove("hidden");
+      renderFormulaDrawerChips();
+
+      setTimeout(() => {
+        const btn = document.getElementById(`fBtn-${id}`);
+        if (btn) btn.scrollIntoView({ behavior: "smooth", block: "center" });
+      }, 50);
+    }
+
+    function closeFormulaDrawer() {
+      formulaActiveTarget = null;
+      const dr = document.getElementById("formulaDrawer");
+      if (dr) dr.classList.add("hidden");
+    }
+
+    function renderFormulaDrawerChips() {
+      const container = document.getElementById("formulaChipsContainer");
+      if (!container) return;
+      const rows = getFilteredFormulaRows();
+      const remaining = rows.filter(r => !formulaSolved[r.id]);
+
+      remaining.sort((a, b) => a.target.localeCompare(b.target, 'ru'));
+
+      if (remaining.length === 0) {
+        container.innerHTML = `<span class="text-xs font-bold text-[#3b5e49]">🎉 Все формулы и структуры в этом разделе успешно открыты!</span>`;
+        return;
+      }
+
+      container.innerHTML = remaining.map(item => `
+        <button type="button" onclick="pickFormulaChip('${item.id}', this)"
+          class="px-3.5 py-2 rounded-xl border border-[#b59e85] bg-[#fffdf9] hover:bg-[#efe7dc] text-xs font-bold text-[#2e2620] shadow-sm transition text-left">
+          ${item.target} <span class="text-[10px] font-normal text-[#7a6b5d] block">(${item.name})</span>
+        </button>
+      `).join("");
+    }
+
+    function pickFormulaChip(pickedId, btnEl) {
+      if (!formulaActiveTarget) return;
+      if (formulaActiveTarget === pickedId) {
+        formulaSolved[formulaActiveTarget] = true;
+        formulaLastSolved = formulaActiveTarget;
+
+        const rows = getFilteredFormulaRows();
+        const nextItem = rows.find(r => !formulaSolved[r.id]);
+        formulaActiveTarget = nextItem ? nextItem.id : null;
+        renderFormulaTrainer();
+
+        if (formulaActiveTarget) {
+          setTimeout(() => {
+            const nextBtn = document.getElementById(`fBtn-${formulaActiveTarget}`);
+            if (nextBtn) nextBtn.scrollIntoView({ behavior: "smooth", block: "center" });
+          }, 80);
+        } else {
+          closeFormulaDrawer();
+        }
+      } else {
+        btnEl.classList.remove("shake");
+        void btnEl.offsetWidth;
+        btnEl.classList.add("shake");
+        btnEl.style.borderColor = "#b85c38";
+        btnEl.style.backgroundColor = "#f9ebe4";
+      }
+    }
+
+    function checkKeyboardFormula(id, inputEl) {
+      const userVal = inputEl.value.trim().toLowerCase().replace(/\s+/g, "");
+      if (!userVal) return;
+      const r = formulaRows.find(item => item.id === id);
+      if (!r) return;
+      const target = r.target.toLowerCase().replace(/\s+/g, "");
+
+      if (target.includes(userVal) && (userVal.length >= 2 || userVal === target)) {
+        formulaSolved[id] = true;
+        formulaLastSolved = id;
+        renderFormulaTrainer();
+      } else {
+        inputEl.classList.add("shake", "border-red-500");
+        setTimeout(() => inputEl.classList.remove("shake"), 400);
+      }
+    }
+
+    function giveFormulaHint() {
+      const rows = getFilteredFormulaRows();
+      if (formulaActiveTarget && !formulaSolved[formulaActiveTarget]) {
+        formulaSolved[formulaActiveTarget] = true;
+        formulaLastSolved = formulaActiveTarget;
+      } else {
+        const next = rows.find(r => !formulaSolved[r.id]);
+        if (next) {
+          formulaSolved[next.id] = true;
+          formulaLastSolved = next.id;
+        }
+      }
+      renderFormulaTrainer();
+    }
+
+    function resetFormulaTrainer() {
+      formulaSolved = {};
+      formulaLastSolved = null;
+      formulaActiveTarget = null;
+      closeFormulaDrawer();
+      renderFormulaTrainer();
+    }
+
+    // =========================================================================
+    // 9. ИНИЦИАЛИЗАЦИЯ КАТАЛОГОВ И ТЕСТОВ (ГЕОЛОГИЯ)
+    // =========================================================================
     let activeGroup = "Все";
     let activeRockGroup = "Все";
-    let activeQuizCategory = "minerals"; // 'minerals' | 'rocks'
     const imageCache = {};
     const rockImageCache = {};
     const answeredQuestions = {};
 
-    // Отрисовка фильтров и карточек минералов
     function renderFilters() {
+      const groups = ["Все", "Самородные элементы", "Сульфиды", "Галоиды", "Окислы", "Карбонаты", "Сульфаты и фосфаты", "Силикаты"];
       document.getElementById("filterContainer").innerHTML = groups.map(g => `
         <button type="button" onclick="setGroup('${g}')"
           class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition shadow-sm ${
@@ -1845,11 +1995,11 @@
       } catch (e) {}
     }
 
-    // Отрисовка фильтров и карточек горных пород
     function renderRockFilters() {
       const container = document.getElementById("rockFilterContainer");
       if (!container) return;
-      container.innerHTML = rockGroups.map(g => `
+      const rGroups = ["Все", "Магматические", "Осадочные (обломочные и глинистые)", "Осадочные (хемогенные и биогенные)", "Метаморфические"];
+      container.innerHTML = rGroups.map(g => `
         <button type="button" onclick="setRockGroup('${g}')"
           class="px-3.5 py-1.5 rounded-xl text-xs font-medium transition shadow-sm ${
             activeRockGroup === g ? 'btn-green font-bold scale-105' : 'btn-light'
@@ -1947,41 +2097,8 @@
       } catch (e) {}
     }
 
-    // Двухрежимный тренажёр (Минералы / Горные породы)
-    function getActiveExamList() {
-      return activeQuizCategory === "rocks" ? rockExamQuestions : mineralExamQuestions;
-    }
-
-    function switchQuizCategory(cat) {
-      activeQuizCategory = cat;
-      const btnMin = document.getElementById("quizTabBtn-minerals");
-      const btnRock = document.getElementById("quizTabBtn-rocks");
-      if (btnMin && btnRock) {
-        btnMin.className = cat === "minerals"
-          ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
-          : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
-        btnRock.className = cat === "rocks"
-          ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
-          : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
-      }
-      renderExam();
-      updateQuizScoreDisplay();
-    }
-
-    function updateQuizScoreDisplay() {
-      const list = getActiveExamList();
-      let score = 0;
-      list.forEach(item => {
-        if (answeredQuestions[item.id] === item.correct) score++;
-      });
-      document.getElementById("quizScore").textContent = score;
-      const totalEl = document.getElementById("quizTotal");
-      if (totalEl) totalEl.textContent = list.length;
-    }
-
     function renderExam() {
-      const list = getActiveExamList();
-      document.getElementById("examContainer").innerHTML = list.map((q, index) => `
+      document.getElementById("examContainer").innerHTML = examQuestions.map((q, index) => `
         <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/85 overflow-hidden transition hover:border-[#c2b09b]">
           <button type="button" onclick="togglePanel('q-body-${q.id}', 'q-arrow-${q.id}')" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
             <div class="flex items-center gap-3">
@@ -1994,7 +2111,7 @@
             <div class="p-3.5 rounded-xl bg-[#f6f0e6] border border-[#e5dac9] text-sm text-[#3d342c]">${q.prompt}</div>
             <div class="space-y-2" id="q-options-${q.id}">
               ${q.options.map((opt, idx) => `
-                <button type="button" id="q-${q.id}-opt-${idx}" onclick="selectExamOption(${q.id}, ${idx})" class="w-full text-left p-3 rounded-xl border border-[#dfd3c3] bg-[#faf6f0] hover:bg-[#f3ece1] text-xs sm:text-sm text-[#3d342c] transition">${opt}</button>
+                <button type="button" id="q-${q.id}-opt-${idx}" onclick="selectExamOption(${q.id},${idx})" class="w-full text-left p-3 rounded-xl border border-[#dfd3c3] bg-[#faf6f0] hover:bg-[#f3ece1] text-xs sm:text-sm text-[#3d342c] transition">${opt}</button>
               `).join("")}
             </div>
             <div>
@@ -2010,8 +2127,7 @@
 
     function selectExamOption(qId, selectedIdx) {
       if (answeredQuestions[qId] !== undefined) return;
-      const list = getActiveExamList();
-      const q = list.find(item => item.id === qId);
+      const q = examQuestions.find(item => item.id === qId);
       if (!q) return;
       answeredQuestions[qId] = selectedIdx;
       q.options.forEach((_, idx) => {
@@ -2024,12 +2140,13 @@
       const badge = document.getElementById(`q-badge-${qId}`);
       if (badge) badge.className = selectedIdx === q.correct ? "w-7 h-7 rounded-lg bg-[#3b5e49] text-white flex items-center justify-center text-xs font-bold shrink-0" : "w-7 h-7 rounded-lg bg-[#8c4a32] text-white flex items-center justify-center text-xs font-bold shrink-0";
       document.getElementById(`q-oral-${qId}`)?.classList.remove("hidden");
-      updateQuizScoreDisplay();
+      let score = 0;
+      examQuestions.forEach(item => { if (answeredQuestions[item.id] === item.correct) score++; });
+      document.getElementById("quizScore").textContent = score;
     }
 
     function toggleAllQuestions(expand) {
-      const list = getActiveExamList();
-      list.forEach(q => {
+      examQuestions.forEach(q => {
         const body = document.getElementById(`q-body-${q.id}`);
         const arrow = document.getElementById(`q-arrow-${q.id}`);
         if (body) {
@@ -2045,20 +2162,20 @@
     }
 
     function resetExam() {
-      const list = getActiveExamList();
-      list.forEach(q => delete answeredQuestions[q.id]);
-      updateQuizScoreDisplay();
+      Object.keys(answeredQuestions).forEach(k => delete answeredQuestions[k]);
+      document.getElementById("quizScore").textContent = "0";
       renderExam();
     }
 
+    // Инициализация при загрузке
     document.getElementById("searchInput").addEventListener("input", renderMinerals);
     document.getElementById("rockSearchInput")?.addEventListener("input", renderRocks);
     renderFilters();
     renderMinerals();
     renderRockFilters();
     renderRocks();
+    renderFormulaTrainer();
     renderExam();
-    updateQuizScoreDisplay();
   </script>
 </body>
 </html>
