@@ -4,6 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Клуб любителей минералов — Геология и Стратиграфия</title>
+  <meta name="description" content="Клуб любителей минералов: справочник 29 минералов и 39 горных пород, шпаргалки, тренажёр формул, тест и интерактивная стратиграфическая шкала ОСШ-2024.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Manrope:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     html { scroll-behavior: smooth; }
@@ -123,59 +127,547 @@
       border-color: #7a6b5d;
     }
   </style>
+  <style id="mineralia-css">
+/* =====================================================================
+   MINERALIA — редизайн в стиле «Discover» (белый фон, журнальная
+   типографика с засечками, чёрные капсулы, природные фото)
+   ===================================================================== */
+:root {
+  --ink: #0f0f0e;
+  --ink-2: #3a3a37;
+  --muted: #7b7b75;
+  --line: #e9e9e4;
+  --paper: #ffffff;
+  --paper-2: #f6f6f2;
+  --moss: #2f5d3a;
+  --moss-soft: #e8f0e6;
+  --clay: #9a4a2c;
+  --radius-xl: 28px;
+  --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+  --sans: 'Manrope', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper) !important;
+  color: var(--ink-2) !important;
+  font-family: var(--sans) !important;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--ink); color: #fff; }
+
+/* ---------- Шапка ---------- */
+.m-header {
+  position: sticky; top: 0; z-index: 35;
+  background: rgba(255,255,255,.86);
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color .3s ease;
+}
+.m-header.scrolled { border-color: var(--line); }
+.m-header-in {
+  max-width: 1440px; margin: 0 auto; padding: 14px 28px;
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px;
+}
+.m-nav { display: flex; gap: 22px; font-size: 13px; color: var(--ink); }
+.m-nav button, .m-nav a { font-family: var(--serif); font-size: 16px; transition: opacity .2s; }
+.m-nav button:hover, .m-nav a:hover { opacity: .55; }
+.m-logo {
+  font-family: var(--serif); font-size: 30px; font-weight: 500; letter-spacing: -.01em;
+  color: var(--ink); display: flex; align-items: flex-start; gap: 2px; line-height: 1;
+}
+.m-logo sup { color: #c99a2e; font-size: 14px; margin-top: 2px; }
+.m-right { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+.m-tabs {
+  display: flex; background: var(--ink); border-radius: 999px; padding: 3px;
+}
+.m-tabs button {
+  padding: 6px 14px !important; border-radius: 999px !important; font-size: 12px !important;
+  font-weight: 600 !important; border: 0 !important; box-shadow: none !important;
+  color: rgba(255,255,255,.6) !important; background: transparent !important;
+  flex: initial !important;
+}
+.m-tabs button.btn-green { background: #fff !important; color: var(--ink) !important; }
+.m-link {
+  font-family: var(--serif); font-size: 16px; color: var(--ink);
+  border-bottom: 1px solid var(--ink); line-height: 1.1;
+}
+.m-burger {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; flex-direction: column; gap: 4px;
+}
+.m-burger i { display: block; width: 14px; height: 1.5px; background: #fff; border-radius: 2px; }
+.m-menu {
+  position: absolute; right: 28px; top: 64px; width: 260px; background: #fff;
+  border: 1px solid var(--line); border-radius: 20px; padding: 10px;
+  box-shadow: 0 30px 60px -20px rgba(0,0,0,.25);
+}
+.m-menu button, .m-menu a {
+  display: flex; justify-content: space-between; width: 100%; padding: 10px 12px; border-radius: 12px;
+  font-size: 14px; color: var(--ink); text-align: left;
+}
+.m-menu button:hover, .m-menu a:hover { background: var(--paper-2); }
+@media (max-width: 860px) {
+  .m-header-in { grid-template-columns: auto 1fr; padding: 12px 16px; }
+  .m-nav, .m-link.hide-sm { display: none; }
+  .m-logo { font-size: 24px; }
+  .m-menu { right: 16px; }
+}
+
+/* ---------- HERO ---------- */
+.hero-frame { max-width: 1440px; margin: 0 auto; padding: 4px 16px 0; }
+.hero {
+  position: relative; height: min(88vh, 860px); min-height: 560px;
+  border-radius: var(--radius-xl); overflow: hidden; isolation: isolate;
+  background: #3d4a3a linear-gradient(160deg, #6f8a64 0%, #2c3a2b 100%);
+}
+.hero-layer {
+  position: absolute; inset: -4% -2%; background-size: cover; background-position: center 55%;
+  transition: opacity 1.1s ease, transform 8s ease-out; opacity: 0;
+}
+.hero-layer.on { opacity: 1; transform: scale(1.03); }
+.hero-word {
+  position: absolute; left: 0; right: 0; top: 7%; z-index: 2; text-align: center;
+  font-family: var(--serif); font-weight: 300; color: #fff; line-height: .8;
+  font-size: clamp(72px, 17.5vw, 270px); letter-spacing: -.035em;
+  text-shadow: 0 10px 50px rgba(0,0,0,.18); will-change: transform;
+  pointer-events: none; user-select: none;
+}
+/* копия пейзажа поверх слова — нижняя часть букв «уходит за скалы» */
+.hero-fg {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 64%, transparent 76%);
+          mask-image: linear-gradient(to top, #000 0%, #000 64%, transparent 76%);
+}
+.hero-fg .hero-layer { inset: -4% -2%; }
+.hero-shade {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background:
+    linear-gradient(to top, rgba(10,14,10,.62) 0%, rgba(10,14,10,.15) 38%, transparent 60%),
+    linear-gradient(to right, rgba(10,14,10,.35) 0%, transparent 45%);
+}
+.hero-ui { position: absolute; inset: 0; z-index: 5; color: #fff; }
+.hero-note {
+  position: absolute; left: 42%; top: 42%; max-width: 260px;
+  font-family: var(--serif); font-size: 15px; line-height: 1.25; color: rgba(255,255,255,.92);
+}
+.hero-chips { position: absolute; right: 4%; top: 42%; display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+.hero-chips span {
+  font-size: 11px; padding: 4px 10px; border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.55); background: rgba(255,255,255,.08); backdrop-filter: blur(6px);
+}
+.hero-title {
+  position: absolute; left: 4%; bottom: 25%;
+  font-family: var(--serif); font-weight: 300; text-transform: uppercase;
+  font-size: clamp(28px, 3.6vw, 52px); line-height: 1.02; letter-spacing: -.01em;
+}
+.hero-cta {
+  position: absolute; left: 4%; bottom: 15%;
+  display: inline-flex; align-items: center; gap: 10px; padding: 5px 18px 5px 5px;
+  background: #fff; color: var(--ink); border-radius: 999px; font-size: 12px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .04em; transition: transform .25s ease;
+}
+.hero-cta:hover { transform: translateX(4px); }
+.hero-cta i {
+  width: 30px; height: 30px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; font-style: normal;
+}
+.hero-ctrl { position: absolute; left: 4%; bottom: 5%; display: flex; align-items: center; gap: 14px; }
+.hero-ctrl button {
+  width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(255,255,255,.5);
+  color: #fff; display: inline-flex; align-items: center; justify-content: center; transition: background .2s;
+}
+.hero-ctrl button:hover { background: rgba(255,255,255,.18); }
+.hero-dash { display: flex; gap: 6px; }
+.hero-dash b { width: 26px; height: 2px; background: rgba(255,255,255,.35); border-radius: 2px; transition: all .35s; }
+.hero-dash b.on { width: 40px; background: #fff; }
+.hero-scroll {
+  position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 6px; font-size: 11px; opacity: .9;
+}
+.hero-scroll .mouse { width: 18px; height: 28px; border: 1.5px solid #fff; border-radius: 10px; position: relative; }
+.hero-scroll .mouse::after {
+  content: ""; position: absolute; left: 50%; top: 5px; width: 2px; height: 6px; background: #fff;
+  border-radius: 2px; transform: translateX(-50%); animation: wheel 1.6s infinite;
+}
+@keyframes wheel { 0% { opacity: 1; top: 5px; } 100% { opacity: 0; top: 14px; } }
+.hero-mini {
+  position: absolute; right: 2.2%; bottom: 3.5%; width: 250px; padding: 6px;
+  border-radius: 22px; background: rgba(255,255,255,.18); backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.35);
+}
+.hero-mini-main {
+  height: 128px; border-radius: 17px; background-size: cover; background-position: center;
+  position: relative; overflow: hidden; cursor: pointer;
+}
+.hero-mini-main span {
+  position: absolute; left: 10px; top: 10px; font-size: 11px; font-weight: 700;
+  background: rgba(255,255,255,.92); color: var(--ink); padding: 3px 9px; border-radius: 999px;
+}
+.hero-mini-thumbs { display: flex; gap: 5px; justify-content: center; margin-top: 6px; }
+.hero-mini-thumbs button {
+  width: 44px; height: 28px; border-radius: 8px; background-size: cover; background-position: center;
+  border: 2px solid transparent; opacity: .7; transition: all .2s;
+}
+.hero-mini-thumbs button.on { border-color: #fff; opacity: 1; }
+@media (max-width: 860px) {
+  .hero { height: 82vh; min-height: 520px; }
+  .hero-word { top: 9%; font-size: 21vw; }
+  .hero-note, .hero-chips, .hero-scroll { display: none; }
+  .hero-title { bottom: 32%; font-size: 30px; }
+  .hero-cta { bottom: 22%; }
+  .hero-mini { width: 150px; }
+  .hero-mini-main { height: 78px; }
+  .hero-mini-thumbs button { width: 30px; height: 20px; }
+}
+
+/* ---------- Поисковая капсула ---------- */
+.search-wrap { max-width: 1240px; margin: 40px auto 0; padding: 0 16px; position: relative; z-index: 20; }
+.search-cap {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr auto; align-items: center; gap: 8px;
+  padding: 8px 8px 8px 22px; border-radius: 999px; background: #fff;
+  border: 1px solid var(--line); box-shadow: 0 20px 50px -30px rgba(0,0,0,.25);
+}
+.search-cell { display: flex; align-items: center; gap: 10px; min-width: 0; font-size: 13px; color: var(--ink); }
+.search-cell + .search-cell { border-left: 1px solid var(--line); padding-left: 18px; }
+.search-cell svg { flex-shrink: 0; }
+.search-cell input, .search-cell select {
+  width: 100%; border: 0; outline: none; background: transparent; font-size: 13px; color: var(--ink);
+  font-family: var(--sans); padding: 10px 0; cursor: pointer;
+}
+.search-cell input { cursor: text; }
+.search-cell input::placeholder { color: var(--ink); opacity: .75; }
+.search-go {
+  width: 50px; height: 50px; border-radius: 50%; background: var(--ink); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center; transition: transform .2s;
+}
+.search-go:hover { transform: scale(1.06); }
+.hero-results {
+  position: absolute; left: 16px; right: 16px; top: calc(100% + 10px);
+  background: #fff; border: 1px solid var(--line); border-radius: 24px; padding: 10px;
+  box-shadow: 0 40px 80px -30px rgba(0,0,0,.3); max-height: 440px; overflow-y: auto;
+}
+.hr-row {
+  display: grid; grid-template-columns: 52px 1fr auto; gap: 14px; align-items: center;
+  width: 100%; padding: 8px; border-radius: 14px; text-align: left; transition: background .15s;
+}
+.hr-row:hover { background: var(--paper-2); }
+.hr-thumb { width: 52px; height: 52px; border-radius: 12px; background: var(--paper-2) center/cover; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+.hr-name { font-family: var(--serif); font-size: 19px; color: var(--ink); line-height: 1.1; }
+.hr-sub { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.hr-tag { font-size: 11px; padding: 4px 10px; border-radius: 999px; background: var(--paper-2); color: var(--ink); font-family: ui-monospace, monospace; }
+.hr-empty { padding: 26px; text-align: center; color: var(--muted); font-size: 13px; }
+@media (max-width: 860px) {
+  .search-cap { grid-template-columns: 1fr auto; border-radius: 26px; padding: 12px; }
+  .search-cell { grid-column: 1 / -1; border-left: 0 !important; padding-left: 4px !important; border-bottom: 1px solid var(--line); }
+  .search-go { grid-column: 1 / -1; width: 100%; border-radius: 999px; height: 46px; }
+}
+
+/* ---------- Общие секции ---------- */
+main#tabContent-geology { max-width: 1240px !important; margin-top: 72px !important; }
+main#tabContent-geology > * + * { margin-top: 96px !important; }
+main h2, section h2 {
+  font-family: var(--serif) !important; font-weight: 400 !important; color: var(--ink) !important;
+  font-size: clamp(30px, 3.4vw, 46px) !important; line-height: 1.05 !important; letter-spacing: -.01em;
+}
+main h3 { color: var(--ink); }
+.pastel-card {
+  background: #fff !important; backdrop-filter: none !important;
+  border: 1px solid var(--line) !important; box-shadow: none !important;
+  border-radius: var(--radius-xl) !important;
+}
+.pastel-header {
+  background: rgba(255,255,255,.95) !important; border-color: var(--line) !important;
+}
+.badge-sage, .badge-sand, .badge-terracotta {
+  background: var(--paper-2) !important; color: var(--ink) !important; border: 1px solid var(--line) !important;
+  border-radius: 999px !important; font-weight: 600 !important; letter-spacing: .02em;
+}
+.badge-terracotta { color: var(--clay) !important; }
+.btn-light {
+  background: #fff !important; color: var(--ink) !important; border: 1px solid var(--line) !important;
+  border-radius: 999px !important;
+}
+.btn-light:hover { background: var(--paper-2) !important; }
+.btn-green {
+  background: var(--ink) !important; color: #fff !important; border: 1px solid var(--ink) !important;
+  box-shadow: none !important; border-radius: 999px !important;
+}
+.scale-105 { transform: none !important; }
+input[type="text"], textarea, select { border-radius: 16px !important; }
+#searchInput, #rockSearchInput {
+  border-radius: 999px !important; border: 1px solid var(--line) !important; background: #fff !important;
+  padding: 12px 20px !important; box-shadow: none !important;
+}
+
+/* приглушаем тёплую «пастель» старой палитры до нейтральной */
+[class*="bg-[#f5efe6]"], [class*="bg-[#faf5ed]"], [class*="bg-[#f6f0e6]"], [class*="bg-[#f3ece1]"],
+[class*="bg-[#faf6f0]"], [class*="bg-[#efe7dc]"], [class*="bg-[#f6f0e6]"] { background-color: var(--paper-2) !important; }
+[class*="bg-[#fffdf9]"] { background-color: #fff !important; }
+[class*="border-[#e2d6c5]"], [class*="border-[#dfd3c3]"], [class*="border-[#e6dccf]"],
+[class*="border-[#e5dac9]"], [class*="border-[#d8cbb8]"], [class*="border-[#e2d6c5]"] { border-color: var(--line) !important; }
+[class*="text-[#2e2620]"] { color: var(--ink) !important; }
+[class*="text-[#54483d]"], [class*="text-[#4a3f35]"], [class*="text-[#3d342c]"], [class*="text-[#5c5044]"] { color: var(--ink-2) !important; }
+[class*="text-[#6e5f51]"], [class*="text-[#7a6b5d]"], [class*="text-[#6e5a44]"], [class*="text-[#594c3f]"] { color: var(--muted) !important; }
+[class*="text-[#3b5e49]"] { color: var(--moss) !important; }
+.rounded-xl { border-radius: 18px; }
+
+/* быстрая навигация — капсулы */
+#tabContent-geology > div:first-child a {
+  border-radius: 999px !important; background: #fff !important; border: 1px solid var(--line) !important;
+  color: var(--ink) !important; padding: 8px 16px !important; font-weight: 500 !important;
+}
+#tabContent-geology > div:first-child a:hover { background: var(--ink) !important; color: #fff !important; }
+
+/* «О клубе» в духе «Elevate Your Adventures» */
+#about > div:first-child { padding: 40px !important; }
+#about > div:first-child h2 { font-size: clamp(36px, 4.4vw, 60px) !important; }
+
+/* ---------- Каталоги: карусель / сетка ---------- */
+.cat-head-ctrl { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.circ {
+  width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--line); background: #fff; color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center; transition: all .2s;
+}
+.circ:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.pill-toggle {
+  height: 44px; padding: 0 18px; border-radius: 999px; background: var(--ink); color: #fff;
+  font-size: 12px; font-weight: 700; letter-spacing: .03em; display: inline-flex; align-items: center; gap: 8px;
+}
+.cards-track {
+  display: flex; gap: 18px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 4px 4px 22px;
+  scrollbar-width: thin; scrollbar-color: #d5d5cf transparent;
+  margin-right: calc(-1 * max(16px, (100vw - 1240px) / 2)); padding-right: 40px;
+}
+.cards-track > * { flex: 0 0 300px; scroll-snap-align: start; }
+.cards-track.is-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  overflow: visible; margin-right: 0; padding-right: 4px;
+}
+.cards-track.is-grid + .circ-hide, .cards-track.is-grid ~ .circ-hide { display: none; }
+.cat-count { font-family: var(--serif); font-size: 18px; color: var(--muted); }
+
+.g-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 8px;
+  display: flex; flex-direction: column; transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s;
+}
+.g-card:hover { transform: translateY(-6px); box-shadow: 0 30px 50px -28px rgba(0,0,0,.28); }
+.g-card-media {
+  position: relative; height: 190px; border-radius: 16px; overflow: hidden; background: var(--paper-2);
+  display: flex; align-items: center; justify-content: center; cursor: zoom-in;
+}
+.g-card-media img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s cubic-bezier(.22,1,.36,1); }
+.g-card:hover .g-card-media img { transform: scale(1.07); }
+.g-ph { flex-direction: column; align-items: center; justify-content: center; font-size: 28px; color: var(--muted); }
+.g-ph small { font-size: 11px; margin-top: 4px; }
+.g-flag {
+  position: absolute; right: 8px; top: 8px; max-width: 75%;
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 9px 4px 5px; border-radius: 8px;
+  background: rgba(255,255,255,.95); font-size: 11px; font-weight: 600; color: var(--ink);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.g-flag i { width: 14px; height: 10px; border-radius: 2px; flex-shrink: 0; display: inline-block; }
+.g-rate {
+  position: absolute; left: 8px; bottom: 8px; padding: 3px 8px; border-radius: 8px;
+  background: rgba(0,0,0,.55); backdrop-filter: blur(4px); color: #fff; font-size: 11px; font-weight: 600;
+}
+.g-rate b { color: #f5c542; font-weight: 700; }
+.g-hard {
+  position: absolute; left: 8px; top: 8px; padding: 3px 8px; border-radius: 8px;
+  background: var(--moss); color: #fff; font-size: 10px; font-weight: 700;
+}
+.g-card-body { padding: 14px 8px 8px; flex: 1; }
+.g-num { font-size: 11px; color: var(--muted); letter-spacing: .03em; }
+.g-card-body h3 {
+  font-family: var(--sans); font-size: 18px; font-weight: 600; color: var(--ink); line-height: 1.2; margin-top: 4px;
+}
+.g-desc {
+  font-size: 12px; color: var(--muted); line-height: 1.45; margin-top: 8px;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.g-card-foot {
+  display: flex; justify-content: space-between; align-items: center; width: 100%;
+  margin-top: 8px; padding: 12px 8px 6px; border-top: 1px solid var(--line);
+  font-size: 12px; font-weight: 600; color: var(--ink);
+}
+.g-card-foot span:last-child { transition: transform .25s; }
+.g-card:hover .g-card-foot span:last-child { transform: translateX(4px); }
+
+/* ---------- Паспорт образца ---------- */
+.pp-wrap {
+  position: fixed; inset: 0; z-index: 60; background: rgba(12,12,10,.45);
+  backdrop-filter: blur(4px); opacity: 0; pointer-events: none; transition: opacity .3s ease;
+}
+.pp-wrap.open { opacity: 1; pointer-events: auto; }
+.pp {
+  position: absolute; right: 12px; top: 12px; bottom: 12px; width: min(560px, calc(100% - 24px));
+  background: #fff; border-radius: var(--radius-xl); overflow-y: auto;
+  transform: translateX(110%); transition: transform .5s cubic-bezier(.22,1,.36,1);
+}
+.pp-wrap.open .pp { transform: translateX(0); }
+.pp-media {
+  position: relative; height: 330px; margin: 10px; border-radius: 22px; overflow: hidden;
+  background: var(--paper-2) center/cover;
+}
+.pp-media::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55), transparent 55%); }
+.pp-media-txt { position: absolute; left: 22px; right: 22px; bottom: 18px; z-index: 2; color: #fff; }
+.pp-media-txt .k { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+.pp-media-txt h3 { font-family: var(--serif); font-weight: 400; font-size: 44px; line-height: 1; margin-top: 6px; }
+.pp-close, .pp-nav button {
+  width: 40px; height: 40px; border-radius: 50%; background: rgba(255,255,255,.95); color: var(--ink);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 15px;
+}
+.pp-close { position: absolute; right: 16px; top: 16px; z-index: 3; }
+.pp-nav { position: absolute; left: 16px; top: 16px; z-index: 3; display: flex; gap: 6px; }
+.pp-body { padding: 8px 28px 32px; }
+.pp-formula {
+  display: inline-block; font-family: ui-monospace, monospace; font-size: 22px; color: var(--ink);
+  padding: 8px 16px; border: 1px solid var(--line); border-radius: 14px; margin: 6px 0 18px;
+}
+.pp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pp-cell { padding: 14px 16px; border-radius: 16px; background: var(--paper-2); }
+.pp-cell.wide { grid-column: 1 / -1; }
+.pp-cell .k { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.pp-cell .v { font-size: 14px; color: var(--ink); margin-top: 4px; line-height: 1.4; font-weight: 500; }
+.pp-fact {
+  margin-top: 18px; padding: 20px; border-radius: 20px; background: var(--ink); color: #fff;
+}
+.pp-fact .k { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+.pp-fact p { font-family: var(--serif); font-size: 20px; line-height: 1.3; margin-top: 8px; }
+.pp-mohs { display: flex; gap: 3px; margin-top: 8px; }
+.pp-mohs i { flex: 1; height: 6px; border-radius: 3px; background: #dcdcd6; }
+.pp-mohs i.on { background: var(--moss); }
+.pp-mohs-l { display: flex; justify-content: space-between; font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+/* ---------- Подвал ---------- */
+.m-footer { max-width: 1440px; margin: 120px auto 0; padding: 0 16px; }
+.m-footer-in {
+  border-radius: var(--radius-xl); background: var(--ink); color: #fff; padding: 56px 40px 28px; overflow: hidden; position: relative;
+}
+.m-footer-word {
+  font-family: var(--serif); font-weight: 300; font-size: clamp(60px, 15vw, 230px); line-height: .8;
+  letter-spacing: -.035em; color: rgba(255,255,255,.1); margin-top: 40px; text-align: center; user-select: none;
+}
+
+/* reveal-анимация секций */
+.rv { opacity: 0; transform: translateY(26px); transition: opacity .9s ease, transform .9s cubic-bezier(.22,1,.36,1); }
+.rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .rv { opacity: 1; transform: none; }
+  .hero-layer { transition: none; }
+}
+
+  </style>
 </head>
 <body class="min-h-screen pb-44">
+  <!-- ===================== ШАПКА MINERALIA ===================== -->
+  <header class="m-header" id="mHeader">
+    <div class="m-header-in">
+      <nav class="m-nav">
+        <button type="button" onclick="goSection('catalog')">Минералы</button>
+        <button type="button" onclick="goSection('rocks-catalog')">Породы</button>
+        <button type="button" onclick="goSection('formula-trainer')">Формулы</button>
+        <button type="button" onclick="goSection('exam')">Тест (20)</button>
+      </nav>
 
-  <div class="geo-bg">
-    <div class="geo-blob geo-blob-1"></div>
-    <div class="geo-blob geo-blob-2"></div>
-    <div class="geo-blob geo-blob-3"></div>
-  </div>
+      <a href="#top" class="m-logo" onclick="switchMainTab('geology')" aria-label="Клуб любителей минералов">
+        <h1 class="sr-only">Клуб любителей минералов</h1>Mineralia<sup>✦</sup>
+      </a>
 
-  <!-- Шапка сайта -->
-  <header class="sticky top-0 z-30 pastel-header">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl badge-sage flex items-center justify-center font-bold text-lg shadow-sm shrink-0">💎</div>
-        <div>
-          <h1 class="font-bold text-base sm:text-xl leading-tight text-[#2e2620]">Клуб любителей минералов</h1>
-          <div class="flex flex-wrap items-center gap-2 text-xs text-[#6e5f51] mt-1">
-            <a href="https://vk.ru/wall-242280530_18"
-               onclick="openVkGate(event, 'https://vk.ru/wall-242280530_18', 'Переход в группу ВКонтакте')"
-               class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md vk-btn font-medium shadow-sm transition">
-              <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M15.07 2H8.93C3.33 2 2 3.33 2 8.93v6.14C2 20.67 3.33 22 8.93 22h6.14c5.6 0 6.93-1.33 6.93-6.93V8.93C22 3.33 20.67 2 15.07 2zm3.08 14.27h-1.46c-.55 0-.72-.44-1.71-1.45-.86-.83-1.24-.94-1.46-.94-.3 0-.38.08-.38.5v1.31c0 .35-.11.56-1.04.56-1.54 0-3.25-.93-4.45-2.66-1.81-2.54-2.3-4.45-2.3-4.84 0-.21.08-.41.5-.41h1.46c.37 0 .51.17.65.56.72 2.08 1.92 3.9 2.41 3.9.19 0 .27-.09.27-.55v-2.14c-.06-.99-.58-1.08-.58-1.43 0-.17.14-.34.37-.34h2.29c.31 0 .42.16.42.53v2.89c0 .31.14.42.23.42.19 0 .34-.11.68-.45 1.05-1.18 1.8-3 1.8-3 .1-.21.27-.41.64-.41h1.46c.44 0 .54.23.44.53-.18.85-1.97 3.36-1.97 3.36-.16.26-.22.38 0 .68.16.22.69.67 1.04 1.08.65.74 1.14 1.36 1.28 1.79.13.42-.09.64-.51.64z"/></svg>
-              <span>ВК</span>
-            </a>
-            <span>•</span>
-            <a href="https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk="
-               onclick="openVkGate(event, 'https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk=', 'Переход в чат группы ВКонтакте')"
-               class="inline-flex items-center gap-1 font-semibold text-[#0077FF] hover:underline">
-              <span>💬 Чат</span>
-            </a>
-            <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Минералы</button>
-            <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('rocks-catalog').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Породы</button>
-            <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('formula-trainer').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Формулы</button>
-            <span>•</span>
-            <button type="button" onclick="switchMainTab('geology'); setTimeout(()=>document.getElementById('exam').scrollIntoView({behavior:'smooth'}),50)" class="hover:text-[#2e2620] underline decoration-[#d8cbb8]">Тест (20)</button>
-          </div>
+      <div class="m-right">
+        <div class="m-tabs">
+          <button type="button" id="tabBtn-geology" onclick="switchMainTab('geology')" class="btn-green">Геология</button>
+          <button type="button" id="tabBtn-stratigraphy" onclick="switchMainTab('stratigraphy')" class="btn-light">Стратиграфия</button>
         </div>
-      </div>
-
-      <div class="flex items-center gap-1.5 bg-[#efe7dc] p-1 rounded-2xl border border-[#dfd3c3] w-full sm:w-auto">
-        <button type="button" id="tabBtn-geology" onclick="switchMainTab('geology')"
-          class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">
-          🪨 Геология
-        </button>
-        <button type="button" id="tabBtn-stratigraphy" onclick="switchMainTab('stratigraphy')"
-          class="flex-1 sm:flex-initial px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">
-          ⏳ Стратиграфия
-        </button>
+        <a href="https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk="
+           onclick="openVkGate(event, 'https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk=', 'Переход в чат группы ВКонтакте')"
+           class="m-link hide-sm">Чат</a>
+        <button type="button" class="m-burger" onclick="toggleMenu()" aria-label="Меню"><i></i><i></i></button>
       </div>
     </div>
+
+    <div id="mMenu" class="m-menu hidden">
+      <a href="https://vk.ru/wall-242280530_18"
+         onclick="openVkGate(event, 'https://vk.ru/wall-242280530_18', 'Переход в группу ВКонтакте')"><span>Группа ВКонтакте</span><span>↗</span></a>
+      <a href="https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk="
+         onclick="openVkGate(event, 'https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk=', 'Переход в чат группы ВКонтакте')"><span>💬 Чат</span><span>↗</span></a>
+      <button type="button" onclick="goSection('about')"><span>О клубе</span><span>→</span></button>
+      <button type="button" onclick="goSection('cleavage')"><span>Шпаргалки</span><span>→</span></button>
+      <button type="button" onclick="goSection('catalog')"><span>Минералы</span><span>→</span></button>
+      <button type="button" onclick="goSection('rocks-catalog')"><span>Породы</span><span>→</span></button>
+      <button type="button" onclick="goSection('formula-trainer')"><span>Формулы</span><span>→</span></button>
+      <button type="button" onclick="goSection('exam')"><span>Тест (20)</span><span>→</span></button>
+      <button type="button" onclick="goSection('rules')"><span>Правила</span><span>→</span></button>
+      <button type="button" onclick="toggleMenu(); switchMainTab('stratigraphy')"><span>⏳ Стратиграфия</span><span>→</span></button>
+    </div>
   </header>
+
+  <!-- ===================== HERO ===================== -->
+  <div id="heroBlock">
+    <div class="hero-frame" id="top">
+      <section class="hero" id="hero">
+        <div id="heroBg"></div>
+        <div class="hero-word" id="heroWord" aria-hidden="true">MINERALIA</div>
+        <div class="hero-fg" id="heroFg"></div>
+        <div class="hero-shade"></div>
+
+        <div class="hero-ui">
+          <p class="hero-note">Просветительское онлайн-сообщество для всех, кто увлечён миром камня, геологией, минералогией, петрографией и стратиграфией.</p>
+          <div class="hero-chips">
+            <span id="heroPlace">Пейзаж</span>
+            <span>29 минералов</span>
+            <span>39 пород</span>
+          </div>
+
+          <h2 class="hero-title" style="font-family:var(--serif)!important;font-weight:300!important;color:#fff!important;font-size:clamp(28px,3.6vw,52px)!important;line-height:1.02!important">Клуб любителей<br>минералов —<br>геология и стратиграфия</h2>
+
+          <button type="button" class="hero-cta" onclick="goSection('catalog')"><i>→</i>Начать изучение</button>
+
+          <div class="hero-ctrl">
+            <button type="button" onclick="heroStep(-1)" aria-label="Назад">←</button>
+            <div class="hero-dash" id="heroDash"></div>
+            <button type="button" onclick="heroStep(1)" aria-label="Вперёд">→</button>
+          </div>
+
+          <button type="button" class="hero-scroll" onclick="goSection('about')"><span class="mouse"></span>Листайте вниз</button>
+
+          <div class="hero-mini">
+            <div class="hero-mini-main" id="heroMiniMain" onclick="heroStep(1)"><span id="heroMiniLabel">Далее</span></div>
+            <div class="hero-mini-thumbs" id="heroThumbs"></div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Поисковая капсула -->
+    <div class="search-wrap" id="heroSearch">
+      <div class="search-cap">
+        <label class="search-cell">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.25 7 13 7 13s7-7.75 7-13a7 7 0 0 0-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          <input id="heroQ" type="text" autocomplete="off" placeholder="Название, формула или состав (напр. FeS₂)">
+        </label>
+        <label class="search-cell">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+          <select id="heroGroup"></select>
+        </label>
+        <label class="search-cell">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.6 6.9L22 9.3l-5.6 4.7L18.2 22 12 17.8 5.8 22l1.8-8L2 9.3l7.4-.4z"/></svg>
+          <select id="heroMohs">
+            <option value="">Твёрдость по Моосу — любая</option>
+            <option value="1">1–2 · очень мягкие</option>
+            <option value="2">2,5–3,5 · мягкие</option>
+            <option value="3">3,5–5 · средние</option>
+            <option value="4">6–9 · царапают стекло</option>
+          </select>
+        </label>
+        <button type="button" class="search-go" onclick="runHeroSearch(true)" aria-label="Найти">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        </button>
+      </div>
+      <div id="heroResults" class="hero-results hidden"></div>
+    </div>
+  </div>
+
 
   <!-- ========================================================= -->
   <!-- ВКЛАДКА 1: ГЕОЛОГИЯ (МИНЕРАЛЫ + ПОРОДЫ + ФОРМУЛЫ + ТЕСТ)  -->
@@ -358,7 +850,16 @@
           class="px-4 py-2.5 rounded-xl bg-[#fffdf9]/90 border border-[#d8cbb8] text-sm text-[#2e2620] placeholder-[#9c8d7e] focus:outline-none focus:border-[#3b5e49] w-full md:w-80 shadow-sm">
       </div>
       <div id="filterContainer" class="flex flex-wrap gap-2"></div>
-      <div id="mineralsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <span class="cat-count" id="mineralsCount"></span>
+        <div class="cat-head-ctrl">
+          <button type="button" class="circ" onclick="scrollTrack('mineralsGrid', -1)" aria-label="Назад">‹</button>
+          <button type="button" class="circ" onclick="scrollTrack('mineralsGrid', 1)" aria-label="Вперёд">›</button>
+          <button type="button" class="pill-toggle" onclick="toggleTrack('mineralsGrid', this)">▦ Показать все сеткой</button>
+        </div>
+      </div>
+      <div id="mineralsGrid" class="cards-track"></div>
     </section>
 
     <!-- 3Б. Справочник горных пород -->
@@ -373,7 +874,16 @@
           class="px-4 py-2.5 rounded-xl bg-[#fffdf9]/90 border border-[#d8cbb8] text-sm text-[#2e2620] placeholder-[#9c8d7e] focus:outline-none focus:border-[#3b5e49] w-full md:w-80 shadow-sm">
       </div>
       <div id="rockFilterContainer" class="flex flex-wrap gap-2"></div>
-      <div id="rocksGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+      
+      <div class="flex items-center justify-between gap-3 flex-wrap">
+        <span class="cat-count" id="rocksCount"></span>
+        <div class="cat-head-ctrl">
+          <button type="button" class="circ" onclick="scrollTrack('rocksGrid', -1)" aria-label="Назад">‹</button>
+          <button type="button" class="circ" onclick="scrollTrack('rocksGrid', 1)" aria-label="Вперёд">›</button>
+          <button type="button" class="pill-toggle" onclick="toggleTrack('rocksGrid', this)">▦ Показать все сеткой</button>
+        </div>
+      </div>
+      <div id="rocksGrid" class="cards-track"></div>
     </section>
 
     <!-- 4А. ИНТЕРАКТИВ ПЛАШКАМИ: ФОРМУЛЫ И МОТИВЫ СТРУКТУРЫ МИНЕРАЛОВ -->
@@ -651,6 +1161,40 @@
       </div>
     </div>
   </div>
+  <!-- ===================== ПАСПОРТ ОБРАЗЦА ===================== -->
+  <div id="passport" class="pp-wrap" onclick="if(event.target===this)closePassport()" aria-hidden="true">
+    <aside class="pp" role="dialog" aria-modal="true">
+      <div class="pp-media" id="ppMedia">
+        <div class="pp-nav">
+          <button type="button" onclick="passportStep(-1)" aria-label="Предыдущий">←</button>
+          <button type="button" onclick="passportStep(1)" aria-label="Следующий">→</button>
+        </div>
+        <button type="button" class="pp-close" onclick="closePassport()" aria-label="Закрыть">✕</button>
+        <div class="pp-media-txt"><div class="k" id="ppKicker"></div><h3 id="ppTitle"></h3></div>
+      </div>
+      <div class="pp-body" id="ppBody"></div>
+    </aside>
+  </div>
+
+  <!-- ===================== ПОДВАЛ ===================== -->
+  <footer class="m-footer">
+    <div class="m-footer-in">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+        <div>
+          <div style="font-family:var(--serif);font-size:40px;line-height:1">Клуб любителей минералов</div>
+          <p class="text-sm mt-3" style="color:rgba(255,255,255,.6);max-width:420px">Обмен знаниями, подготовка к практическим работам, помощь в определении минералов и горных пород по фотографиям.</p>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <a href="https://vk.ru/wall-242280530_18" onclick="openVkGate(event, 'https://vk.ru/wall-242280530_18', 'Переход в группу ВКонтакте')"
+             class="px-5 py-3 rounded-full bg-white text-black text-sm font-semibold">ВКонтакте ↗</a>
+          <a href="https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk=" onclick="openVkGate(event, 'https://vk.me/join/HF2LWJUiwA2kXkpPOrXQVI_4WdD8s2Veulk=', 'Переход в чат группы ВКонтакте')"
+             class="px-5 py-3 rounded-full text-sm font-semibold" style="border:1px solid rgba(255,255,255,.35)">💬 Чат ↗</a>
+        </div>
+      </div>
+      <div class="m-footer-word" aria-hidden="true">MINERALIA</div>
+    </div>
+  </footer>
+
 
   <script>
     // =========================================================================
@@ -2276,5 +2820,369 @@
     renderFormulaTrainer();
     renderExam();
   </script>
+
+  <script id="mineralia-design">
+    // =========================================================================
+    // MINERALIA — новый интерфейс. Данные (minerals, rocks, examQuestions,
+    // stratRows) и вся исходная логика остаются нетронутыми.
+    // =========================================================================
+
+    // ---------- утилиты ----------
+    const GROUP_COLORS = {
+      "Самородные элементы": ["#c99a2e", "#f5d77a"],
+      "Сульфиды": ["#8a7a3a", "#d8c26a"],
+      "Галоиды": ["#3e7cb1", "#bfe0f5"],
+      "Окислы": ["#8c3b2a", "#d9876c"],
+      "Карбонаты": ["#e8e2d0", "#bdb39a"],
+      "Сульфаты и фосфаты": ["#6a9a8b", "#cfe6dd"],
+      "Силикаты": ["#2f5d3a", "#8fbf8a"],
+      "Магматические": ["#b0412b", "#2b2b2b"],
+      "Осадочные (обломочные и глинистые)": ["#c9a46a", "#efe0c0"],
+      "Осадочные (хемогенные и биогенные)": ["#8fa3b8", "#e6edf3"],
+      "Метаморфические": ["#4b5563", "#a7b0bc"]
+    };
+    function flagHtml(group) {
+      const c = GROUP_COLORS[group] || ["#999", "#ddd"];
+      return `<i style="background:linear-gradient(180deg, ${c[0]} 0 50%, ${c[1]} 50% 100%)"></i>`;
+    }
+    function hardNum(str) {
+      const m = String(str || "").match(/\d+(?:,\d+)?/);
+      return m ? parseFloat(m[0].replace(",", ".")) : null;
+    }
+    function mohsTier(h) {
+      if (h === null) return null;
+      if (h < 2.5) return "1";
+      if (h <= 3.5) return "2";
+      if (h < 6) return "3";
+      return "4";
+    }
+    function goSection(id) {
+      document.getElementById("mMenu")?.classList.add("hidden");
+      switchMainTab("geology");
+      setTimeout(() => document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" }), 60);
+    }
+    function toggleMenu() { document.getElementById("mMenu").classList.toggle("hidden"); }
+    document.addEventListener("click", e => {
+      const menu = document.getElementById("mMenu");
+      if (!menu || menu.classList.contains("hidden")) return;
+      if (!e.target.closest("#mMenu") && !e.target.closest(".m-burger")) menu.classList.add("hidden");
+    });
+
+    // Стратиграфия открывается без hero — на весь экран
+    const _origSwitchMainTab = switchMainTab;
+    switchMainTab = function (tab) {
+      _origSwitchMainTab(tab);
+      const hb = document.getElementById("heroBlock");
+      if (hb) hb.style.display = tab === "stratigraphy" ? "none" : "";
+    };
+
+    // ---------- HERO: слайды, параллакс, мини-превью ----------
+    const HERO_SLIDES = [
+      { title: "Sørvágsvatn", lang: "en", label: "Фарерские острова" },
+      { title: "Уральские горы", lang: "ru", label: "Уральские горы" },
+      { title: "Kamchatka Peninsula", lang: "en", label: "Камчатка" },
+      { title: "Grand Canyon", lang: "en", label: "Гранд-Каньон" }
+    ];
+    const HERO_FALLBACK = [
+      "linear-gradient(160deg,#7c9a6a,#2c3a2b)",
+      "linear-gradient(160deg,#8a9a7a,#3a4433)",
+      "linear-gradient(160deg,#5f7d8c,#22313a)",
+      "linear-gradient(160deg,#c98a5a,#5a2e1c)"
+    ];
+    let heroIdx = 0, heroTimer = null;
+
+    function heroBgValue(i) {
+      const s = HERO_SLIDES[i];
+      return s.img ? `url("${s.img}")` : HERO_FALLBACK[i];
+    }
+    function buildHero() {
+      const bg = document.getElementById("heroBg"), fg = document.getElementById("heroFg");
+      bg.innerHTML = fg.innerHTML = HERO_SLIDES.map((_, i) => `<div class="hero-layer" data-i="${i}"></div>`).join("");
+      document.getElementById("heroDash").innerHTML = HERO_SLIDES.map((_, i) => `<b data-i="${i}"></b>`).join("");
+      document.getElementById("heroThumbs").innerHTML = HERO_SLIDES.map((s, i) =>
+        `<button type="button" data-i="${i}" onclick="setHero(${i})" aria-label="${s.label}"></button>`).join("");
+      paintHero();
+      setHero(0);
+      HERO_SLIDES.forEach((s, i) => loadHeroImage(s, i));
+    }
+    function paintHero() {
+      document.querySelectorAll(".hero-layer").forEach(el => {
+        el.style.backgroundImage = heroBgValue(+el.dataset.i);
+      });
+      document.querySelectorAll("#heroThumbs button").forEach(el => {
+        el.style.backgroundImage = heroBgValue(+el.dataset.i);
+      });
+      const next = (heroIdx + 1) % HERO_SLIDES.length;
+      document.getElementById("heroMiniMain").style.backgroundImage = heroBgValue(next);
+      document.getElementById("heroMiniLabel").textContent = HERO_SLIDES[next].label;
+    }
+    function setHero(i) {
+      heroIdx = (i + HERO_SLIDES.length) % HERO_SLIDES.length;
+      document.querySelectorAll(".hero-layer").forEach(el => el.classList.toggle("on", +el.dataset.i === heroIdx));
+      document.querySelectorAll("#heroDash b, #heroThumbs button").forEach(el => el.classList.toggle("on", +el.dataset.i === heroIdx));
+      document.getElementById("heroPlace").textContent = HERO_SLIDES[heroIdx].label;
+      paintHero();
+      clearInterval(heroTimer);
+      heroTimer = setInterval(() => setHero(heroIdx + 1), 7000);
+    }
+    function heroStep(d) { setHero(heroIdx + d); }
+    async function loadHeroImage(s, i) {
+      try {
+        const res = await fetch(`https://${s.lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(s.title)}`);
+        const data = await res.json();
+        let url = data?.originalimage?.source;
+        const thumb = data?.thumbnail?.source;
+        if (thumb && /\/\d+px-/.test(thumb)) url = thumb.replace(/\/\d+px-/, "/1920px-");
+        if (!url) return;
+        const probe = new Image();
+        probe.onload = () => { s.img = url; paintHero(); };
+        probe.onerror = () => {
+          if (data?.originalimage?.source && url !== data.originalimage.source) {
+            url = data.originalimage.source;
+            const p2 = new Image();
+            p2.onload = () => { s.img = url; paintHero(); };
+            p2.src = url;
+          }
+        };
+        probe.src = url;
+      } catch (e) {}
+    }
+    // Параллакс: при прокрутке буквы «оседают» за линию скал
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const y = Math.min(window.scrollY, 900);
+        const w = document.getElementById("heroWord");
+        if (w) w.style.transform = `translateY(${y * 0.38}px)`;
+        document.getElementById("mHeader")?.classList.toggle("scrolled", window.scrollY > 10);
+        ticking = false;
+      });
+    }, { passive: true });
+
+    // ---------- Поисковая капсула ----------
+    function buildHeroSearch() {
+      const sel = document.getElementById("heroGroup");
+      const mg = ["Самородные элементы", "Сульфиды", "Галоиды", "Окислы", "Карбонаты", "Сульфаты и фосфаты", "Силикаты"];
+      const rg = ["Магматические", "Осадочные (обломочные и глинистые)", "Осадочные (хемогенные и биогенные)", "Метаморфические"];
+      sel.innerHTML = `<option value="">Все классы и группы</option>
+        <optgroup label="💎 Минералы (29)">${mg.map(g => `<option value="m|${g}">${g}</option>`).join("")}</optgroup>
+        <optgroup label="🌋 Горные породы (39)">${rg.map(g => `<option value="r|${g}">${g}</option>`).join("")}</optgroup>`;
+      ["heroQ", "heroGroup", "heroMohs"].forEach(id => {
+        const el = document.getElementById(id);
+        el.addEventListener(id === "heroQ" ? "input" : "change", () => runHeroSearch(false));
+      });
+      document.getElementById("heroQ").addEventListener("keydown", e => { if (e.key === "Enter") runHeroSearch(true); });
+      document.addEventListener("click", e => {
+        if (!e.target.closest("#heroSearch")) document.getElementById("heroResults").classList.add("hidden");
+      });
+    }
+    function runHeroSearch(force) {
+      const q = document.getElementById("heroQ").value.toLowerCase().trim();
+      const g = document.getElementById("heroGroup").value;
+      const t = document.getElementById("heroMohs").value;
+      const box = document.getElementById("heroResults");
+      if (!force && !q && !g && !t) { box.classList.add("hidden"); return; }
+      const [kind, grp] = g ? g.split("|") : [null, null];
+
+      const mRes = (kind === "r") ? [] : minerals.filter(m =>
+        (!grp || m.group === grp) &&
+        (!t || mohsTier(hardNum(m.hardness)) === t) &&
+        (!q || [m.name, m.formula, m.group, m.color, m.extra, m.cleavage].join(" ").toLowerCase().includes(q))
+      ).map(m => ({ kind: "m", key: m.num, name: m.name, sub: `${m.group} · твёрдость ${m.hardness}`, tag: m.formula, img: imageCache[m.num], ico: "💎" }));
+
+      const rRes = (kind === "m" || t) ? [] : rocks.filter(r =>
+        (!grp || r.group === grp) &&
+        (!q || [r.name, r.subType, r.composition, r.structure, r.texture, r.diagnosis].join(" ").toLowerCase().includes(q))
+      ).map(r => ({ kind: "r", key: r.id, name: r.name, sub: `${r.group} · ${r.structure}`, tag: r.num, img: rockImageCache[r.id], ico: "🌋" }));
+
+      const all = mRes.concat(rRes);
+      box.innerHTML = all.length
+        ? `<div class="px-3 pt-1 pb-2 text-[11px] uppercase tracking-widest" style="color:var(--muted)">Найдено: ${all.length}</div>` +
+          all.map(x => `
+          <button type="button" class="hr-row" onclick="openPassport('${x.kind}','${x.key}')">
+            <span class="hr-thumb" style="${x.img ? `background-image:url('${x.img}')` : ""}">${x.img ? "" : x.ico}</span>
+            <span class="min-w-0"><span class="hr-name block truncate">${x.name}</span><span class="hr-sub block truncate">${x.sub}</span></span>
+            <span class="hr-tag">${x.tag}</span>
+          </button>`).join("")
+        : `<div class="hr-empty">Ничего не найдено — попробуйте другое название, формулу или снимите фильтр твёрдости.</div>`;
+      box.classList.remove("hidden");
+    }
+
+    // ---------- Каталоги: новые карточки (переопределяем отрисовку) ----------
+    // снимаем старые обработчики поиска, чтобы они не рисовали прежние карточки
+    document.getElementById("searchInput").removeEventListener("input", renderMinerals);
+    document.getElementById("rockSearchInput")?.removeEventListener("input", renderRocks);
+    document.getElementById("searchInput").addEventListener("input", () => renderMinerals());
+    document.getElementById("rockSearchInput")?.addEventListener("input", () => renderRocks());
+
+    renderMinerals = function () {
+      const query = document.getElementById("searchInput").value.toLowerCase().trim();
+      const filtered = minerals.filter(m => {
+        const matchGroup = activeGroup === "Все" || m.group === activeGroup;
+        const matchSearch = m.name.toLowerCase().includes(query) || m.formula.toLowerCase().includes(query) || m.cleavage.toLowerCase().includes(query) || m.extra.toLowerCase().includes(query);
+        return matchGroup && matchSearch;
+      });
+      const cnt = document.getElementById("mineralsCount");
+      if (cnt) cnt.textContent = `${filtered.length} из ${minerals.length}`;
+      document.getElementById("mineralsGrid").innerHTML = filtered.length ? filtered.map(m => `
+        <article class="g-card">
+          <div class="g-card-media" onclick="openPassport('m','${m.num}')">
+            <img id="img-${m.num}" src="${imageCache[m.num] || ''}" alt="${m.name}" class="mineral-img ${imageCache[m.num] ? '' : 'hidden'}">
+            <div id="placeholder-${m.num}" class="g-ph ${imageCache[m.num] ? 'hidden' : 'flex'}"><span>💎</span><small>Загрузка фото...</small></div>
+            <span class="g-flag">${flagHtml(m.group)}${m.group}</span>
+            ${m.high ? `<span class="g-hard">✨ Высокая твёрдость</span>` : ''}
+            <span class="g-rate"><b>★</b> ${m.hardness.split(' ')[0]} по Моосу</span>
+          </div>
+          <div class="g-card-body">
+            <div class="g-num">№ ${m.num} · <span class="font-mono">${m.formula}</span></div>
+            <h3>${m.name}</h3>
+            <p class="g-desc">${m.extra}</p>
+          </div>
+          <button type="button" class="g-card-foot" onclick="openPassport('m','${m.num}')"><span>Паспорт минерала</span><span>→</span></button>
+        </article>`).join("") : `<div class="hr-empty w-full">Ничего не найдено</div>`;
+      filtered.forEach(m => loadWikiPhoto(m));
+    };
+
+    renderRocks = function () {
+      const grid = document.getElementById("rocksGrid");
+      if (!grid) return;
+      const query = (document.getElementById("rockSearchInput")?.value || "").toLowerCase().trim();
+      const filtered = rocks.filter(r => {
+        const matchGroup = activeRockGroup === "Все" || r.group === activeRockGroup;
+        const matchSearch =
+          r.name.toLowerCase().includes(query) || r.subType.toLowerCase().includes(query) ||
+          r.composition.toLowerCase().includes(query) || r.structure.toLowerCase().includes(query) ||
+          r.texture.toLowerCase().includes(query) || r.diagnosis.toLowerCase().includes(query);
+        return matchGroup && matchSearch;
+      });
+      const cnt = document.getElementById("rocksCount");
+      if (cnt) cnt.textContent = `${filtered.length} из ${rocks.length}`;
+      grid.innerHTML = filtered.length ? filtered.map(r => `
+        <article class="g-card">
+          <div class="g-card-media" onclick="openPassport('r','${r.id}')">
+            <img id="rock-img-${r.id}" src="${rockImageCache[r.id] || ''}" alt="${r.name}" class="mineral-img ${rockImageCache[r.id] ? '' : 'hidden'}">
+            <div id="rock-ph-${r.id}" class="g-ph ${rockImageCache[r.id] ? 'hidden' : 'flex'}"><span>🌋</span><small>Загрузка фото породы...</small></div>
+            <span class="g-flag">${flagHtml(r.group)}${r.group.split(' ')[0]}</span>
+            ${r.high ? `<span class="g-hard">✨ Высокая твёрдость</span>` : ''}
+            <span class="g-rate"><b>◆</b> ${r.num}</span>
+          </div>
+          <div class="g-card-body">
+            <div class="g-num">${r.structure}</div>
+            <h3>${r.name}</h3>
+            <p class="g-desc">${r.subType}</p>
+          </div>
+          <button type="button" class="g-card-foot" onclick="openPassport('r','${r.id}')"><span>Паспорт породы</span><span>→</span></button>
+        </article>`).join("") : `<div class="hr-empty w-full">Ничего не найдено</div>`;
+      filtered.forEach(r => loadRockWikiPhoto(r));
+    };
+
+    function scrollTrack(id, dir) {
+      const t = document.getElementById(id);
+      t.scrollBy({ left: dir * Math.max(320, t.clientWidth * 0.8), behavior: "smooth" });
+    }
+    function toggleTrack(id, btn) {
+      const t = document.getElementById(id);
+      const grid = t.classList.toggle("is-grid");
+      btn.innerHTML = grid ? "↔ Показать каруселью" : "▦ Показать все сеткой";
+      btn.closest("section").querySelectorAll(".circ").forEach(c => c.style.display = grid ? "none" : "");
+    }
+
+    // ---------- Паспорт образца ----------
+    let ppList = [], ppPos = 0;
+    function mohsBar(h) {
+      if (h === null) return "";
+      return `<div class="pp-mohs">${Array.from({ length: 10 }, (_, i) => `<i class="${i < Math.round(h) ? 'on' : ''}"></i>`).join("")}</div>
+              <div class="pp-mohs-l"><span>1 · тальк</span><span>10 · алмаз</span></div>`;
+    }
+    function openPassport(kind, key) {
+      document.getElementById("heroResults")?.classList.add("hidden");
+      ppList = (kind === "m" ? minerals.map(m => ["m", m.num]) : rocks.map(r => ["r", r.id]));
+      ppPos = ppList.findIndex(x => x[1] === key);
+      renderPassport();
+      const w = document.getElementById("passport");
+      w.classList.add("open"); w.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+    function closePassport() {
+      const w = document.getElementById("passport");
+      w.classList.remove("open"); w.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+    }
+    function passportStep(d) {
+      if (!ppList.length) return;
+      ppPos = (ppPos + d + ppList.length) % ppList.length;
+      renderPassport();
+    }
+    function renderPassport() {
+      const [kind, key] = ppList[ppPos];
+      const media = document.getElementById("ppMedia");
+      const body = document.getElementById("ppBody");
+      if (kind === "m") {
+        const m = minerals.find(x => x.num === key);
+        if (!imageCache[m.num]) loadWikiPhoto(m).then(() => { if (ppList[ppPos][1] === key) setPpImg(imageCache[m.num]); });
+        setPpImg(imageCache[m.num]);
+        document.getElementById("ppKicker").textContent = `№ ${m.num} · ${m.group}`;
+        document.getElementById("ppTitle").textContent = m.name;
+        body.innerHTML = `
+          <div class="pp-formula">${m.formula}</div>
+          <div class="pp-grid">
+            <div class="pp-cell wide"><div class="k">Твёрдость (Моос)</div><div class="v">${m.hardness}</div>${mohsBar(hardNum(m.hardness))}</div>
+            <div class="pp-cell"><div class="k">Плотность</div><div class="v">${m.density}</div></div>
+            <div class="pp-cell"><div class="k">Окраска</div><div class="v">${m.color}</div></div>
+            ${m.silicateMotif ? `<div class="pp-cell wide"><div class="k">Мотив структуры</div><div class="v">${m.silicateMotif}</div></div>` : ""}
+            <div class="pp-cell wide"><div class="k">Спайность и излом</div><div class="v" style="color:var(--moss)">${m.cleavage}</div></div>
+            <div class="pp-cell wide"><div class="k">Характерные признаки</div><div class="v">${m.extra}</div></div>
+          </div>
+          <div class="pp-fact"><div class="k">✨ Интересный факт и применение</div><p>${m.fact}</p></div>`;
+      } else {
+        const r = rocks.find(x => x.id === key);
+        if (!rockImageCache[r.id]) loadRockWikiPhoto(r).then(() => { if (ppList[ppPos][1] === key) setPpImg(rockImageCache[r.id]); });
+        setPpImg(rockImageCache[r.id]);
+        document.getElementById("ppKicker").textContent = `${r.num} · ${r.group}`;
+        document.getElementById("ppTitle").textContent = r.name;
+        body.innerHTML = `
+          <p class="text-sm mt-2 mb-4" style="color:var(--clay);font-weight:600">${r.subType}</p>
+          <div class="pp-grid">
+            <div class="pp-cell wide"><div class="k">Минеральный состав</div><div class="v">${r.composition}</div></div>
+            <div class="pp-cell"><div class="k">Структура</div><div class="v" style="color:var(--moss)">${r.structure}</div></div>
+            <div class="pp-cell"><div class="k">Текстура</div><div class="v">${r.texture}</div></div>
+            <div class="pp-cell wide"><div class="k">Диагностика</div><div class="v">${r.diagnosis}</div></div>
+          </div>
+          <div class="pp-fact"><div class="k">✨ Интересный факт и применение</div><p>${r.fact}</p></div>`;
+      }
+      document.querySelector("#passport .pp").scrollTop = 0;
+    }
+    function setPpImg(url) {
+      document.getElementById("ppMedia").style.backgroundImage = url
+        ? `url("${url.replace(/\/\d+px-/, '/800px-')}"), url("${url}")` : "linear-gradient(160deg,#e9ece4,#cfd6c8)";
+    }
+    document.addEventListener("keydown", e => {
+      if (!document.getElementById("passport").classList.contains("open")) return;
+      if (e.key === "Escape") closePassport();
+      if (e.key === "ArrowRight") passportStep(1);
+      if (e.key === "ArrowLeft") passportStep(-1);
+    });
+
+    // ---------- Появление секций ----------
+    function initReveal() {
+      const els = document.querySelectorAll("#tabContent-geology > section, #tabContent-geology > div");
+      if (!("IntersectionObserver" in window)) return;
+      const io = new IntersectionObserver(entries => entries.forEach(en => {
+        if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
+      }), { rootMargin: "0px 0px -8% 0px" });
+      els.forEach(el => { el.classList.add("rv"); io.observe(el); });
+    }
+
+    // ---------- запуск ----------
+    buildHero();
+    buildHeroSearch();
+    renderMinerals();
+    renderRocks();
+    initReveal();
+  </script>
+
 </body>
 </html>
+
