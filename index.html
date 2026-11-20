@@ -569,7 +569,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
         <button type="button" onclick="goSection('catalog')">Минералы</button>
         <button type="button" onclick="goSection('rocks-catalog')">Породы</button>
         <button type="button" onclick="goSection('formula-trainer')">Формулы</button>
-        <button type="button" onclick="goSection('exam')">Тест (20)</button>
+        <button type="button" onclick="goSection('exam')">Тесты (40)</button>
       </nav>
 
       <a href="#top" class="m-logo" onclick="switchMainTab('geology')" aria-label="Клуб любителей минералов">
@@ -598,7 +598,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       <button type="button" onclick="goSection('catalog')"><span>Минералы</span><span>→</span></button>
       <button type="button" onclick="goSection('rocks-catalog')"><span>Породы</span><span>→</span></button>
       <button type="button" onclick="goSection('formula-trainer')"><span>Формулы</span><span>→</span></button>
-      <button type="button" onclick="goSection('exam')"><span>Тест (20)</span><span>→</span></button>
+      <button type="button" onclick="goSection('exam')"><span>Тесты: минералы и породы</span><span>→</span></button>
       <button type="button" onclick="goSection('rules')"><span>Правила</span><span>→</span></button>
       <button type="button" onclick="toggleMenu(); switchMainTab('stratigraphy')"><span>⏳ Стратиграфия</span><span>→</span></button>
     </div>
@@ -682,7 +682,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       <a href="#catalog" class="px-3 py-1.5 rounded-lg badge-sage font-medium">💎 Минералы (29)</a>
       <a href="#rocks-catalog" class="px-3 py-1.5 rounded-lg badge-sand font-medium">🌋 Горные породы</a>
       <a href="#formula-trainer" class="px-3 py-1.5 rounded-lg badge-sage font-bold">🧩 Интерактив: Формулы и структуры</a>
-      <a href="#exam" class="px-3 py-1.5 rounded-lg badge-terracotta font-medium">📝 Тест по минералам (20)</a>
+      <a href="#exam" class="px-3 py-1.5 rounded-lg badge-terracotta font-medium">📝 Тесты: минералы и породы (40)</a>
       <a href="#rules" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Правила</a>
     </div>
 
@@ -932,22 +932,27 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       <div id="formulaGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
     </section>
 
-    <!-- 4Б. Тестовый тренажёр: 20 обновлённых вопросов по минералам -->
+    <!-- 4Б. Тестовый тренажёр: 20 вопросов по минералам + 20 вопросов по горным породам -->
     <section id="exam" class="pastel-card rounded-2xl p-6 md:p-8 space-y-6">
       <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#e6dccf] pb-5">
         <div class="space-y-1.5">
-          <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-terracotta">Тренажёр по минералогии</span>
-          <h2 class="text-2xl md:text-3xl font-bold text-[#2e2620]">📝 20 вопросов по минералам</h2>
-          <p class="text-sm text-[#5c5044]">Нажмите на любой вопрос, чтобы развернуть его, выберите вариант ответа или откройте кнопку «Ответ».</p>
+          <span id="examBadge" class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-terracotta">Тренажёр по минералогии</span>
+          <h2 id="examTitle" class="text-2xl md:text-3xl font-bold text-[#2e2620]">📝 20 вопросов по минералам</h2>
+          <p id="examSubtitle" class="text-sm text-[#5c5044]">Нажмите на любой вопрос, чтобы развернуть его, выберите вариант ответа или откройте кнопку «Ответ».</p>
         </div>
         <div class="flex flex-wrap items-center gap-3 shrink-0">
           <div class="px-4 py-2 rounded-xl badge-sage font-bold text-sm">
-            Счёт: <span id="quizScore">0</span> / 20
+            Счёт: <span id="quizScore">0</span> / <span id="quizTotal">20</span>
           </div>
           <button type="button" onclick="toggleAllQuestions(true)" class="px-3.5 py-2 rounded-xl bg-[#f3ece1] hover:bg-[#e6dccf] text-[#4a3f35] text-xs font-semibold transition">Развернуть все</button>
           <button type="button" onclick="toggleAllQuestions(false)" class="px-3.5 py-2 rounded-xl bg-[#f3ece1] hover:bg-[#e6dccf] text-[#4a3f35] text-xs font-semibold transition">Свернуть все</button>
           <button type="button" onclick="resetExam()" class="px-3.5 py-2 rounded-xl badge-terracotta text-xs font-semibold hover:opacity-90 transition">Сбросить ответы</button>
         </div>
+      </div>
+      <div class="flex flex-wrap items-center gap-2 bg-[#f5efe6]/90 p-3 rounded-2xl border border-[#e2d6c5]">
+        <span class="text-xs font-bold uppercase tracking-wider text-[#6e5a44] mr-1">Раздел теста:</span>
+        <button type="button" id="examTabBtn-minerals" onclick="switchExamTab('minerals')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green">💎 Минералы (20)</button>
+        <button type="button" id="examTabBtn-rocks" onclick="switchExamTab('rocks')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">🌋 Горные породы (20)</button>
       </div>
       <div id="examContainer" class="space-y-3"></div>
     </section>
@@ -2306,6 +2311,273 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       { id: 20, title: "Вопрос с подвохом: у какого из оксидов совершенная спайность?", prompt: "В нашей коллекции 5 минералов из класса окислов (оксидов): кварц, корунд, магнетит, гематит и лимонит. Какой из этих оксидов имеет совершенную спайность?", options: ["Кварц и корунд (совершенная спайность по призме и бочонку)", "Магнетит и гематит (совершенная спайность по кубу и октаэдру)", "Только корунд (совершенная спайность в двух направлениях под углом 90°)", "Никакой! Это вопрос с подвохом — у всех окислов в нашей коллекции спайность полностью отсутствует"], correct: 3, oralAnswer: "Ни у одного! У всех пяти окислов в нашей коллекции (кварца, корунда, магнетита, гематита и лимонита) спайность полностью отсутствует (у них неровный или раковистый излом)." }
     ];
 
+
+    // =========================================================================
+    // 5Б. ТЕСТОВЫЙ ТРЕНАЖЁР: 20 ВОПРОСОВ ПО ГОРНЫМ ПОРОДАМ (БЕЗ ИНСТРУМЕНТОВ)
+    // =========================================================================
+    const rockExamQuestions = [
+      {
+        id: "rq1",
+        title: "Алевритовая структура",
+        prompt: "У какой горной породы алевритовая структура и как её узнать в руках без приборов?",
+        options: [
+          "Песчаник — крупные зёрна кварца, хорошо видимые глазом",
+          "Глина — гладкая на ощупь, пачкает пальцы",
+          "Алевролит — зёрна мельче песка («каменная мука»), но порода всё ещё шероховатая на ощупь",
+          "Аргиллит — абсолютно гладкий плотный камень с раковистым сколом"
+        ],
+        correct: 2,
+        oralAnswer: "Это <strong>алевролит</strong> (осадочная мелкообломочная сцементированная порода; текстура слоистая или массивная; состав — алевритовый материал + цемент). <em>Похожие структуры по размеру зёрен:</em> псаммитовая (крупнее, у песчаника) и пелитовая (мельче, у глины и аргиллита)."
+      },
+      {
+        id: "rq2",
+        title: "Более 90% оливина в составе",
+        prompt: "Какая горная порода содержит более 90% оливина и менее 10% пироксена? К какой группе она относится?",
+        options: [
+          "Габбро — основная интрузивная",
+          "Дунит (оливинит) — ультраосновная интрузивная",
+          "Серпентинит — метаморфическая",
+          "Базальт — основная эффузивная"
+        ],
+        correct: 1,
+        oralAnswer: "<strong>Дунит (оливинит)</strong> — ультраосновная интрузивная магматическая порода. Структура кристаллическая тонко- и мелкозернистая, текстура массивная плотная. В руках: тёмно-зелёный до чёрного, тяжёлый, видны мелкие зёрна оливина со стеклянным блеском. <em>Если наоборот (пироксена > 90%, оливина < 10%):</em> это пироксенит (средне-крупнозернистый)."
+      },
+      {
+        id: "rq3",
+        title: "Пегматитовая структура",
+        prompt: "У какой породы пегматитовая структура и как она выглядит глазами?",
+        options: [
+          "У порфирита — светлые квадратные вкрапленники на тёмном фоне",
+          "У гранита — равномерные зёрна кварца, шпата и слюды вразброс",
+          "У пегматита — закономерное прорастание кварца в полевом шпате, похожее на древние письмена",
+          "У гнейса — чёткие параллельные полосы светлых и тёмных минералов"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Пегматит</strong> — кислая полуглубинная (жильная) магматическая порода. Состав: кварц, калиевый полевой шпат, слюда. Текстура массивная плотная. <em>Созвучная структура-ловушка:</em> порфировая (у порфирита и базальта)."
+      },
+      {
+        id: "rq4",
+        title: "Полосчатая (гнейсовидная) текстура",
+        prompt: "Какая метаморфическая порода имеет гранитный состав (кварц, полевой шпат, слюда), кристаллическую зернистую структуру, но сразу выдаёт себя полосчатой текстурой?",
+        options: [
+          "Слюдяной сланец",
+          "Кварцит",
+          "Гнейс",
+          "Мрамор"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Гнейс</strong> — порода глубокого регионального метаморфизма. Состав: калиевый полевой шпат, кварц, слюда, роговая обманка, плагиоклаз. Легко узнать по чередованию светлых и тёмных полос. <em>Аналог с массивной текстурой:</em> магматический гранит."
+      },
+      {
+        id: "rq5",
+        title: "От 25% до 75% глины и карбонатов",
+        prompt: "Какая осадочная порода образуется, когда в составе смешано от 25% до 75% глинистых минералов и от 25% до 75% карбонатов?",
+        options: [
+          "Известняк",
+          "Аргиллит",
+          "Мергель",
+          "Доломит"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Мергель</strong> — смешанная глинисто-карбонатная осадочная порода. Структура пелитовая и скрытокристаллическая зернистая; текстура слоистая или массивная. <em>Если карбонатов > 75%:</em> это уже известняк (кальцит > 75%) или доломит (минерал доломит > 75%)."
+      },
+      {
+        id: "rq6",
+        title: "Порфировая структура",
+        prompt: "Какая средняя эффузивная магматическая порода имеет порфировую структуру?",
+        options: [
+          "Диорит",
+          "Пегматит",
+          "Порфирит",
+          "Нефелиновый сиенит"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Порфирит</strong> — средняя излившаяся (эффузивная) порода. Состав: плагиоклаз, полевой шпат, роговая обманка, слюда. Текстура массивная плотная. В руках видны светлые вкрапленники полевого шпата на тёмном фоне основной массы. <em>Где ещё бывает порфировая структура:</em> у базальта; глубинный аналог порфирита — диорит."
+      },
+      {
+        id: "rq7",
+        title: "Конкреционная структура и запах при трении",
+        prompt: "Какая осадочная порода состоит более чем на 50% из апатита, имеет конкреционное (шаровидное) строение и при трении в руках издаёт запах жжёной кости?",
+        options: [
+          "Боксит",
+          "Бурый железняк",
+          "Фосфорит",
+          "Каменный уголь"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Фосфорит</strong> — фосфорсодержащая хемогенно-биогенная осадочная порода. Структура микрозернистая, конкреционная; текстура слоистая или массивная плотная. Окраска чёрно-тёмно-зелёная. <em>Похожие округлые образования:</em> бобовины и оолиты у боксита и бурого железняка."
+      },
+      {
+        id: "rq8",
+        title: "Пелитовая структура + сланцеватая текстура",
+        prompt: "У какой метаморфической породы пелитовая структура сочетается с тонкоплитчатой сланцеватой текстурой?",
+        options: [
+          "Аргиллит",
+          "Глинистый сланец",
+          "Слюдяной сланец",
+          "Глина"
+        ],
+        correct: 1,
+        oralAnswer: "<strong>Глинистый сланец</strong> — порода начальной стадии регионального метаморфизма глин. Состав: глинистые минералы, серицит, хлорит. В руках: тёмно-серый, матовый, плотный, звонко раскалывается на ровные тонкие плитки. <em>Осадочные породы с пелитовой структурой (без сланцеватости):</em> глина, аргиллит, мергель."
+      },
+      {
+        id: "rq9",
+        title: "Псаммитовая структура",
+        prompt: "У какой горной породы псаммитовая структура и что это слово означает?",
+        options: [
+          "У глины — глинистая (пылеватая) структура",
+          "У брекчии — угловатая щебёночная структура",
+          "У песчаника — песчаная структура (сцементированные зёрна песка)",
+          "У мрамора — перекристаллизованная зернистая структура"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Песчаник</strong> — осадочная среднеобломочная сцементированная порода. Состав: зёрна кварца, полевых шпатов + цемент. Текстура слоистая или массивная, пористая или плотная. В руках шероховатый, видны отдельные песчинки. <em>При метаморфизме переходит в:</em> кварцит."
+      },
+      {
+        id: "rq10",
+        title: "Аморфная структура и раковистый излом",
+        prompt: "Какая кислая эффузивная порода имеет аморфную (стекловатую) структуру, стеклянный блеск и раковистый излом с острыми краями?",
+        options: [
+          "Базальт",
+          "Каменный уголь",
+          "Обсидиан",
+          "Яшма"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Обсидиан</strong> — излившаяся кислая магматическая порода (вулканическое стекло). Текстура массивная плотная. Кристаллы не успели вырасти из-за мгновенного остывания лавы. <em>Осадочная порода с аморфной структурой и чёрным цветом (но очень лёгкая):</em> каменный уголь."
+      },
+      {
+        id: "rq11",
+        title: "Галечная структура с цементом",
+        prompt: "Какая грубообломочная осадочная порода имеет галечную структуру, причём все окатанные обломки намертво скреплены природным цементом?",
+        options: [
+          "Галечник",
+          "Брекчия",
+          "Конгломерат",
+          "Щебень"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Конгломерат</strong> — грубообломочная сцементированная порода (окатанная галька + цемент; текстура массивная, пористая или плотная). <em>Похожие грубообломочные:</em> без цемента — галечник; угловатые обломки с цементом — брекчия; угловатые без цемента — щебень."
+      },
+      {
+        id: "rq12",
+        title: "Катакластическая (щебёночная) структура",
+        prompt: "Какая метаморфическая порода динамометаморфизма имеет катакластическую (щебёночную) структуру и образуется в зонах тектонических разломов?",
+        options: [
+          "Осадочная брекчия",
+          "Конгломерат",
+          "Тектоническая брекчия",
+          "Туф"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Тектоническая брекчия</strong> — порода динамометаморфизма (дробления). Состав: остроугольный щебень разных пород + перетёртый цемент (милонит). Текстура массивная плотная, в руках видны угловатые раздробленные обломки и следы трения/скольжения."
+      },
+      {
+        id: "rq13",
+        title: "Жирный блеск нефелина",
+        prompt: "Какая средняя интрузивная щелочная порода не содержит кварца и узнаётся глазами по зеленовато-серому минералу с характерным жирным блеском?",
+        options: [
+          "Гранит",
+          "Диорит",
+          "Нефелиновый сиенит",
+          "Габбро"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Нефелиновый сиенит</strong> — средняя интрузивная щелочная магматическая порода. Состав: нефелин, щелочные полевые шпаты, натриевый плагиоклаз. Структура кристаллическая средне- и крупнозернистая, текстура массивная плотная."
+      },
+      {
+        id: "rq14",
+        title: "Жирный на ощупь и царапается ногтем",
+        prompt: "Какая метаморфическая порода имеет чешуйчатую структуру, сланцеватую текстуру, ощущается жирной (мыльной) под пальцами и легко царапается ногтем?",
+        options: [
+          "Хлоритовый сланец",
+          "Тальковый сланец",
+          "Глинистый сланец",
+          "Серпентинит"
+        ],
+        correct: 1,
+        oralAnswer: "<strong>Тальковый сланец</strong> — порода метаморфизма ультраосновных пород. Состав: тальк (иногда с магнезитом). Светло-зелёный, твёрдость 1 (легко царапается ногтем). <em>Другие чешуйчатые сланцы:</em> хлоритовый (травяно-зелёный) и слюдяной (сплошной блеск слюды)."
+      },
+      {
+        id: "rq15",
+        title: "Бобовая и оолитовая структура (гидроокислы алюминия)",
+        prompt: "Какая осадочная порода с бобовой и оолитовой структурой имеет кирпично-красную окраску и состоит из гидроокислов алюминия (гиббсит, диаспор)?",
+        options: [
+          "Бурый железняк",
+          "Яшма",
+          "Боксит",
+          "Фосфорит"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Боксит</strong> — аллитовая (алюминийсодержащая) осадочная порода. Структура бобовая, оолитовая, пелитовая; текстура слоистая или массивная. <em>Похожая структура:</em> у бурого железняка (лимонит + гематит), но он ржаво-бурый и заметно тяжелее в руке."
+      },
+      {
+        id: "rq16",
+        title: "Пирокластическая порода с пористой текстурой",
+        prompt: "Какая вулканогенно-осадочная (пирокластическая) порода состоит из спечённого вулканического пепла и обломков, а в руках сразу ощущается лёгкой, шероховатой и пористой?",
+        options: [
+          "Базальт",
+          "Туф (вулканический)",
+          "Песчаник",
+          "Известняк"
+        ],
+        correct: 1,
+        oralAnswer: "<strong>Вулканический туф</strong> — пирокластическая порода. Состав: литокластический материал, кристаллокласты, витрокласты. Структура обломочная (пирокластическая), текстура массивная пористая. <em>Магматическая порода, которая тоже бывает пористой (но чёрная и тяжелее):</em> базальт."
+      },
+      {
+        id: "rq17",
+        title: "Окраска «соль с перцем» без кварца",
+        prompt: "Какая средняя интрузивная порода с кристаллической среднезернистой структурой и массивной текстурой узнаётся глазами по пёстрой чёрно-белой окраске «соль с перцем»?",
+        options: [
+          "Гранит",
+          "Габбро",
+          "Диорит",
+          "Гнейс"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Диорит</strong> — средняя интрузивная магматическая порода (SiO₂ 52–65%). Состав: плагиоклаз, калиевый полевой шпат, роговая обманка, биотит (кварца нет). <em>Его излившийся (эффузивный) аналог:</em> порфирит."
+      },
+      {
+        id: "rq18",
+        title: "Восковой блеск и «змеиная» окраска",
+        prompt: "Какая метаморфическая порода (результат метасоматоза) имеет массивную плотную текстуру, скрытокристаллическую структуру, пятнистую тёмно-зелёную окраску и восковой блеск?",
+        options: [
+          "Хлоритовый сланец",
+          "Дунит",
+          "Серпентинит (Змеевик)",
+          "Яшма"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Серпентинит (змеевик)</strong> — метаморфическая порода (метасоматоз дунитов и пироксенитов). Состав: серпентин, остатки оливина и пироксена/магнетита. В отличие от зелёного хлоритового сланца, текстура у него массивная, а не сланцеватая."
+      },
+      {
+        id: "rq19",
+        title: "Сульфатная порода (> 75% минерала, тест ногтем)",
+        prompt: "Какая сульфатная эвапоритовая порода содержит более 75% водного сульфата кальция, имеет светлую окраску и в руках легко царапается ногтем?",
+        options: [
+          "Ангидрит",
+          "Известняк",
+          "Гипс (порода)",
+          "Доломит"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Гипс (порода)</strong> — сульфатная хемогенно-биогенная порода (CaSO₄·2H₂O > 75%). Структура кристаллическая зернистая или волокнистая, текстура слоистая или массивная плотная. Твёрдость 2 (царапается ногтем). <em>Безводный аналог (тв. 3, ногтем не царапается, голубовато-серый):</em> ангидрит."
+      },
+      {
+        id: "rq20",
+        title: "Гранобластовая структура и «сахаровидный» излом",
+        prompt: "Какая метаморфическая порода с массивной плотной текстурой и полнокристаллической зернистой (гранобластовой) структурой узнаётся глазами по искристому «сахаровидному» излому?",
+        options: [
+          "Кварцит",
+          "Известняк",
+          "Мрамор",
+          "Гранит"
+        ],
+        correct: 2,
+        oralAnswer: "<strong>Мрамор</strong> — порода контактового или регионального метаморфизма (по известнякам и доломитам). Состав: кальцит (реже доломит). В руках заметны сверкающие сросшиеся кристаллы, похожие на кусковой сахар. <em>Ещё одна порода с гранобластовой (сливной) структурой (но кварц > 90%, сверхтвёрдая):</em> кварцит."
+      }
+    ];
+
     // =========================================================================
     // 6. СКРИПТЫ ИНТЕРАКТИВА ФОРМУЛ И СТРУКТУР МИНЕРАЛОВ
     // =========================================================================
@@ -2562,7 +2834,8 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
     let activeRockGroup = "Все";
     const imageCache = {};
     const rockImageCache = {};
-    const answeredQuestions = {};
+    let activeExamTab = "minerals";
+    const answeredQuestions = { minerals: {}, rocks: {} };
 
     function renderFilters() {
       const groups = ["Все", "Самородные элементы", "Сульфиды", "Галоиды", "Окислы", "Карбонаты", "Сульфаты и фосфаты", "Силикаты"];
@@ -2742,12 +3015,63 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       } catch (e) {}
     }
 
+    function getActiveExamList() {
+      return activeExamTab === "rocks" ? rockExamQuestions : examQuestions;
+    }
+
+    function switchExamTab(tab) {
+      activeExamTab = tab;
+      ["minerals", "rocks"].forEach(k => {
+        const b = document.getElementById(`examTabBtn-${k}`);
+        if (b) {
+          b.className = k === tab
+            ? "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-green"
+            : "px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light";
+        }
+      });
+      const badge = document.getElementById("examBadge");
+      const title = document.getElementById("examTitle");
+      const sub = document.getElementById("examSubtitle");
+      if (tab === "rocks") {
+        if (badge) badge.textContent = "Тренажёр по петрографии (без приборов)";
+        if (title) title.textContent = "🌋 20 вопросов по горным породам";
+        if (sub) sub.textContent = "Формат зачёта: структура, текстура, процентный состав и анализ породы прямо в руках без инструментов.";
+      } else {
+        if (badge) badge.textContent = "Тренажёр по минералогии";
+        if (title) title.textContent = "📝 20 вопросов по минералам";
+        if (sub) sub.textContent = "Нажмите на любой вопрос, чтобы развернуть его, выберите вариант ответа или откройте кнопку «Ответ».";
+      }
+      renderExam();
+    }
+
+    function updateExamScore() {
+      const list = getActiveExamList();
+      const ansMap = answeredQuestions[activeExamTab];
+      let score = 0;
+      list.forEach(item => { if (ansMap[item.id] === item.correct) score++; });
+      const scoreEl = document.getElementById("quizScore");
+      const totalEl = document.getElementById("quizTotal");
+      if (scoreEl) scoreEl.textContent = score;
+      if (totalEl) totalEl.textContent = list.length;
+    }
+
     function renderExam() {
-      document.getElementById("examContainer").innerHTML = examQuestions.map((q, index) => `
+      const list = getActiveExamList();
+      const ansMap = answeredQuestions[activeExamTab];
+      document.getElementById("examContainer").innerHTML = list.map((q, index) => {
+        const picked = ansMap[q.id];
+        const isAnswered = picked !== undefined;
+        const badgeCls = !isAnswered
+          ? "w-7 h-7 rounded-lg badge-sand flex items-center justify-center text-xs font-bold shrink-0"
+          : (picked === q.correct
+            ? "w-7 h-7 rounded-lg bg-[#3b5e49] text-white flex items-center justify-center text-xs font-bold shrink-0"
+            : "w-7 h-7 rounded-lg bg-[#8c4a32] text-white flex items-center justify-center text-xs font-bold shrink-0");
+
+        return `
         <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/85 overflow-hidden transition hover:border-[#c2b09b]">
           <button type="button" onclick="togglePanel('q-body-${q.id}', 'q-arrow-${q.id}')" class="w-full px-5 py-4 text-left flex items-center justify-between gap-4 hover:bg-[#f3ece1]/80 transition">
             <div class="flex items-center gap-3">
-              <span id="q-badge-${q.id}" class="w-7 h-7 rounded-lg badge-sand flex items-center justify-center text-xs font-bold shrink-0">${index + 1}</span>
+              <span id="q-badge-${q.id}" class="${badgeCls}">${index + 1}</span>
               <span class="font-bold text-sm sm:text-base text-[#2e2620]">${q.title}</span>
             </div>
             <span id="q-arrow-${q.id}" class="text-[#6e5a44] font-bold transition-transform duration-300">▼</span>
@@ -2755,43 +3079,50 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
           <div id="q-body-${q.id}" class="hidden slide-fade px-5 pb-5 pt-3 border-t border-[#e6dccf] bg-[#fffdf9]/95 space-y-4">
             <div class="p-3.5 rounded-xl bg-[#f6f0e6] border border-[#e5dac9] text-sm text-[#3d342c]">${q.prompt}</div>
             <div class="space-y-2" id="q-options-${q.id}">
-              ${q.options.map((opt, idx) => `
-                <button type="button" id="q-${q.id}-opt-${idx}" onclick="selectExamOption(${q.id}, ${idx})" class="w-full text-left p-3 rounded-xl border border-[#dfd3c3] bg-[#faf6f0] hover:bg-[#f3ece1] text-xs sm:text-sm text-[#3d342c] transition">${opt}</button>
-              `).join("")}
+              ${q.options.map((opt, idx) => {
+                let optCls = "w-full text-left p-3 rounded-xl border border-[#dfd3c3] bg-[#faf6f0] hover:bg-[#f3ece1] text-xs sm:text-sm text-[#3d342c] transition";
+                if (isAnswered) {
+                  if (idx === q.correct) optCls = "w-full text-left p-3 rounded-xl border-2 border-[#3b5e49] bg-[#e6efe9] text-[#233d2c] font-semibold text-xs sm:text-sm";
+                  else if (idx === picked) optCls = "w-full text-left p-3 rounded-xl border-2 border-[#b85c38] bg-[#f9ebe4] text-[#7a3118] text-xs sm:text-sm";
+                  else optCls = "w-full text-left p-3 rounded-xl border border-[#e6dccf] bg-[#faf6f0] opacity-60 text-xs sm:text-sm";
+                }
+                return `<button type="button" id="q-${q.id}-opt-${idx}" onclick="selectExamOption('${q.id}', ${idx})" class="${optCls}">${opt}</button>`;
+              }).join("")}
             </div>
             <div>
               <button type="button" onclick="togglePanel('q-oral-${q.id}', 'q-oral-arrow-${q.id}')" class="px-4 py-2 rounded-xl badge-sage text-xs font-semibold flex items-center gap-2 hover:opacity-90 transition">
                 <span>Ответ</span><span id="q-oral-arrow-${q.id}" class="transition-transform duration-300">▼</span>
               </button>
-              <div id="q-oral-${q.id}" class="hidden slide-fade mt-2.5 p-4 rounded-xl bg-[#e6efe9]/85 border border-[#c8ddd0] text-xs sm:text-sm text-[#2e4738] leading-relaxed">${q.oralAnswer}</div>
+              <div id="q-oral-${q.id}" class="${isAnswered ? '' : 'hidden'} slide-fade mt-2.5 p-4 rounded-xl bg-[#e6efe9]/85 border border-[#c8ddd0] text-xs sm:text-sm text-[#2e4738] leading-relaxed">${q.oralAnswer}</div>
             </div>
           </div>
         </div>
-      `).join("");
+      `;
+      }).join("");
+      updateExamScore();
     }
 
     function selectExamOption(qId, selectedIdx) {
-      if (answeredQuestions[qId] !== undefined) return;
-      const q = examQuestions.find(item => item.id === qId);
-      if (!q) return;
-      answeredQuestions[qId] = selectedIdx;
+      const list = getActiveExamList();
+      const ansMap = answeredQuestions[activeExamTab];
+      const q = list.find(item => String(item.id) === String(qId));
+      if (!q || ansMap[q.id] !== undefined) return;
+      ansMap[q.id] = selectedIdx;
       q.options.forEach((_, idx) => {
-        const btn = document.getElementById(`q-${qId}-opt-${idx}`);
+        const btn = document.getElementById(`q-${q.id}-opt-${idx}`);
         if (!btn) return;
         if (idx === q.correct) btn.className = "w-full text-left p-3 rounded-xl border-2 border-[#3b5e49] bg-[#e6efe9] text-[#233d2c] font-semibold text-xs sm:text-sm";
         else if (idx === selectedIdx) btn.className = "w-full text-left p-3 rounded-xl border-2 border-[#b85c38] bg-[#f9ebe4] text-[#7a3118] text-xs sm:text-sm";
         else btn.className = "w-full text-left p-3 rounded-xl border border-[#e6dccf] bg-[#faf6f0] opacity-60 text-xs sm:text-sm";
       });
-      const badge = document.getElementById(`q-badge-${qId}`);
+      const badge = document.getElementById(`q-badge-${q.id}`);
       if (badge) badge.className = selectedIdx === q.correct ? "w-7 h-7 rounded-lg bg-[#3b5e49] text-white flex items-center justify-center text-xs font-bold shrink-0" : "w-7 h-7 rounded-lg bg-[#8c4a32] text-white flex items-center justify-center text-xs font-bold shrink-0";
-      document.getElementById(`q-oral-${qId}`)?.classList.remove("hidden");
-      let score = 0;
-      examQuestions.forEach(item => { if (answeredQuestions[item.id] === item.correct) score++; });
-      document.getElementById("quizScore").textContent = score;
+      document.getElementById(`q-oral-${q.id}`)?.classList.remove("hidden");
+      updateExamScore();
     }
 
     function toggleAllQuestions(expand) {
-      examQuestions.forEach(q => {
+      getActiveExamList().forEach(q => {
         const body = document.getElementById(`q-body-${q.id}`);
         const arrow = document.getElementById(`q-arrow-${q.id}`);
         if (body) {
@@ -2807,8 +3138,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
     }
 
     function resetExam() {
-      Object.keys(answeredQuestions).forEach(k => delete answeredQuestions[k]);
-      document.getElementById("quizScore").textContent = "0";
+      answeredQuestions[activeExamTab] = {};
       renderExam();
     }
 
@@ -2882,7 +3212,16 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
     const HERO_SLIDES = [
       { title: "Sørvágsvatn", lang: "en", label: "Фарерские острова" },
       { title: "Уральские горы", lang: "ru", label: "Уральские горы" },
-      { title: "Kamchatka Peninsula", lang: "en", label: "Камчатка" },
+      {
+        title: "Klyuchevskaya Sopka",
+        lang: "en",
+        fallbacks: [
+          { title: "Ключевская Сопка", lang: "ru" },
+          { title: "Koryaksky", lang: "en" },
+          { title: "Авачинская Сопка", lang: "ru" }
+        ],
+        label: "Камчатка"
+      },
       { title: "Grand Canyon", lang: "en", label: "Гранд-Каньон" }
     ];
     const HERO_FALLBACK = [
@@ -2928,26 +3267,40 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       heroTimer = setInterval(() => setHero(heroIdx + 1), 7000);
     }
     function heroStep(d) { setHero(heroIdx + d); }
+    function probeImage(url) {
+      return new Promise(resolve => {
+        if (!url) return resolve(false);
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
     async function loadHeroImage(s, i) {
-      try {
-        const res = await fetch(`https://${s.lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(s.title)}`);
-        const data = await res.json();
-        let url = data?.originalimage?.source;
-        const thumb = data?.thumbnail?.source;
-        if (thumb && /\/\d+px-/.test(thumb)) url = thumb.replace(/\/\d+px-/, "/1920px-");
-        if (!url) return;
-        const probe = new Image();
-        probe.onload = () => { s.img = url; paintHero(); };
-        probe.onerror = () => {
-          if (data?.originalimage?.source && url !== data.originalimage.source) {
-            url = data.originalimage.source;
-            const p2 = new Image();
-            p2.onload = () => { s.img = url; paintHero(); };
-            p2.src = url;
+      const sources = [{ title: s.title, lang: s.lang }, ...(s.fallbacks || [])];
+      for (const src of sources) {
+        try {
+          const res = await fetch(`https://${src.lang}.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(src.title)}`);
+          if (!res.ok) continue;
+          const data = await res.json();
+          const orig = data?.originalimage?.source;
+          const origW = data?.originalimage?.width || 0;
+          const thumb = data?.thumbnail?.source;
+          const candidates = [];
+          if (thumb && /\/\d+px-/.test(thumb) && !/\.svg/i.test(thumb)) {
+            if (!origW || origW >= 1280) candidates.push(thumb.replace(/\/\d+px-/, "/1280px-"));
           }
-        };
-        probe.src = url;
-      } catch (e) {}
+          if (orig && !/\.svg/i.test(orig)) candidates.push(orig);
+          if (thumb && !/\.svg/i.test(thumb)) candidates.push(thumb);
+          for (const url of [...new Set(candidates)]) {
+            if (await probeImage(url)) {
+              s.img = url;
+              paintHero();
+              return;
+            }
+          }
+        } catch (e) {}
+      }
     }
     // Параллакс: при прокрутке буквы «оседают» за линию скал
     let ticking = false;
@@ -3187,4 +3540,3 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
 
 </body>
 </html>
-
