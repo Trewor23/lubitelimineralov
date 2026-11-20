@@ -1,4 +1,4 @@
-\<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
@@ -960,7 +960,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
         <div class="space-y-1.5">
           <span id="examBadge" class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-terracotta">Тренажёр по минералогии</span>
           <h2 id="examTitle" class="text-2xl md:text-3xl font-bold text-[#2e2620]">📝 20 вопросов по минералам</h2>
-          <p id="examSubtitle" class="text-sm text-[#5c5044]">Нажмите на любой вопрос, чтобы развернуть его, выберите вариант ответа или откройте кнопку «Ответ».</p>
+          <p id="examSubtitle" class="text-sm text-[#5c5044]">Нажмите на любой вопрос, чтобы развернуть его, выберите вариант ответа или откройте кнопку «Ответ». Варианты ответов перемешиваются при каждом обновлении.</p>
         </div>
         <div class="flex flex-wrap items-center gap-3 shrink-0">
           <div class="px-4 py-2 rounded-xl badge-sage font-bold text-sm">
@@ -968,7 +968,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
           </div>
           <button type="button" onclick="toggleAllQuestions(true)" class="px-3.5 py-2 rounded-xl bg-[#f3ece1] hover:bg-[#e6dccf] text-[#4a3f35] text-xs font-semibold transition">Развернуть все</button>
           <button type="button" onclick="toggleAllQuestions(false)" class="px-3.5 py-2 rounded-xl bg-[#f3ece1] hover:bg-[#e6dccf] text-[#4a3f35] text-xs font-semibold transition">Свернуть все</button>
-          <button type="button" onclick="resetExam()" class="px-3.5 py-2 rounded-xl badge-terracotta text-xs font-semibold hover:opacity-90 transition">Сбросить ответы</button>
+          <button type="button" onclick="resetExam()" class="px-3.5 py-2 rounded-xl badge-terracotta text-xs font-semibold hover:opacity-90 transition">🔀 Сбросить и перемешать</button>
         </div>
       </div>
       <div class="flex flex-wrap items-center gap-2 bg-[#f5efe6]/90 p-3 rounded-2xl border border-[#e2d6c5]">
@@ -2862,19 +2862,43 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
 
     function shuffleExamOptions(tab) {
       const list = tab === "rocks" ? rockExamQuestions : examQuestions;
+      const storageKey = "mineralia_last_correct_" + tab;
+      let prevMap = {};
+      try { prevMap = JSON.parse(localStorage.getItem(storageKey) || "{}"); } catch (e) {}
+      const nextPrevMap = {};
       const map = {};
+
       list.forEach(q => {
-        const pairs = q.options.map((text, idx) => ({ text, isCorrect: idx === q.correct }));
-        for (let i = pairs.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+        const prevIdx = (prevMap[q.id] !== undefined) ? prevMap[q.id] : q.correct;
+        let pairs = [];
+        let newCorrect = prevIdx;
+        let attempts = 0;
+
+        do {
+          pairs = q.options.map((text, idx) => ({ text, isCorrect: idx === q.correct }));
+          for (let i = pairs.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [pairs[i], pairs[j]] = [pairs[j], pairs[i]];
+          }
+          newCorrect = pairs.findIndex(p => p.isCorrect);
+          attempts++;
+        } while (pairs.length > 1 && newCorrect === prevIdx && attempts < 12);
+
+        if (pairs.length > 1 && newCorrect === prevIdx) {
+          const swapIdx = (newCorrect + 1) % pairs.length;
+          [pairs[newCorrect], pairs[swapIdx]] = [pairs[swapIdx], pairs[newCorrect]];
+          newCorrect = swapIdx;
         }
+
         map[q.id] = {
           options: pairs.map(p => p.text),
-          correct: pairs.findIndex(p => p.isCorrect)
+          correct: newCorrect
         };
+        nextPrevMap[q.id] = newCorrect;
       });
+
       shuffledExamData[tab] = map;
+      try { localStorage.setItem(storageKey, JSON.stringify(nextPrevMap)); } catch (e) {}
     }
     shuffleExamOptions("minerals");
     shuffleExamOptions("rocks");
