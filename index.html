@@ -11,6 +11,18 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300&family=Manrope:wght@400;500;600;700&display=swap&subset=cyrillic" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+
+    /* Section guide keeps the existing Mineralia visual language. */
+    #section-guide { overflow: hidden; }
+    #section-guide .guide-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr)); gap:1rem; }
+    #section-guide .guide-step { background:rgba(255,253,249,.82); border:1px solid #e6dccf; border-radius:1rem; padding:1.1rem; }
+    #section-guide .guide-step h3 { color:var(--moss,#2f5d3a); font-family:var(--serif,'Cormorant Garamond',serif); font-size:1.45rem; font-weight:700; }
+    #section-guide .guide-table { width:100%; border-collapse:collapse; font-size:.85rem; }
+    #section-guide .guide-table th,#section-guide .guide-table td { padding:.45rem; border-bottom:1px solid #e6dccf; text-align:left; }
+    #section-guide .guide-table th { color:var(--moss,#2f5d3a); }
+    #section-guide .guide-input { width:100%; border:1px solid #d8cbb9; border-radius:.7rem; padding:.65rem .75rem; background:#fffdf9; }
+    #section-guide .guide-result { background:#edf3ea; border-radius:.8rem; padding:.8rem; color:#2f5d3a; min-height:2.7rem; }
+    @media (max-width:640px){ #section-guide .guide-table { font-size:.72rem; } #section-guide .guide-table th,#section-guide .guide-table td { padding:.32rem; } }
     html { scroll-behavior: smooth; }
     body {
       background-color: #f8f3eb;
@@ -592,6 +604,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
         <button type="button" onclick="goSection('rocks-catalog')">Породы</button>
         <button type="button" onclick="goSection('formula-trainer')">Формулы</button>
         <button type="button" onclick="goSection('exam')">Тесты (40)</button>
+        <button type="button" onclick="goSection('section-guide')">Пособие: Разрез</button>
       </nav>
 
       <a href="#top" class="m-logo" onclick="switchMainTab('geology')" aria-label="Клуб любителей минералов">
@@ -621,6 +634,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       <button type="button" onclick="goSection('rocks-catalog')"><span>Породы</span><span>→</span></button>
       <button type="button" onclick="goSection('formula-trainer')"><span>Формулы</span><span>→</span></button>
       <button type="button" onclick="goSection('exam')"><span>Тесты: минералы и породы</span><span>→</span></button>
+      <button type="button" onclick="goSection('section-guide')"><span>Пособие: Разрез</span><span>→</span></button>
       <button type="button" onclick="goSection('rules')"><span>Правила</span><span>→</span></button>
       <button type="button" onclick="toggleMenu(); switchMainTab('stratigraphy')"><span>⏳ Стратиграфия</span><span>→</span></button>
     </div>
@@ -705,6 +719,7 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
       <a href="#rocks-catalog" class="px-3 py-1.5 rounded-lg badge-sand font-medium">🌋 Горные породы</a>
       <a href="#formula-trainer" class="px-3 py-1.5 rounded-lg badge-sage font-bold">🧩 Интерактив: Формулы и структуры</a>
       <a href="#exam" class="px-3 py-1.5 rounded-lg badge-terracotta font-medium">📝 Тесты: минералы и породы (40)</a>
+      <a href="#section-guide" class="px-3 py-1.5 rounded-lg badge-sage font-medium">Пособие: Разрез</a>
       <a href="#rules" class="px-3 py-1.5 rounded-lg bg-[#fffdf9]/80 border border-[#e6dccf] hover:bg-[#efe7dc] text-[#594c3f] transition">Правила</a>
     </div>
 
@@ -977,6 +992,22 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
         <button type="button" id="examTabBtn-rocks" onclick="switchExamTab('rocks')" class="px-4 py-2 rounded-xl text-xs sm:text-sm font-bold transition btn-light">🌋 Горные породы (20)</button>
       </div>
       <div id="examContainer" class="space-y-3"></div>
+    </section>
+
+
+    <section id="section-guide" class="pastel-card rounded-2xl p-6 md:p-8 space-y-7">
+      <div class="space-y-2"><span class="inline-block px-3 py-1 rounded-full text-xs font-semibold badge-sage">Пособие для первокурсников</span><h2 class="text-2xl md:text-4xl font-bold text-[#2e2620]">Как построить геологический разрез на миллиметровке с нуля</h2><p class="text-[#5c5044]">Пример: Верхнекамское месторождение калийных солей, вариант I. Устье — земля, кровля — крыша слоя, забой — дно скважины, выклинивание — слой сходит в ноль.</p></div>
+      <div class="guide-step"><h3>Чек-лист подготовки</h3><p>Миллиметровка 45×50 см, карандаш HB/H, мягкий ластик, линейка от 40 см, калькулятор, Таблицы 2, 3 и 4 методички.</p></div>
+      <div class="guide-step"><h3>Не черти, пока не проверишь 3 числа</h3><ol class="list-decimal pl-5 space-y-1"><li>Общая длина профиля: 8384,4 м.</li><li>Отметка забоя каждой скважины.</li><li>Есть ли прочерки в таблице: они означают отсутствие слоя.</li></ol></div>
+      <div class="guide-grid">
+        <article class="guide-step"><h3>Шаг 1. Переведи расстояния</h3><p>Масштаб 1:25 000: 1 см = 250 м, 1 мм = 25 м. Соедини скважины 3 и 31, опусти перпендикуляры из 10, 15, 22 и 28. Метры раздели на 250.</p><table class="guide-table"><thead><tr><th>Участок</th><th>Метры</th><th>На листе</th></tr></thead><tbody><tr><td>3 → 10</td><td>2260,4</td><td>9,04 см</td></tr><tr><td>10 → 15</td><td>1052,4</td><td>4,21 см</td></tr><tr><td>15 → 22</td><td>987,0</td><td>3,95 см</td></tr><tr><td>22 → 28</td><td>1973,9</td><td>7,90 см</td></tr><tr><td>28 → 31</td><td>2110,8</td><td>8,44 см</td></tr><tr><th>Итого 3 → 31</th><th>8384,4</th><th>33,54 см</th></tr></tbody></table><p class="text-sm mt-3"><b>Проверка:</b> сумма пяти отрезков должна дать 33,54 см.</p></article>
+        <article class="guide-step"><h3>Шаг 2. Сделай линейку глубин</h3><p>Масштаб 1:1 000: 1 см = 10 м, 1 мм = 1 м. Слева проведи шкалу от +200 м до −260 м, ноль поставь посередине.</p><p><b>Проверка:</b> между +100 и −100 ровно 20 см.</p></article>
+        <article class="guide-step"><h3>Шаг 3. Проведи скважины</h3><p>На каждом месте из Шага 1 проведи вертикальную линию. Сверь всю длину профиля линейкой, прежде чем наносить слои.</p><p><b>Проверка:</b> крайние линии стоят на расстоянии 33,54 см.</p></article>
+        <article class="guide-step"><h3>Шаг 4. Нанеси точки слоёв</h3><p>Пример для скв. 3. От нуля откладывай вверх положительные числа и вниз отрицательные.</p><table class="guide-table"><tbody><tr><td>Устье (земля)</td><td>+173,37 м</td><td>17 см 3,5 мм вверх</td></tr><tr><td>Терригенно-карбонатная толща</td><td>+170,42 м</td><td>17 см 0,5 мм вверх</td></tr><tr><td>Соляно-мергельная толща</td><td>+92,87 м</td><td>9 см 3 мм вверх</td></tr><tr><td>Покровная соль</td><td>+12,87 м</td><td>1 см 3 мм вверх</td></tr><tr><td>Сильвинит-карналлитовая литозона</td><td>−4,28 м</td><td>4 мм вниз</td></tr><tr><td>Сильвинитовая литозона</td><td>−71,38 м</td><td>7 см 1,5 мм вниз</td></tr><tr><td>Подстилающая соль</td><td>−99,38 м</td><td>9 см 9,5 мм вниз</td></tr><tr><td>Нижняя соль</td><td>−132,83 м</td><td>мощность 50,00 м</td></tr><tr><td>Забой (дно)</td><td>−182,83 м</td><td>18 см 3 мм вниз</td></tr></tbody></table><p class="text-sm mt-3"><b>Самопроверка:</b> 173,37 − (−182,83) = 356,20 м. Это глубина из Таблицы 3.</p><p class="text-sm"><b>Таблица 4:</b> Абсолютная отметка пласта = Отметка устья − Глубина из Таблицы 4.</p></article>
+        <article class="guide-step"><h3>Шаг 5. Соедини границы</h3><p>Соединяй точки плавной линией от руки. Острые углы выглядят как ошибка. Если слой есть в одной скважине, а в соседней стоит прочерк, доведи границу до середины и сведи её клином в ноль.</p></article>
+      </div>
+      <div class="guide-grid"><div class="guide-step"><h3>Калькулятор горизонтали</h3><label class="text-sm">Расстояние, м<input id="guideHorizontal" class="guide-input mt-1" type="number" min="0" step="0.1" placeholder="например, 2260.4"></label><div id="guideHorizontalResult" class="guide-result mt-3">Введи расстояние.</div></div><div class="guide-step"><h3>Калькулятор вертикали</h3><label class="text-sm">Абсолютная отметка, м<input id="guideAbsolute" class="guide-input mt-1" type="number" step="0.01" placeholder="например, -71.38"></label><p class="text-center text-sm my-2">или</p><div class="grid grid-cols-2 gap-2"><label class="text-sm">Устье, м<input id="guideMouth" class="guide-input mt-1" type="number" step="0.01" placeholder="173.37"></label><label class="text-sm">Глубина, м<input id="guideDepth" class="guide-input mt-1" type="number" step="0.01" placeholder="244.75"></label></div><div id="guideVerticalResult" class="guide-result mt-3">Введи отметку или пару «устье + глубина».</div></div></div>
+      <div class="guide-step"><h3>3 частые ошибки первокурсников</h3><ol class="list-decimal pl-5 space-y-1"><li>Путают глубину с абсолютной отметкой.</li><li>Рисуют границы под линейку зигзагами.</li><li>Теряют знак «минус» у точек ниже нуля.</li></ol></div>
     </section>
 
     <!-- 5. Правила сообщества ВКонтакте -->
@@ -3628,6 +3659,16 @@ input[type="text"], textarea, select { border-radius: 16px !important; }
         io.observe(el);
       });
     }
+
+
+    function initGuideCalculators(){
+      const h=document.getElementById('guideHorizontal'), hr=document.getElementById('guideHorizontalResult');
+      const abs=document.getElementById('guideAbsolute'), mouth=document.getElementById('guideMouth'), depth=document.getElementById('guideDepth'), vr=document.getElementById('guideVerticalResult');
+      h?.addEventListener('input',()=>{ const m=Number(h.value); hr.textContent=Number.isFinite(m)&&h.value!=='' ? `${(m/250).toFixed(2)} см = ${(m/25).toFixed(1)} мм на листе.` : 'Введи расстояние.'; });
+      const draw=()=>{ let v=abs.value!==''?Number(abs.value):(mouth.value!==''&&depth.value!==''?Number(mouth.value)-Number(depth.value):NaN); if(!Number.isFinite(v)){vr.textContent='Введи отметку или пару «устье + глубина».';return;} const d=Math.abs(v), cm=Math.floor(d/10), mm=Math.round((d-cm*10)); vr.textContent=`${v.toFixed(2)} м. Отложи ${cm} см и ${mm} мм ${v>=0?'ВВЕРХ':'ВНИЗ'} от нуля.`; };
+      [abs,mouth,depth].forEach(x=>x?.addEventListener('input',draw));
+    }
+    initGuideCalculators();
 
     // ---------- запуск ----------
     buildHero();
