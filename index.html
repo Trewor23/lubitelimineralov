@@ -1280,6 +1280,44 @@ main#tabContent-geology > div.hidden { display: none !important; margin-top: 0 !
           <div id="lab4WellDetail" class="space-y-4"></div>
         </div>
 
+        <!-- НОВОЕ: СВОДНЫЙ ЛИТОЛОГО-СТРАТИГРАФИЧЕСКИЙ РАЗРЕЗ (1:1000, 3 см) -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-[#fffdf9] border border-[#e2d6c5] space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <span class="text-xs font-bold uppercase text-[#8c4a32]">Сводная колонка • Масштаб 1:1 000 • Ширина 3 см</span>
+              <h3 class="font-bold text-lg sm:text-xl text-[#2e2620]">📊 Литолого-стратиграфический разрез (средние мощности по варианту)</h3>
+              <p class="text-xs text-[#5c5044] mt-0.5">Считается по среднему арифметическому на <strong>все скважины варианта</strong> (если слой есть в 1 из 7 скважин, мощность делится на 7). Породы указаны в порядке убывания мощности, отмечен маркирующий горизонт (<strong>Мг</strong>).</p>
+            </div>
+          </div>
+
+          <!-- Живой SVG литолого-стратиграфического разреза -->
+          <div id="lab4LithoSvgWrap" class="rounded-2xl bg-[#faf6f0] border border-[#e2d6c5] p-3 overflow-x-auto"></div>
+
+          <!-- Готовая таблица расчёта мм для миллиметровки -->
+          <div id="lab4LithoTableWrap" class="space-y-3 overflow-x-auto"></div>
+
+          <!-- Развёрнутая таблица средних мощностей пластов СК и С -->
+          <div class="rounded-xl border border-[#dfd3c3] bg-[#faf5ed]/80 overflow-hidden">
+            <button type="button" onclick="togglePanel('lab4LithoBedsBody', 'lab4LithoBedsArrow')" class="w-full px-4 py-3 text-left flex items-center justify-between gap-3 hover:bg-[#f3ece1]/80 transition">
+              <span class="font-bold text-xs sm:text-sm text-[#2e2620]">📏 Средние мощности пластов внутри СК (К…Б) и С (А…Кр-III) для колонки 3 см</span>
+              <span id="lab4LithoBedsArrow" class="text-[#3b5e49] font-bold transition-transform duration-300">▼</span>
+            </button>
+            <div id="lab4LithoBedsBody" class="hidden slide-fade p-4 border-t border-[#e6dccf] bg-white overflow-x-auto"></div>
+          </div>
+        </div>
+
+        <!-- НОВОЕ: СОЛЯНОЙ КАРСТ (СТРОГО ПО МЕТОДИЧКЕ МПИ) -->
+        <div class="p-4 sm:p-5 rounded-2xl bg-[#fffdf9] border border-[#e2d6c5] space-y-4">
+          <div class="space-y-1">
+            <span class="text-xs font-bold uppercase text-[#8c4a32]">Методичка МПИ (раздел 6 «Гидрогеология и соляной карст»)</span>
+            <h3 class="font-bold text-lg sm:text-xl text-[#2e2620]">🕳️ Соляной карст (подземная эрозия) — расчёт по варианту</h3>
+            <p class="text-xs sm:text-sm text-[#5c5044]">
+              <strong>Правило из методички:</strong> если мощность <strong>покровной соли &lt; 2 м</strong> (или она отсутствует) — в скважине присутствует соляной карст; если <strong>≥ 2 м</strong> — карста нет. Интенсивность соляного карста определяется как <strong>суммарная мощность отсутствующих пластов</strong> сильвинит-карналлитовой литозоны (по средней арифметической неразмытых скважин).
+            </p>
+          </div>
+          <div id="lab4KarstWrap" class="space-y-4"></div>
+        </div>
+
         <!-- Полный послойный гайд сверху вниз (на примере Варианта V) -->
         <div class="p-4 sm:p-6 rounded-2xl bg-[#f5efe6] border border-[#e2d6c5] space-y-4">
           <div class="space-y-1">
@@ -4529,6 +4567,538 @@ main#tabContent-geology > div.hidden { display: none !important; margin-top: 0 !
       `;
     }
 
+
+    function wrapSvgLines(text, maxChars) {
+      const words = String(text).split(/\s+/);
+      const lines = [];
+      let cur = "";
+      for (const w of words) {
+        if (!cur) { cur = w; }
+        else if ((cur + " " + w).length <= maxChars) { cur += " " + w; }
+        else { lines.push(cur); cur = w; }
+      }
+      if (cur) lines.push(cur);
+      return lines;
+    }
+
+    function renderLab4LithoAndKarst(vNum, wlist) {
+      const N = wlist.length;
+      const roman = ["", "I", "II", "III", "IV", "V", "VI"][vNum];
+      const fmt2 = n => n.toFixed(2).replace(".", ",");
+      const toCmMm = n => {
+        const cm = Math.floor(n / 10);
+        const mm = (n % 10).toFixed(1).replace(".", ",");
+        return `${cm} см ${mm} мм`;
+      };
+
+      // 1. Средние мощности по всем N скважинам варианта (Табл. 3)
+      const defs = [
+        { key: "q",   col: 1,  isScalar: true,  era: "KZ", sys: "Q",  otd: "",   yar: "",          sv: "",             psv: "",             tol: "Четвертичные",         lz: "",         pat: "url(#lpat-q)",   minH: 44, rocks: "Суглинок, глина, галечник, песок, гравий, щебень, торф (почв. слой)" },
+        { key: "pc",  col: 2,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Уфимский",  sv: "Шешминская",   psv: "",             tol: "Пестроцветная",        lz: "",         pat: "url(#lpat-pc)",  minH: 40, rocks: "Аргиллит, алевролит, песчаник (красноцветные), прослои мергеля и известняка" },
+        { key: "tk",  col: 3,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Уфимский",  sv: "Соликамская",  psv: "Верхняя sl₂",  tol: "Терригенно-карбон.",   lz: "",         pat: "url(#lpat-tk)",  minH: 88, rocks: "Песчаник известковистый, алевролит, аргиллит плотный, мергель, известняк" },
+        { key: "sm",  col: 4,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Уфимский",  sv: "Соликамская",  psv: "Нижняя sl₁",   tol: "Соляно-мергельная",    lz: "",         pat: "url(#lpat-sm)",  minH: 135, rocks: "Глина мергелистая и известковистая, мергель глинистый и известковистый, известняк доломитизированный, гипс, доломит" },
+        { key: "vp",  col: 5,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Верх. перех. br₂⁷", pat: "url(#lpat-vp)",  minH: 42, rocks: "Каменная соль, мергель глинистый (переслаивание)" },
+        { key: "ps",  col: 6,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Покровная br₂⁶",    pat: "url(#lpat-ps)",  minH: 42, rocks: "Каменная соль плотная, слоистая (водозащитный экран)" },
+        { key: "sk",  col: 7,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Сильв.-карн. br₂⁵", pat: "sk_beds",       minH: 120, rocks: "Карналлитовая порода, каменная соль (прослои), сильвинит пёстрый (пласты К–Б)" },
+        { key: "s",   col: 8,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Сильвинитовая br₂⁴",pat: "s_beds",        minH: 64, rocks: "Сильвинит красный (Кр-III, Кр-II, Кр-I), каменная соль (прослои), сильвинит полосчатый (А)" },
+        { key: "pd",  col: 9,  isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Подстилающая br₂³", pat: "url(#lpat-pd)",  minH: 62, rocks: "Каменная соль средне- и крупнозернистая" },
+        { key: "mg",  col: -1, isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Мг",                pat: "mg_clay",       minH: 34, rocks: "Маркирующий горизонт (Мг): глина галопелитовая (1–2 м, граница подстилающей и нижней соли)" },
+        { key: "ns",  col: 10, isScalar: false, era: "PZ", sys: "P",  otd: "P₁", yar: "Кунгурский",sv: "Березниковская",psv: "Верхняя br₂", tol: "Соляная толща",        lz: "Нижняя соль br₂²",  pat: "url(#lpat-ns)",  minH: 96, rocks: "Каменная соль крупнозернистая с прослоями ангидрита и глин" }
+      ];
+
+      const layers = [];
+      defs.forEach(d => {
+        if (d.key === "mg") {
+          layers.push({ ...d, vals: wlist.map(() => 1.5), sum: 1.5 * N, min: 1.0, max: 2.0, avg: 1.5, presentCount: N, isMarker: true });
+          return;
+        }
+        const vals = wlist.map(w => {
+          const row = lab4Tab3[w];
+          if (d.isScalar) return row[d.col];
+          return row[d.col] ? row[d.col][1] : 0;
+        });
+        const sum = vals.reduce((a, b) => a + b, 0);
+        const min = Math.min(...vals), max = Math.max(...vals);
+        const avg = sum / N;
+        const presentCount = vals.filter(v => v > 0).length;
+        // Шешминскую свиту включаем только если она реально есть хотя бы в 1 скважине варианта
+        if (d.key === "pc" && max === 0) return;
+        layers.push({ ...d, vals, sum, min, max, avg, presentCount, isMarker: false });
+      });
+
+      // Средние пласты внутри СК и С (для прорисовки в колонке и для подтаблицы)
+      const skAvgBeds = lab4SKNames.map((name, k) => {
+        let sum = 0, cnt = 0, min = Infinity, max = 0;
+        const typeCounts = { "к": 0, "с": 0, "кс": 0, "salt": 0 };
+        wlist.forEach(w => {
+          const p = parseSkCell(lab4Tab4[w].sk[k]);
+          if (p) {
+            sum += p.t; cnt++;
+            if (p.t < min) min = p.t;
+            if (p.t > max) max = p.t;
+            typeCounts[p.type] = (typeCounts[p.type] || 0) + 1;
+          } else {
+            min = 0;
+          }
+        });
+        if (min === Infinity) min = 0;
+        let domType = (k % 2 === 1) ? "salt" : "к";
+        if (k % 2 === 0) {
+          let bestC = -1;
+          ["к", "с", "кс"].forEach(tp => { if (typeCounts[tp] > bestC) { bestC = typeCounts[tp]; domType = tp; } });
+        }
+        return { name, sum, avgAll: sum / N, avgPres: cnt > 0 ? sum / cnt : 0, min, max, cnt, domType };
+      });
+
+      const sAvgBeds = lab4SNames.map((name, k) => {
+        const vals = wlist.map(w => lab4Tab4[w].s[k]);
+        const sum = vals.reduce((a, b) => a + b, 0);
+        return { name, sum, avgAll: sum / N, min: Math.min(...vals), max: Math.max(...vals), isBed: k % 2 === 0 };
+      });
+
+      // 2. Построение SVG Сводного литолого-стратиграфического разреза (1:1000, ширина колонки 3 см = 75 px при 2.5 px/м)
+      const scale = 2.5; // 1 м (= 1 мм на миллиметровке) = 2.5 px => 3 см (30 мм) = 75 px
+      const totalTrueM = layers.reduce((acc, l) => acc + l.avg, 0);
+      const colTrueH = totalTrueM * scale;
+
+      // Разметка комфортных высот строк (без наложений текста!) с подгонкой общей суммы к colTrueH
+      const minSum = layers.reduce((acc, l) => acc + l.minH, 0);
+      const totalH = Math.max(colTrueH, minSum + 20);
+      const extraH = totalH - minSum;
+      const flexWeights = layers.map(l => Math.max(0, l.avg * scale - l.minH) + (l.avg > 35 ? l.avg * 0.4 : 0));
+      const flexSum = flexWeights.reduce((a, b) => a + b, 0) || 1;
+      const rowHs = layers.map((l, idx) => l.minH + (extraH * flexWeights[idx]) / flexSum);
+
+      const headH = 98, padX = 12, padB = 22;
+      const W = 1040, H = Math.ceil(headH + totalH + padB);
+
+      // X-координаты 12 столбцов
+      const colWidths = [30, 30, 30, 38, 42, 46, 56, 74, 24, 75, 24, 76, 62, 409];
+      // [0]Эратема [1]Система [2]Отдел [3]Ярус [4]Свита [5]Подсвита [6]Толща [7]Литозона [8]переход-L [9]Колонка 3см [10]переход-R [11]Диапазон [12]Средняя [13]Наименование пород
+      const X = [padX];
+      for (const cw of colWidths) X.push(X[X.length - 1] + cw);
+
+      // Границы слоёв в истинном масштабе 1:1000 (в колонке 3 см) и в табличных строках (слева и справа)
+      const colYOffset = headH + (totalH - colTrueH) / 2;
+      let cyT = colYOffset, cyR = headH;
+      const layerGeom = layers.map((l, idx) => {
+        const t0 = cyT, t1 = cyT + l.avg * scale;
+        cyT = t1;
+        const r0 = cyR, r1 = cyR + rowHs[idx];
+        cyR = r1;
+        return { ...l, idx, t0, t1, r0, r1 };
+      });
+
+      // Помощник объединённых вертикальных ячеек слева
+      function drawMergedLeft(colIdx, groupKeyFn, labelFn, rotateMode) {
+        let out = "";
+        let i = 0;
+        while (i < layerGeom.length) {
+          const gKey = groupKeyFn(layerGeom[i]);
+          let j = i;
+          while (j + 1 < layerGeom.length && groupKeyFn(layerGeom[j + 1]) === gKey) j++;
+          const y0 = layerGeom[i].r0, y1 = layerGeom[j].r1;
+          const x0 = X[colIdx], cw = colWidths[colIdx];
+          const bh = y1 - y0;
+          const lbl = labelFn(layerGeom[i]);
+          out += `<rect x="${x0}" y="${y0.toFixed(1)}" width="${cw}" height="${bh.toFixed(1)}" fill="#ffffff" stroke="#594c3f" stroke-width="0.9"/>`;
+          if (lbl) {
+            const cx = x0 + cw / 2, cy = (y0 + y1) / 2;
+            const useRot = rotateMode === "always" || (rotateMode === "auto" && bh >= 58);
+            if (useRot) {
+              const parts = lbl.split("|");
+              if (parts.length === 1) {
+                out += `<text x="${cx.toFixed(1)}" y="${cy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="9.5" font-weight="bold" fill="#2e2620" transform="rotate(-90 ${cx.toFixed(1)} ${cy.toFixed(1)})">${parts[0]}</text>`;
+              } else {
+                out += `<text x="${(cx - 5.5).toFixed(1)}" y="${cy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="9" font-weight="bold" fill="#2e2620" transform="rotate(-90 ${(cx - 5.5).toFixed(1)} ${cy.toFixed(1)})">${parts[0]}</text>`;
+                out += `<text x="${(cx + 6).toFixed(1)}" y="${cy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="8.5" fill="#594c3f" transform="rotate(-90 ${(cx + 6).toFixed(1)} ${cy.toFixed(1)})">${parts[1]}</text>`;
+              }
+            } else {
+              const parts = lbl.split("|");
+              const lineH = 10.5;
+              const startY = cy - ((parts.length - 1) * lineH) / 2;
+              parts.forEach((pt, pi) => {
+                out += `<text x="${cx.toFixed(1)}" y="${(startY + pi * lineH).toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="${pi === 0 ? 8.8 : 8.2}" font-weight="${pi === 0 ? 'bold' : 'normal'}" fill="#2e2620">${pt}</text>`;
+              });
+            }
+          }
+          i = j + 1;
+        }
+        return out;
+      }
+
+      let leftColsSvg = "";
+      leftColsSvg += drawMergedLeft(0, l => l.era, l => l.era === "KZ" ? "KZ" : "Палеозойская PZ", "auto");
+      leftColsSvg += drawMergedLeft(1, l => l.sys, l => l.sys === "Q" ? "Q" : "Пермская P", "auto");
+      leftColsSvg += drawMergedLeft(2, l => l.otd || ("empty_" + l.key), l => l.otd ? "Нижний P₁" : "", "auto");
+      leftColsSvg += drawMergedLeft(3, l => l.yar || ("empty_" + l.key), l => l.yar === "Уфимский" ? "Уфимский|P₁u" : (l.yar === "Кунгурский" ? "Кунгурский|P₁k" : ""), "auto");
+      leftColsSvg += drawMergedLeft(4, l => l.sv || ("empty_" + l.key), l => {
+        if (l.sv === "Шешминская") return "Шешм.|sh";
+        if (l.sv === "Соликамская") return "Соликамская|P₁sl";
+        if (l.sv === "Березниковская") return "Березниковская|P₁br";
+        return "";
+      }, "auto");
+      leftColsSvg += drawMergedLeft(5, l => l.psv || ("empty_" + l.key), l => {
+        if (l.psv === "Верхняя sl₂") return "Верхняя|P₁sl₂";
+        if (l.psv === "Нижняя sl₁") return "Нижняя|P₁sl₁";
+        if (l.psv === "Верхняя br₂") return "Верхняя|P₁br₂";
+        return "";
+      }, "auto");
+      leftColsSvg += drawMergedLeft(6, l => l.tol, l => {
+        if (l.key === "q") return "Четверт.|Q";
+        if (l.key === "pc") return "Пестроцв.|sh";
+        if (l.key === "tk") return "Терригенно-|карбонатная";
+        if (l.key === "sm") return "Соляно-|мергельная";
+        return "Соляная толща|br₂";
+      }, "auto");
+      leftColsSvg += drawMergedLeft(7, l => l.key, l => {
+        if (l.key === "vp") return "Верх. перех.|br₂⁷";
+        if (l.key === "ps") return "Покровная|br₂⁶";
+        if (l.key === "sk") return "Сильвинит-|карналлитовая|br₂⁵";
+        if (l.key === "s")  return "Сильвини-|товая|br₂⁴";
+        if (l.key === "pd") return "Подстила-|ющая|br₂³";
+        if (l.key === "mg") return "Марк. гор.|Мг";
+        if (l.key === "ns") return "Нижняя|соль br₂²";
+        return "—";
+      }, "never");
+
+      // Центральная литологическая колонка (ширина 75 px = 3 см, 1:1000) + соединительные выноски
+      const fillForSk = typ => typ === "с" ? "url(#lpat-sylv)" : (typ === "кс" ? "url(#lpat-mix)" : (typ === "salt" ? "#faf6ee" : "url(#lpat-carn)"));
+      let colSvg = `<rect x="${X[9]}" y="${colYOffset.toFixed(1)}" width="${colWidths[9]}" height="${colTrueH.toFixed(1)}" fill="#ffffff" stroke="#1f1a16" stroke-width="1.3"/>`;
+      let connSvg = "";
+      let rightSvg = "";
+
+      layerGeom.forEach(l => {
+        const th = l.t1 - l.t0;
+        // Заливка истинной колонки
+        if (l.pat === "sk_beds") {
+          colSvg += `<rect x="${X[9]}" y="${l.t0.toFixed(1)}" width="${colWidths[9]}" height="${th.toFixed(1)}" fill="#faf6ee" stroke="#2e2620" stroke-width="0.9"/>`;
+          const sumSkAvg = skAvgBeds.reduce((a, b) => a + b.avgAll, 0) || 1;
+          let by = l.t0;
+          skAvgBeds.forEach((b, bi) => {
+            const bh = (b.avgAll / sumSkAvg) * th;
+            if (bh > 0.25) {
+              colSvg += `<rect x="${X[9]}" y="${by.toFixed(1)}" width="${colWidths[9]}" height="${bh.toFixed(1)}" fill="${fillForSk(b.domType)}" stroke="#4a3f35" stroke-width="${bi % 2 === 0 ? 0.55 : 0.35}"/>`;
+            }
+            by += bh;
+          });
+          colSvg += `<rect x="${X[9]}" y="${l.t0.toFixed(1)}" width="${colWidths[9]}" height="${th.toFixed(1)}" fill="none" stroke="#1f1a16" stroke-width="1.1"/>`;
+        } else if (l.pat === "s_beds") {
+          colSvg += `<rect x="${X[9]}" y="${l.t0.toFixed(1)}" width="${colWidths[9]}" height="${th.toFixed(1)}" fill="#faf6ee" stroke="#2e2620" stroke-width="0.9"/>`;
+          const sumSAvg = sAvgBeds.reduce((a, b) => a + b.avgAll, 0) || 1;
+          let by = l.t0;
+          sAvgBeds.forEach(b => {
+            const bh = (b.avgAll / sumSAvg) * th;
+            if (bh > 0.25) {
+              colSvg += `<rect x="${X[9]}" y="${by.toFixed(1)}" width="${colWidths[9]}" height="${bh.toFixed(1)}" fill="${b.isBed ? 'url(#lpat-sylv)' : '#faf6ee'}" stroke="#5c2b29" stroke-width="0.5"/>`;
+            }
+            by += bh;
+          });
+          colSvg += `<rect x="${X[9]}" y="${l.t0.toFixed(1)}" width="${colWidths[9]}" height="${th.toFixed(1)}" fill="none" stroke="#1f1a16" stroke-width="1.1"/>`;
+        } else if (l.pat === "mg_clay") {
+          colSvg += `<rect x="${X[9]}" y="${l.t0.toFixed(1)}" width="${colWidths[9]}" height="${Math.max(3.5, th).toFixed(1)}" fill="#4a3f35" stroke="#0f0f0e" stroke-width="1"/>`;
+        } else {
+          colSvg += `<rect x="${X[9]}" y="${l.t0.toFixed(1)}" width="${colWidths[9]}" height="${th.toFixed(1)}" fill="${l.pat}" stroke="#2e2620" stroke-width="0.9"/>`;
+        }
+
+        // Соединительные линии от точной границы колонки к строкам слева и справа
+        connSvg += `<line x1="${X[8]}" y1="${l.r0.toFixed(1)}" x2="${X[9]}" y2="${l.t0.toFixed(1)}" stroke="#8c7b6b" stroke-width="0.75" stroke-dasharray="2 2"/>`;
+        connSvg += `<line x1="${X[10]}" y1="${l.t0.toFixed(1)}" x2="${X[11]}" y2="${l.r0.toFixed(1)}" stroke="#8c7b6b" stroke-width="0.75" stroke-dasharray="2 2"/>`;
+
+        // Правые столбцы: Диапазон, Средняя, Наименование пород
+        const rh = l.r1 - l.r0;
+        const rMidY = (l.r0 + l.r1) / 2;
+        const rangeStr = l.isMarker ? "1,0–2,0" : `${fmt2(l.min)}–${fmt2(l.max)}`;
+        const avgStr = l.isMarker ? "~1,50" : fmt2(l.avg);
+        const bgRow = l.isMarker ? "#f5efe6" : "#ffffff";
+
+        rightSvg += `<rect x="${X[11]}" y="${l.r0.toFixed(1)}" width="${colWidths[11]}" height="${rh.toFixed(1)}" fill="${bgRow}" stroke="#594c3f" stroke-width="0.9"/>`;
+        rightSvg += `<text x="${(X[11] + colWidths[11]/2).toFixed(1)}" y="${rMidY.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="9" font-family="ui-monospace,monospace" fill="#2e2620">${rangeStr}</text>`;
+
+        rightSvg += `<rect x="${X[12]}" y="${l.r0.toFixed(1)}" width="${colWidths[12]}" height="${rh.toFixed(1)}" fill="${bgRow}" stroke="#594c3f" stroke-width="0.9"/>`;
+        rightSvg += `<text x="${(X[12] + colWidths[12]/2).toFixed(1)}" y="${rMidY.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="9.5" font-weight="bold" font-family="ui-monospace,monospace" fill="${l.isMarker ? '#8c4a32' : '#2f5d3a'}">${avgStr}</text>`;
+
+        rightSvg += `<rect x="${X[13]}" y="${l.r0.toFixed(1)}" width="${colWidths[13]}" height="${rh.toFixed(1)}" fill="${bgRow}" stroke="#594c3f" stroke-width="0.9"/>`;
+        const rockLines = wrapSvgLines(l.rocks, 58);
+        const lh = 12;
+        const startRY = rMidY - ((rockLines.length - 1) * lh) / 2;
+        rockLines.forEach((rl, rli) => {
+          rightSvg += `<text x="${(X[13] + 8).toFixed(1)}" y="${(startRY + rli * lh).toFixed(1)}" dominant-baseline="central" font-size="9.2" font-weight="${l.isMarker ? 'bold' : 'normal'}" fill="#2e2620">${rl}</text>`;
+        });
+      });
+
+      // Нижние соединительные линии
+      const lastL = layerGeom[layerGeom.length - 1];
+      connSvg += `<line x1="${X[8]}" y1="${lastL.r1.toFixed(1)}" x2="${X[9]}" y2="${lastL.t1.toFixed(1)}" stroke="#8c7b6b" stroke-width="0.75" stroke-dasharray="2 2"/>`;
+      connSvg += `<line x1="${X[10]}" y1="${lastL.t1.toFixed(1)}" x2="${X[11]}" y2="${lastL.r1.toFixed(1)}" stroke="#8c7b6b" stroke-width="0.75" stroke-dasharray="2 2"/>`;
+
+      // Шапка таблицы SVG
+      const headerTitles = [
+        [0, "Эратема", true], [1, "Система", true], [2, "Отдел", true], [3, "Ярус", true],
+        [4, "Свита", true], [5, "Подсвита", true], [6, "Толща", true], [7, "Литозона", true]
+      ];
+      let headSvg = "";
+      headerTitles.forEach(([ci, title]) => {
+        const cx = X[ci] + colWidths[ci] / 2, cy = headH / 2 + 8;
+        headSvg += `<rect x="${X[ci]}" y="16" width="${colWidths[ci]}" height="${headH - 16}" fill="#f3ece1" stroke="#3d342c" stroke-width="1"/>`;
+        headSvg += `<text x="${cx.toFixed(1)}" y="${cy.toFixed(1)}" text-anchor="middle" dominant-baseline="central" font-size="10" font-weight="bold" fill="#2e2620" transform="rotate(-90 ${cx.toFixed(1)} ${cy.toFixed(1)})">${title}</text>`;
+      });
+      // Объединённый заголовок колонки (включая поля выносок)
+      const colSpanW = colWidths[8] + colWidths[9] + colWidths[10];
+      headSvg += `<rect x="${X[8]}" y="16" width="${colSpanW}" height="${headH - 16}" fill="#f3ece1" stroke="#3d342c" stroke-width="1"/>
+                  <text x="${(X[8] + colSpanW/2).toFixed(1)}" y="44" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2e2620">Литологическая</text>
+                  <text x="${(X[8] + colSpanW/2).toFixed(1)}" y="58" text-anchor="middle" font-size="9.5" font-weight="bold" fill="#2e2620">колонка</text>
+                  <text x="${(X[8] + colSpanW/2).toFixed(1)}" y="74" text-anchor="middle" font-size="8.5" fill="#7a6b5d">3 см • 1:1 000</text>`;
+      headSvg += `<rect x="${X[11]}" y="16" width="${colWidths[11]}" height="${headH - 16}" fill="#f3ece1" stroke="#3d342c" stroke-width="1"/>
+                  <text x="${(X[11] + colWidths[11]/2).toFixed(1)}" y="50" text-anchor="middle" font-size="9" font-weight="bold" fill="#2e2620">Диапазон</text>
+                  <text x="${(X[11] + colWidths[11]/2).toFixed(1)}" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="#2e2620">мощн., м</text>`;
+      headSvg += `<rect x="${X[12]}" y="16" width="${colWidths[12]}" height="${headH - 16}" fill="#f3ece1" stroke="#3d342c" stroke-width="1"/>
+                  <text x="${(X[12] + colWidths[12]/2).toFixed(1)}" y="50" text-anchor="middle" font-size="9" font-weight="bold" fill="#2e2620">Средняя</text>
+                  <text x="${(X[12] + colWidths[12]/2).toFixed(1)}" y="64" text-anchor="middle" font-size="9" font-weight="bold" fill="#2e2620">арифм., м</text>`;
+      headSvg += `<rect x="${X[13]}" y="16" width="${colWidths[13]}" height="${headH - 16}" fill="#f3ece1" stroke="#3d342c" stroke-width="1"/>
+                  <text x="${(X[13] + colWidths[13]/2).toFixed(1)}" y="50" text-anchor="middle" font-size="10.5" font-weight="bold" fill="#2e2620">Наименование пород</text>
+                  <text x="${(X[13] + colWidths[13]/2).toFixed(1)}" y="66" text-anchor="middle" font-size="9" fill="#594c3f">(в порядке убывания мощности)</text>`;
+
+      // Рамка колонки-выноски
+      const connFrame = `<rect x="${X[8]}" y="${headH}" width="${colSpanW}" height="${totalH.toFixed(1)}" fill="#fffdf9" stroke="#594c3f" stroke-width="0.9"/>`;
+
+      const lithoWrap = document.getElementById("lab4LithoSvgWrap");
+      if (lithoWrap) {
+        lithoWrap.innerHTML = `
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-2 text-xs">
+            <strong class="text-[#2e2620]">📋 Сводный литолого-стратиграфический разрез — Вариант ${roman} (${N} скв.: ${wlist.join(", ")})</strong>
+            <div class="flex items-center gap-2">
+              <span class="text-[#7a6b5d]">Высота колонки: ${fmt2(totalTrueM)} м = ${(totalTrueM / 10).toFixed(2).replace(".", ",")} см • Ширина: 3 см</span>
+              <button type="button" onclick="downloadLab4LithoSvg(${vNum})" class="px-2.5 py-1 rounded-full bg-[#0f0f0e] text-white text-[11px] font-bold hover:opacity-85">📥 Скачать SVG</button>
+            </div>
+          </div>
+          <svg id="lab4LithoSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" class="w-full min-w-[760px] bg-white rounded-xl border border-[#dfd3c3]">
+            <defs>
+              <pattern id="lpat-q" width="16" height="10" patternUnits="userSpaceOnUse"><rect width="16" height="10" fill="#fff9db"/><path d="M 1 6 Q 4 2 8 6 T 15 6" fill="none" stroke="#8c7b6b" stroke-width="0.8"/></pattern>
+              <pattern id="lpat-pc" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#f7dfd4"/><line x1="0" y1="8" x2="8" y2="0" stroke="#9a4a2c" stroke-width="0.8"/></pattern>
+              <pattern id="lpat-tk" width="20" height="12" patternUnits="userSpaceOnUse"><rect width="20" height="12" fill="#eef4f8"/><path d="M 0 6 H 20 M 0 12 H 20 M 10 0 V 6 M 0 6 V 12 M 20 6 V 12" fill="none" stroke="#6c7d8c" stroke-width="0.7"/></pattern>
+              <pattern id="lpat-sm" width="20" height="12" patternUnits="userSpaceOnUse"><rect width="20" height="12" fill="#edf0e2"/><path d="M 0 6 H 20 M 0 12 H 20 M 10 0 V 6 M 0 6 V 12 M 3 3 H 7 M 13 9 H 17" fill="none" stroke="#5c6b54" stroke-width="0.7"/></pattern>
+              <pattern id="lpat-vp" width="12" height="12" patternUnits="userSpaceOnUse"><rect width="12" height="12" fill="#eeeaf5"/><path d="M 6 3 V 9 M 3 6 H 9" fill="none" stroke="#6a5a8c" stroke-width="0.85"/></pattern>
+              <pattern id="lpat-ps" width="10" height="4" patternUnits="userSpaceOnUse"><rect width="10" height="4" fill="#e1f0f5"/><line x1="0" y1="2" x2="10" y2="2" stroke="#3b6e82" stroke-width="0.7"/></pattern>
+              <pattern id="lpat-carn" width="4" height="8" patternUnits="userSpaceOnUse"><rect width="4" height="8" fill="#f7e3c6"/><line x1="2" y1="0" x2="2" y2="8" stroke="#8a5a24" stroke-width="0.85"/></pattern>
+              <pattern id="lpat-sylv" width="6" height="6" patternUnits="userSpaceOnUse"><rect width="6" height="6" fill="#f5d0cc"/><path d="M 0 6 L 6 0 M 0 0 L 6 6" stroke="#a6362e" stroke-width="0.75"/></pattern>
+              <pattern id="lpat-mix" width="8" height="8" patternUnits="userSpaceOnUse"><rect width="8" height="8" fill="#f5d8b8"/><path d="M 4 0 V 8 M 0 8 L 8 0" stroke="#9a4a2c" stroke-width="0.8"/></pattern>
+              <pattern id="lpat-pd" width="14" height="12" patternUnits="userSpaceOnUse"><rect width="14" height="12" fill="#ebf1f5"/><path d="M 3 3 Q 7 6 3 9 M 10 3 Q 14 6 10 9" fill="none" stroke="#5b7082" stroke-width="0.8"/><circle cx="8" cy="6" r="0.8" fill="#5b7082"/></pattern>
+              <pattern id="lpat-ns" width="14" height="12" patternUnits="userSpaceOnUse"><rect width="14" height="12" fill="#e0e8ef"/><path d="M 3 3 Q 7 6 3 9 M 10 3 Q 14 6 10 9" fill="none" stroke="#42576b" stroke-width="0.9"/></pattern>
+            </defs>
+            ${headSvg}
+            ${leftColsSvg}
+            ${connFrame}
+            ${connSvg}
+            ${colSvg}
+            ${rightSvg}
+          </svg>
+        `;
+      }
+
+      // 3. Таблица расчёта для миллиметровки (с накопленной глубиной от верха)
+      let cumM = 0;
+      const tblWrap = document.getElementById("lab4LithoTableWrap");
+      if (tblWrap) {
+        const rowsT = layers.map(l => {
+          if (!l.isMarker) cumM += l.avg;
+          const idxLabel = l.key === "q" ? "Q" : (l.key === "pc" ? "P₁sh" : (l.key === "tk" ? "P₁sl₂" : (l.key === "sm" ? "P₁sl₁" : (l.key === "mg" ? "Мг" : ("P₁" + l.lz.split(" ").pop())))));
+          const nameLabel = l.lz ? `${l.tol} — ${l.lz}` : l.tol;
+          return `
+            <tr class="border-b border-[#ece5d8] ${l.isMarker ? 'bg-[#f5efe6] font-semibold' : ''}">
+              <td class="py-1.5 px-2 font-mono font-bold text-[#3b5e49]">${idxLabel}</td>
+              <td class="py-1.5 px-2 font-semibold text-[#2e2620]">${nameLabel}</td>
+              <td class="py-1.5 px-2 text-center font-mono">${l.isMarker ? "1,0–2,0" : `${fmt2(l.min)} – ${fmt2(l.max)}`}</td>
+              <td class="py-1.5 px-2 text-center font-mono text-[#7a6b5d]">${l.isMarker ? "по керну" : `${fmt2(l.sum)} ÷ ${N}`}</td>
+              <td class="py-1.5 px-2 text-center font-mono font-bold text-[#2f5d3a]">${l.isMarker ? "~1,5 мм" : `${fmt2(l.avg)} мм`}</td>
+              <td class="py-1.5 px-2 text-center font-mono font-bold text-[#8c4a32]">${l.isMarker ? "на границе br₂³/br₂²" : toCmMm(cumM)}</td>
+            </tr>
+          `;
+        }).join("");
+
+        tblWrap.innerHTML = `
+          <table class="w-full text-xs border-collapse">
+            <thead>
+              <tr class="bg-[#f5efe6] text-[#2e2620] border-b-2 border-[#dfd3c3]">
+                <th class="py-1.5 px-2 text-left">Индекс</th>
+                <th class="py-1.5 px-2 text-left">Подразделение</th>
+                <th class="py-1.5 px-2">Диапазон, м</th>
+                <th class="py-1.5 px-2">Сумма ÷ N</th>
+                <th class="py-1.5 px-2">Ср. арифм. (1:1000)</th>
+                <th class="py-1.5 px-2">Накопл. от верха</th>
+              </tr>
+            </thead>
+            <tbody>${rowsT}</tbody>
+          </table>
+          <p class="text-[11px] text-[#5c5044] mt-1.5">
+            <strong>Подсказка для миллиметровки:</strong> начерти вертикальную полосу шириной <strong>3 см</strong>, поставь «0» линейки в самый верх колонки и отмечай столбец «Накопл. от верха» сверху вниз. ${layers.some(l => l.key === "pc") ? "В этом варианте есть <strong>Шешминская свита (P₁sh)</strong> — она включена в колонку." : "В варианте VI Шешминская свита отсутствует во всех скважинах, поэтому в колонке её нет."}
+          </p>
+        `;
+      }
+
+      // 4. Подтаблица средних мощностей пластов СК и С
+      const bedsBody = document.getElementById("lab4LithoBedsBody");
+      if (bedsBody) {
+        const skHtml = skAvgBeds.map((b, bi) => `
+          <tr class="border-b border-[#ece5d8] ${bi % 2 === 0 ? 'bg-[#faf6f0] font-semibold' : ''}">
+            <td class="py-1 px-2">${b.name}</td>
+            <td class="py-1 px-2 text-center font-mono">${fmt2(b.min)}–${fmt2(b.max)}</td>
+            <td class="py-1 px-2 text-center font-mono">${fmt2(b.sum)} ÷ ${N}</td>
+            <td class="py-1 px-2 text-center font-mono font-bold text-[#8c4a32]">${fmt2(b.avgAll)} мм</td>
+            <td class="py-1 px-2 text-center text-[#5c5044]">${b.cnt}/${N} скв.</td>
+          </tr>
+        `).join("");
+        const sHtml = sAvgBeds.map(b => `
+          <tr class="border-b border-[#ece5d8] ${b.isBed ? 'bg-[#f9ecea] font-semibold' : ''}">
+            <td class="py-1 px-2">${b.name}</td>
+            <td class="py-1 px-2 text-center font-mono">${fmt2(b.min)}–${fmt2(b.max)}</td>
+            <td class="py-1 px-2 text-center font-mono">${fmt2(b.sum)} ÷ ${N}</td>
+            <td class="py-1 px-2 text-center font-mono font-bold text-[#2f5d3a]">${fmt2(b.avgAll)} мм</td>
+          </tr>
+        `).join("");
+        bedsBody.innerHTML = `
+          <div class="grid lg:grid-cols-2 gap-4">
+            <div>
+              <div class="text-xs font-bold text-[#7a3118] mb-1.5">Сильвинит-карналлитовая (br₂⁵) — средние по ${N} скв.</div>
+              <table class="w-full text-[11px] border-collapse">
+                <thead><tr class="bg-[#f5efe6] border-b border-[#dfd3c3]"><th class="py-1 px-2 text-left">Пласт</th><th class="py-1 px-2">min–max</th><th class="py-1 px-2">Сумма ÷ N</th><th class="py-1 px-2">Ср. арифм.</th><th class="py-1 px-2">Есть в</th></tr></thead>
+                <tbody>${skHtml}</tbody>
+              </table>
+            </div>
+            <div>
+              <div class="text-xs font-bold text-[#233d2c] mb-1.5">Сильвинитовая (br₂⁴) — средние по ${N} скв.</div>
+              <table class="w-full text-[11px] border-collapse">
+                <thead><tr class="bg-[#f5efe6] border-b border-[#dfd3c3]"><th class="py-1 px-2 text-left">Пласт</th><th class="py-1 px-2">min–max</th><th class="py-1 px-2">Сумма ÷ N</th><th class="py-1 px-2">Ср. арифм.</th></tr></thead>
+                <tbody>${sHtml}</tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // 5. РАСЧЁТ СОЛЯНОГО КАРСТА (строго по методичке МПИ)
+      const karstWrap = document.getElementById("lab4KarstWrap");
+      if (!karstWrap) return;
+
+      const intactWells = wlist.filter(w => lab4Tab3[w][6] && lab4Tab3[w][6][1] >= 2.0);
+      const karstWells  = wlist.filter(w => !lab4Tab3[w][6] || lab4Tab3[w][6][1] < 2.0);
+
+      // Средние мощности верхних пластов СК (К .. Е-Ж) по неразмытым скважинам варианта
+      const intactSkAvg = lab4SKNames.map((name, k) => {
+        const vals = intactWells.map(w => parseSkCell(lab4Tab4[w].sk[k])).filter(p => p !== null).map(p => p.t);
+        const avg = vals.length > 0 ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+        return { name, vals, avg };
+      });
+
+      const karstRows = wlist.map(w => {
+        const ps = lab4Tab3[w][6] ? lab4Tab3[w][6][1] : 0;
+        const hasKarst = ps < 2.0;
+        if (!hasKarst) {
+          return { w, ps, hasKarst: false, missingNames: [], pureSum: 0, partName: null, partLoss: 0, fullSum: 0 };
+        }
+        const skArr = lab4Tab4[w].sk;
+        const missIdx = [];
+        let firstPresent = -1;
+        for (let k = 0; k < 17; k++) {
+          if (skArr[k] === null) missIdx.push(k);
+          else if (firstPresent === -1) firstPresent = k;
+        }
+        const missingNames = missIdx.map(k => lab4SKNames[k]);
+        const pureSum = missIdx.reduce((acc, k) => acc + intactSkAvg[k].avg, 0);
+        let partName = null, partLoss = 0;
+        if (firstPresent !== -1) {
+          const fact = parseSkCell(skArr[firstPresent]).t;
+          const refAvg = intactSkAvg[firstPresent].avg;
+          if (fact < refAvg) {
+            partName = `${lab4SKNames[firstPresent]} (${fmt2(refAvg)} − ${fmt2(fact)})`;
+            partLoss = refAvg - fact;
+          }
+        }
+        return { w, ps, hasKarst: true, missingNames, pureSum, partName, partLoss, fullSum: pureSum + partLoss };
+      });
+
+      const onlyKarst = karstRows.filter(r => r.hasKarst);
+      const avgPure = onlyKarst.length ? onlyKarst.reduce((a, b) => a + b.pureSum, 0) / onlyKarst.length : 0;
+      const avgFull = onlyKarst.length ? onlyKarst.reduce((a, b) => a + b.fullSum, 0) / onlyKarst.length : 0;
+      const maxRow  = onlyKarst.length ? onlyKarst.reduce((best, r) => (r.fullSum > best.fullSum ? r : best), onlyKarst[0]) : null;
+      const diffPure = maxRow ? (maxRow.pureSum - avgPure) : 0;
+      const diffFull = maxRow ? (maxRow.fullSum - avgFull) : 0;
+
+      const refChips = intactSkAvg.slice(0, 8).map(it =>
+        `<span class="px-2 py-1 rounded-lg bg-[#f5efe6] border border-[#e2d6c5] font-mono text-[11px]"><strong>${it.name}</strong> = ${fmt2(it.avg)} м</span>`
+      ).join("");
+
+      const karstTableHtml = karstRows.map(r => `
+        <tr class="border-b border-[#ece5d8] ${r.hasKarst ? 'bg-[#fdf4f1]' : ''}">
+          <td class="py-2 px-2 font-bold text-center">Скв. ${r.w}</td>
+          <td class="py-2 px-2 text-center font-mono">${r.ps > 0 ? fmt2(r.ps) + " м" : "0 (нет)"}</td>
+          <td class="py-2 px-2 text-center">${r.hasKarst ? '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#f9ebe4] text-[#8c4a32]">⚠️ Есть карст (&lt;2 м)</span>' : '<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-[#e8f0e6] text-[#2f5d3a]">✅ Нет карста (≥2 м)</span>'}</td>
+          <td class="py-2 px-2 text-xs">${r.hasKarst ? (r.missingNames.length ? r.missingNames.join(", ") : "—") : "—"}</td>
+          <td class="py-2 px-2 text-center font-mono font-bold text-[#8c4a32]">${r.hasKarst ? fmt2(r.pureSum) + " м" : "—"}</td>
+          <td class="py-2 px-2 text-center font-mono text-xs">${r.hasKarst ? (r.partLoss > 0 ? `+${fmt2(r.partLoss)} м (${r.partName}) = <strong>${fmt2(r.fullSum)} м</strong>` : `<strong>${fmt2(r.fullSum)} м</strong>`) : "—"}</td>
+        </tr>
+      `).join("");
+
+      const noteText = onlyKarst.length
+        ? `По данным разреза варианта ${roman} (скв. ${wlist.join(", ")}) признаки подземной эрозии (соляного карста, мощность покровной соли < 2 м) установлены в ${onlyKarst.length} из ${N} скважин: скв. ${onlyKarst.map(r => r.w).join(", ")}. В неразмытых скважинах (скв. ${intactWells.join(", ")}) покровная соль сохранилась (≥ 2 м). По методике (сумма средних мощностей отсутствующих пластов СК) интенсивность карста составляет от ${fmt2(Math.min(...onlyKarst.map(r => r.pureSum)))} до ${fmt2(Math.max(...onlyKarst.map(r => r.pureSum)))} м (с учётом частичного размыва верхнего уцелевшего пласта — до ${fmt2(maxRow.fullSum)} м в скв. ${maxRow.w}). Максимальный размыв зафиксирован в скв. ${maxRow.w} — он превышает среднюю интенсивность карста по закарстованным скважинам (${fmt2(avgPure)} м) на ${fmt2(diffPure)} м (с частичным размывом: ${fmt2(maxRow.fullSum)} м против среднего ${fmt2(avgFull)} м, разница +${fmt2(diffFull)} м).`
+        : `В варианте ${roman} мощность покровной соли во всех скважинах ≥ 2 м — признаков соляного карста не выявлено.`;
+
+      karstWrap.innerHTML = `
+        <div class="space-y-2">
+          <div class="text-xs font-bold text-[#594c3f]">Эталонные средние мощности верхних пластов СК по неразмытым скважинам (скв. ${intactWells.join(", ")}):</div>
+          <div class="flex flex-wrap gap-1.5">${refChips}</div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-xs border-collapse">
+            <thead>
+              <tr class="bg-[#f5efe6] text-[#2e2620] border-b-2 border-[#dfd3c3]">
+                <th class="py-2 px-2">Скважина</th>
+                <th class="py-2 px-2">Покр. соль (br₂⁶)</th>
+                <th class="py-2 px-2">Статус (критерий 2 м)</th>
+                <th class="py-2 px-2 text-left">Отсутствующие пласты СК</th>
+                <th class="py-2 px-2">Интенсивность карста (метод.)</th>
+                <th class="py-2 px-2">С частичн. размывом верхн. пласта</th>
+              </tr>
+            </thead>
+            <tbody>${karstTableHtml}</tbody>
+          </table>
+        </div>
+
+        <div class="grid sm:grid-cols-3 gap-3 text-xs">
+          <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5]">
+            <div class="text-[#7a6b5d]">Скважин с карстом</div>
+            <div class="text-base font-bold text-[#8c4a32] mt-0.5">${onlyKarst.length} из ${N} (скв. ${onlyKarst.map(r => r.w).join(", ")})</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5]">
+            <div class="text-[#7a6b5d]">Макс. размыв / Среднее</div>
+            <div class="text-base font-bold text-[#2e2620] mt-0.5">${maxRow ? `Скв. ${maxRow.w}: ${fmt2(maxRow.pureSum)} м (ср. ${fmt2(avgPure)} м)` : "—"}</div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-[#f5efe6] border border-[#e2d6c5]">
+            <div class="text-[#7a6b5d]">Превышение макс. над средним</div>
+            <div class="text-base font-bold text-[#2f5d3a] mt-0.5">${maxRow ? `+${fmt2(diffPure)} м (с частичн. +${fmt2(diffFull)} м)` : "—"}</div>
+          </div>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-[#e8f0e6] border border-[#c8ddd0] space-y-1.5">
+          <div class="text-xs font-bold uppercase text-[#233d2c]">📝 Готовый текст для пояснительной записки (Вариант ${roman})</div>
+          <p class="text-xs sm:text-sm text-[#1e3526] leading-relaxed">${noteText}</p>
+        </div>
+      `;
+    }
+
+    function downloadLab4LithoSvg(vNum) {
+      const svg = document.getElementById("lab4LithoSvg");
+      if (!svg) return;
+      const blob = new Blob([svg.outerHTML], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `litologo_stratigraf_variant_${vNum}.svg`;
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+
     function renderLab4Variant(vNum) {
       currentLab4Variant = vNum;
       for (let i = 1; i <= 6; i++) {
@@ -4545,6 +5115,7 @@ main#tabContent-geology > div.hidden { display: none !important; margin-top: 0 !
       const ts = wlist.map(w => (lab4Coords[w][0] - p0[0]) * ux + (lab4Coords[w][1] - p0[1]) * uy);
       renderLab4CrossSectionSvg(vNum, wlist, ts, L);
       renderLab4PlanSvg(vNum, wlist, p0, pEnd, ux, uy, L);
+      renderLab4LithoAndKarst(vNum, wlist);
 
       let prevT = 0;
       const rowsHtml = wlist.map((w, idx) => {
